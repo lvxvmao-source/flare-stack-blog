@@ -8,11 +8,13 @@ import { cn } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
 
 function createEmptyItem() {
+  const id = crypto.randomUUID();
   return {
-    id: crypto.randomUUID(),
+    id,
     label: { zh: "", en: "" },
     type: "internal" as const,
-    to: "",
+    to: `/nav/${id}`,
+    openInNewTab: false,
   };
 }
 
@@ -54,6 +56,7 @@ export function NavItemsEditor() {
     <div className="space-y-3">
       {fields.map((field, index) => {
         const type = watch(`site.navItems.${index}.type`);
+        const navId = watch(`site.navItems.${index}.id`);
         const isDragging = dragIndex === index;
         const isOver = overIndex === index && dragIndex !== index;
         return (
@@ -117,13 +120,14 @@ export function NavItemsEditor() {
                   type="button"
                   onClick={() => remove(index)}
                   className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
-                  aria-label={m.settings_nav_add()}
+                  aria-label={m.settings_nav_delete()}
                 >
                   <Trash2 size={16} />
                 </button>
               </div>
             </div>
 
+            {/* Name: Chinese / English */}
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="space-y-1.5">
                 <label className="text-xs font-medium text-muted-foreground">
@@ -131,7 +135,7 @@ export function NavItemsEditor() {
                 </label>
                 <Input
                   {...register(`site.navItems.${index}.label.zh`)}
-                  placeholder={m.settings_nav_label_zh()}
+                  placeholder={m.settings_nav_label_zh_ph()}
                 />
               </div>
               <div className="space-y-1.5">
@@ -140,11 +144,34 @@ export function NavItemsEditor() {
                 </label>
                 <Input
                   {...register(`site.navItems.${index}.label.en`)}
-                  placeholder={m.settings_nav_label_en()}
+                  placeholder={m.settings_nav_label_en_ph()}
                 />
               </div>
             </div>
 
+            {/* Description: Chinese / English */}
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-muted-foreground">
+                  {m.settings_nav_description_zh()}
+                </label>
+                <Input
+                  {...register(`site.navItems.${index}.description.zh`)}
+                  placeholder={m.settings_nav_description_zh_ph()}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-muted-foreground">
+                  {m.settings_nav_description_en()}
+                </label>
+                <Input
+                  {...register(`site.navItems.${index}.description.en`)}
+                  placeholder={m.settings_nav_description_en_ph()}
+                />
+              </div>
+            </div>
+
+            {/* Type selector + URL */}
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
               <div className="w-full shrink-0 space-y-1.5 sm:w-40">
                 <label className="text-xs font-medium text-muted-foreground">
@@ -162,19 +189,31 @@ export function NavItemsEditor() {
                   </option>
                 </select>
               </div>
-              <div className="min-w-0 flex-1 space-y-1.5">
-                <label className="text-xs font-medium text-muted-foreground">
-                  {m.settings_nav_url()}
-                </label>
-                <Input
-                  {...register(`site.navItems.${index}.to`)}
-                  placeholder={
-                    type === "external"
-                      ? m.settings_nav_url_ph_external()
-                      : m.settings_nav_url_ph_internal()
-                  }
-                />
-              </div>
+
+              {type === "internal" ? (
+                <div className="min-w-0 flex-1 space-y-1.5">
+                  <label className="text-xs font-medium text-muted-foreground">
+                    {m.settings_nav_url()}
+                  </label>
+                  <input
+                    type="hidden"
+                    {...register(`site.navItems.${index}.to`)}
+                  />
+                  <div className="flex h-9 w-full items-center rounded-md border border-border/30 bg-muted/30 px-3 text-sm text-muted-foreground">
+                    /nav/{navId}
+                  </div>
+                </div>
+              ) : (
+                <div className="min-w-0 flex-1 space-y-1.5">
+                  <label className="text-xs font-medium text-muted-foreground">
+                    {m.settings_nav_url()}
+                  </label>
+                  <Input
+                    {...register(`site.navItems.${index}.to`)}
+                    placeholder={m.settings_nav_url_ph_external()}
+                  />
+                </div>
+              )}
             </div>
 
             {type === "external" && (

@@ -24,6 +24,12 @@ export function createNavItemSchema(messages?: Messages) {
         zh: z.string().trim().max(60),
         en: z.string().trim().max(60),
       }),
+      description: z
+        .object({
+          zh: z.string().trim().max(200),
+          en: z.string().trim().max(200),
+        })
+        .optional(),
       type: z.enum(["internal", "external"]),
       to: z.string().min(1),
       openInNewTab: z.boolean().optional(),

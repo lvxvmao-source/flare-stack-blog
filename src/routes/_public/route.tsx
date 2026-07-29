@@ -48,7 +48,7 @@ function PublicLayout() {
     (item) => ({
       id: item.id,
       label: item.label[locale] ?? item.label.zh,
-      to: item.to,
+      to: item.type === "internal" ? `/nav/${item.id}` : item.to,
       external: item.type === "external",
       openInNewTab: item.openInNewTab,
     }),
