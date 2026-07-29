@@ -1,0 +1,1 @@
+ALTER TABLE `posts` ADD `nav_id` text;

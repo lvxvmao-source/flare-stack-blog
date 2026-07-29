@@ -1,7 +1,9 @@
+import { useQuery } from "@tanstack/react-query";
 import { Loader2, Pin, PinOff, Sparkles } from "lucide-react";
 import TextareaAutosize from "react-textarea-autosize";
 import DatePicker from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
+import { siteConfigQuery } from "@/features/config/queries";
 import { TagSelector } from "@/features/tags/components/tag-selector";
 import { POST_STATUSES } from "@/lib/db/schema";
 import { toLocalDateString } from "@/lib/utils";
@@ -38,6 +40,9 @@ export function PostEditorMetadata({
   onGenerateSummary,
   onGenerateTags,
 }: PostEditorMetadataProps) {
+  const { data: siteConfig } = useQuery(siteConfigQuery);
+  const navItems = siteConfig?.navItems ?? [];
+
   return (
     <>
       <div className="mb-12">
@@ -210,6 +215,30 @@ export function PostEditorMetadata({
             onChange={(tagIds) => onPostChange({ tagIds })}
           />
         </div>
+
+        {navItems.length > 0 && (
+          <div className="col-span-1 space-y-3 md:col-span-3">
+            <label className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground">
+              {m.editor_meta_nav()}
+            </label>
+            <select
+              value={post.navId ?? ""}
+              onChange={(e) =>
+                onPostChange({ navId: e.target.value || null })
+              }
+              className="w-full bg-transparent text-xs font-mono text-foreground border-none p-0 focus:outline-none focus:ring-0 cursor-pointer"
+            >
+              <option value="">
+                {m.editor_meta_nav_none()}
+              </option>
+              {navItems.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.label.zh}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
         <div className="col-span-1 space-y-3 md:col-span-3">
           <div className="flex items-center justify-between">

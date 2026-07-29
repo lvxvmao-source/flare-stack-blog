@@ -39,7 +39,7 @@ export const POSTS_KEYS = {
   revisionDetails: ["posts", "revision-detail"] as const,
 
   // Child keys (functions for specific queries)
-  list: (filters: { tagName?: string; limit?: number } = {}) =>
+  list: (filters: { tagName?: string; navId?: string; excludeAssigned?: boolean; limit?: number } = {}) =>
     [
       "posts",
       "list",
@@ -77,12 +77,12 @@ export function recentPostsQuery(limit: number) {
 }
 
 export function postsInfiniteQueryOptions(
-  filters: { tagName?: string; limit?: number } = {},
+  filters: { tagName?: string; navId?: string; excludeAssigned?: boolean; limit?: number } = {},
 ) {
   const pageSize = filters.limit ?? 12;
   const tagName = normalizePostTagName(filters.tagName);
   return infiniteQueryOptions({
-    queryKey: POSTS_KEYS.list({ ...filters, tagName }),
+    queryKey: POSTS_KEYS.list(filters),
     queryFn: async ({ pageParam }) => {
       if (isSSR) {
         return await getPostsCursorFn({
@@ -90,6 +90,8 @@ export function postsInfiniteQueryOptions(
             cursor: pageParam,
             limit: pageSize,
             tagName,
+            navId: filters.navId,
+            excludeAssigned: filters.excludeAssigned,
           },
         });
       }
@@ -98,6 +100,8 @@ export function postsInfiniteQueryOptions(
           cursor: pageParam?.toString(),
           limit: String(pageSize),
           tagName,
+          navId: filters.navId,
+          excludeAssigned: filters.excludeAssigned ? "true" : undefined,
         },
       });
       if (!res.ok) throw new Error("Failed to fetch posts");

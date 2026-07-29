@@ -29,6 +29,7 @@ export const Route = createFileRoute("/_public/posts")({
         postsInfiniteQueryOptions({
           tagName: deps.tagName,
           limit: postsPerPage,
+          excludeAssigned: true,
         }),
       ),
       context.queryClient.prefetchQuery(tagsQueryOptions),
@@ -66,7 +67,7 @@ function RouteComponent() {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useSuspenseInfiniteQuery(
-      postsInfiniteQueryOptions({ tagName, limit: postsPerPage }),
+      postsInfiniteQueryOptions({ tagName, limit: postsPerPage, excludeAssigned: true }),
     );
 
   const posts = useMemo(() => {

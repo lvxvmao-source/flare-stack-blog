@@ -64,6 +64,8 @@ export const GetPostsCursorInputSchema = z.object({
   cursor: z.number().optional(),
   limit: z.number().optional(),
   tagName: PostTagNameSchema,
+  navId: z.string().optional(),
+  excludeAssigned: z.boolean().optional(),
   excludePinned: z.boolean().optional(),
 });
 
@@ -138,10 +140,28 @@ export type PostItem = z.infer<typeof PostItemSchema>;
 export type PostWithToc = z.infer<typeof PostWithTocSchema>;
 
 export const POSTS_CACHE_KEYS = {
-  list: (version: string, limit: number, cursor: number, tagName?: string) =>
-    tagName === undefined
-      ? (["posts", "list", version, limit, cursor, "all"] as const)
-      : (["posts", "list", version, limit, cursor, "tag", tagName] as const),
+  list: (
+    version: string,
+    limit: number,
+    cursor: number,
+    tagName?: string,
+    navId?: string,
+    excludeAssigned?: boolean,
+  ) => {
+    const parts = [
+      "posts",
+      "list",
+      version,
+      String(limit),
+      String(cursor),
+    ] as const;
+    const extras: string[] = [];
+    if (tagName !== undefined) extras.push("tag", tagName);
+    else extras.push("all");
+    if (navId !== undefined) extras.push("nav", navId);
+    if (excludeAssigned) extras.push("unassigned");
+    return [...parts, ...extras] as const;
+  },
   detail: (version: string, slug: string) => [version, "post", slug] as const,
   related: (slug: string, limit?: number) =>
     ["posts", "related-ids", slug, limit] as const,

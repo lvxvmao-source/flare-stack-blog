@@ -27,6 +27,7 @@ export const PostsTable = sqliteTable(
     status: text("status", { enum: POST_STATUSES }).notNull().default("draft"),
     publishedAt: integer("published_at", { mode: "timestamp" }),
     pinnedAt: integer("pinned_at", { mode: "timestamp" }),
+    navId: text("nav_id"),
     createdAt,
     updatedAt,
   },

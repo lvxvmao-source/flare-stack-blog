@@ -5,6 +5,7 @@ import {
   eq,
   inArray,
   isNotNull,
+  isNull,
   like,
   lt,
   ne,
@@ -107,6 +108,8 @@ export async function getPostsCursor(
     limit?: number;
     publicOnly?: boolean;
     tagName?: string;
+    navId?: string | null;
+    excludeAssigned?: boolean;
     excludePinned?: boolean;
   } = {},
 ): Promise<{
@@ -118,6 +121,8 @@ export async function getPostsCursor(
     limit = DEFAULT_PAGE_SIZE,
     publicOnly,
     tagName,
+    navId,
+    excludeAssigned,
     excludePinned,
   } = options;
 
@@ -158,6 +163,14 @@ export async function getPostsCursor(
 
   if (excludePinned) {
     conditions.push(sql`${PostsTable.pinnedAt} IS NULL`);
+  }
+
+  if (navId) {
+    conditions.push(eq(PostsTable.navId, navId));
+  }
+
+  if (excludeAssigned) {
+    conditions.push(isNull(PostsTable.navId));
   }
 
   let query = db

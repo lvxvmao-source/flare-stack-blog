@@ -56,7 +56,6 @@ export function NavItemsEditor() {
     <div className="space-y-3">
       {fields.map((field, index) => {
         const type = watch(`site.navItems.${index}.type`);
-        const navId = watch(`site.navItems.${index}.id`);
         const isDragging = dragIndex === index;
         const isOver = overIndex === index && dragIndex !== index;
         return (
@@ -190,30 +189,19 @@ export function NavItemsEditor() {
                 </select>
               </div>
 
-              {type === "internal" ? (
-                <div className="min-w-0 flex-1 space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground">
-                    {m.settings_nav_url()}
-                  </label>
-                  <input
-                    type="hidden"
-                    {...register(`site.navItems.${index}.to`)}
-                  />
-                  <div className="flex h-9 w-full items-center rounded-md border border-border/30 bg-muted/30 px-3 text-sm text-muted-foreground">
-                    /nav/{navId}
-                  </div>
-                </div>
-              ) : (
-                <div className="min-w-0 flex-1 space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground">
-                    {m.settings_nav_url()}
-                  </label>
-                  <Input
-                    {...register(`site.navItems.${index}.to`)}
-                    placeholder={m.settings_nav_url_ph_external()}
-                  />
-                </div>
-              )}
+              <div className="min-w-0 flex-1 space-y-1.5">
+                <label className="text-xs font-medium text-muted-foreground">
+                  {m.settings_nav_url()}
+                </label>
+                <Input
+                  {...register(`site.navItems.${index}.to`)}
+                  placeholder={
+                    type === "internal"
+                      ? m.settings_nav_url_ph_internal()
+                      : m.settings_nav_url_ph_external()
+                  }
+                />
+              </div>
             </div>
 
             {type === "external" && (

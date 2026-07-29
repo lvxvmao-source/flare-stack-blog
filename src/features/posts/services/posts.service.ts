@@ -69,6 +69,8 @@ export async function getPostsCursor(
       limit: data.limit,
       publicOnly: true,
       tagName,
+      navId: data.navId,
+      excludeAssigned: data.excludeAssigned,
       excludePinned: data.excludePinned,
     });
 
@@ -81,6 +83,8 @@ export async function getPostsCursor(
         data.limit ?? 10,
         data.cursor ?? 0,
         tagName,
+        data.navId,
+        data.excludeAssigned,
       ),
     PostListResponseSchema,
     fetcher,

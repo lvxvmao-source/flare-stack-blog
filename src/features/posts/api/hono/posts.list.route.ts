@@ -17,6 +17,7 @@ const route = app.get(
     GetPostsCursorInputSchema.extend({
       cursor: z.coerce.number().optional(),
       limit: z.coerce.number().optional(),
+      excludeAssigned: z.coerce.boolean().optional(),
     }),
   ),
   async (c) => {

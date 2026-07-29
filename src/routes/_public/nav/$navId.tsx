@@ -13,9 +13,10 @@ export const Route = createFileRoute("/_public/nav/$navId")({
   component: RouteComponent,
   pendingComponent: NavPageSkeleton,
   loader: async ({ context, params }) => {
+    const navId = params.navId;
     const [, domain, siteConfig] = await Promise.all([
       context.queryClient.prefetchInfiniteQuery(
-        postsInfiniteQueryOptions({ limit: postsPerPage }),
+        postsInfiniteQueryOptions({ limit: postsPerPage, navId }),
       ),
       context.queryClient.ensureQueryData(siteDomainQuery),
       context.queryClient.ensureQueryData(siteConfigQuery),
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/_public/nav/$navId")({
 
     const locale = getLocale();
     const navItem = (siteConfig.navItems ?? []).find(
-      (item) => item.id === params.navId,
+      (item) => item.id === navId,
     );
 
     if (!navItem) {
@@ -37,7 +38,7 @@ export const Route = createFileRoute("/_public/nav/$navId")({
     return {
       title,
       description,
-      canonicalHref: buildCanonicalUrl(domain, `/nav/${params.navId}`),
+      canonicalHref: buildCanonicalUrl(domain, `/nav/${navId}`),
     };
   },
   head: ({ loaderData }) => ({
@@ -55,11 +56,12 @@ export const Route = createFileRoute("/_public/nav/$navId")({
 });
 
 function RouteComponent() {
+  const { navId } = Route.useParams();
   const loaderData = Route.useLoaderData();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useSuspenseInfiniteQuery(
-      postsInfiniteQueryOptions({ limit: postsPerPage }),
+      postsInfiniteQueryOptions({ limit: postsPerPage, navId }),
     );
 
   const posts = useMemo(() => {
