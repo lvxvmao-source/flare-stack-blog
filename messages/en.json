@@ -662,6 +662,7 @@
   "editor_meta_unpinned": "Not Pinned",
   "editor_meta_nav": "Section",
   "editor_meta_nav_none": "(None)",
+  "editor_meta_nav_default": "Posts",
   "editor_content_placeholder": "Start writing...",
   "editor_summary_placeholder": "A brief introduction...",
   "editor_history_open": "History",

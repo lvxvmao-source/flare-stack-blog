@@ -6,6 +6,7 @@ import { useCallback, useMemo, useState } from "react";
 import { Editor } from "@/components/tiptap-editor";
 import { Button } from "@/components/ui/button";
 import ConfirmationModal from "@/components/ui/confirmation-modal";
+import { siteConfigQuery } from "@/features/config/queries";
 import { extensions } from "@/features/posts/editor/config";
 import type { PostRevisionSnapshot } from "@/features/posts/schema/post-revisions.schema";
 import { tagsAdminQueryOptions } from "@/features/tags/queries";
@@ -63,6 +64,24 @@ export function PostEditor({ initialData, onSave }: PostEditorProps) {
 
   // Fetch all tags for AI context and matching
   const { data: allTags = [] } = useQuery(tagsAdminQueryOptions());
+
+  // Fetch nav config for dynamic preview URL
+  const { data: siteConfig } = useQuery(siteConfigQuery);
+  const navItems = siteConfig?.navItems ?? [];
+
+  // Compute preview URL based on selected nav section
+  const getPreviewUrl = useCallback(
+    (slug: string) => {
+      const selectedNav = navItems.find((item) => item.id === post.navId);
+      const section = selectedNav
+        ? selectedNav.to.startsWith("/")
+          ? selectedNav.to.slice(1)
+          : selectedNav.to
+        : "post";
+      return `/${section}/${slug}`;
+    },
+    [navItems, post.navId],
+  );
 
   // Auto-save hook
   const useAutoSaveReturn = useAutoSave({
@@ -188,7 +207,7 @@ export function PostEditor({ initialData, onSave }: PostEditorProps) {
         processState={processState}
         isPostDirty={isPostDirty}
         onPreview={() => {
-          if (post.slug) window.open(`/post/${post.slug}`, "_blank");
+          if (post.slug) window.open(getPreviewUrl(post.slug), "_blank");
         }}
         onProcess={handleProcessData}
       />

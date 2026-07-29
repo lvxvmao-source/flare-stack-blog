@@ -17,22 +17,18 @@ const searchSchema = z.object({
   rootId: z.number().optional(),
 });
 
-const { relatedPostsLimit } = theme.config.post;
-
 export const Route = createFileRoute("/_public/post/$slug")({
   validateSearch: searchSchema,
-  component: RouteComponent,
+  component: PostPageRoute,
   loader: async ({ context, params }) => {
-    // 1. Critical: Main post data - use serverFn (executes directly on server, no HTTP)
     const [post, domain, siteConfig] = await Promise.all([
       context.queryClient.ensureQueryData(postBySlugQuery(params.slug)),
       context.queryClient.ensureQueryData(siteDomainQuery),
       context.queryClient.ensureQueryData(siteConfigQuery),
     ]);
 
-    // 2. Deferred: Related posts (prefetch only, don't await)
     void context.queryClient.prefetchQuery(
-      relatedPostsQuery(params.slug, relatedPostsLimit),
+      relatedPostsQuery(params.slug, theme.config.post.relatedPostsLimit),
     );
 
     if (!post) throw notFound();
@@ -52,13 +48,8 @@ export const Route = createFileRoute("/_public/post/$slug")({
 
     return {
       meta: [
-        {
-          title: post?.title,
-        },
-        {
-          name: "description",
-          content: post?.summary ?? "",
-        },
+        { title: post?.title },
+        { name: "description", content: post?.summary ?? "" },
         { property: "og:title", content: post?.title ?? "" },
         { property: "og:description", content: post?.summary ?? "" },
         { property: "og:type", content: "article" },
@@ -83,7 +74,7 @@ export const Route = createFileRoute("/_public/post/$slug")({
   pendingMs: __THEME_CONFIG__.pendingMs,
 });
 
-function RouteComponent() {
+function PostPageRoute() {
   const { slug } = Route.useParams();
   const { data: post } = useSuspenseQuery(postBySlugQuery(slug));
 

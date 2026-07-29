@@ -655,6 +655,7 @@
   "editor_meta_unpinned": "未置顶",
   "editor_meta_nav": "所属栏目",
   "editor_meta_nav_none": "（无）",
+  "editor_meta_nav_default": "文章导航栏",
   "editor_content_placeholder": "开始记录...",
   "editor_summary_placeholder": "简短的介绍...",
   "editor_history_open": "历史记录",

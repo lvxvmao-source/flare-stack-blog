@@ -43,6 +43,12 @@ export function PostEditorMetadata({
   const { data: siteConfig } = useQuery(siteConfigQuery);
   const navItems = siteConfig?.navItems ?? [];
 
+  // Compute slug prefix based on selected nav
+  const selectedNav = navItems.find((item) => item.id === post.navId);
+  const slugPrefix = selectedNav
+    ? `${selectedNav.to.startsWith("/") ? selectedNav.to : `/${selectedNav.to}`}/`
+    : "/post/";
+
   return (
     <>
       <div className="mb-12">
@@ -169,7 +175,7 @@ export function PostEditorMetadata({
           </label>
           <div className="group flex items-center gap-2">
             <span className="text-xs font-mono text-muted-foreground">
-              /post/
+              {slugPrefix}
             </span>
             <Input
               type="text"
@@ -216,29 +222,27 @@ export function PostEditorMetadata({
           />
         </div>
 
-        {navItems.length > 0 && (
-          <div className="col-span-1 space-y-3 md:col-span-3">
-            <label className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground">
-              {m.editor_meta_nav()}
-            </label>
-            <select
-              value={post.navId ?? ""}
-              onChange={(e) =>
-                onPostChange({ navId: e.target.value || null })
-              }
-              className="w-full bg-transparent text-xs font-mono text-foreground border-none p-0 focus:outline-none focus:ring-0 cursor-pointer"
-            >
-              <option value="">
-                {m.editor_meta_nav_none()}
+        <div className="col-span-1 space-y-3 md:col-span-3">
+          <label className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground">
+            {m.editor_meta_nav()}
+          </label>
+          <select
+            value={post.navId ?? ""}
+            onChange={(e) =>
+              onPostChange({ navId: e.target.value || null })
+            }
+            className="w-full bg-transparent text-xs font-mono text-foreground border-none p-0 focus:outline-none focus:ring-0 cursor-pointer"
+          >
+            <option value="">
+              {m.editor_meta_nav_default()}
+            </option>
+            {navItems.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.label.zh}
               </option>
-              {navItems.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.label.zh}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+            ))}
+          </select>
+        </div>
 
         <div className="col-span-1 space-y-3 md:col-span-3">
           <div className="flex items-center justify-between">
