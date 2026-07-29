@@ -35,6 +35,7 @@ import { Route as AdminMediaIndexRouteImport } from './routes/admin/media/index'
 import { Route as AdminFriendLinksIndexRouteImport } from './routes/admin/friend-links/index'
 import { Route as AdminCommentsIndexRouteImport } from './routes/admin/comments/index'
 import { Route as PublicPostSlugRouteImport } from './routes/_public/post/$slug'
+import { Route as PublicNavNavIdRouteImport } from './routes/_public/nav/$navId'
 import { Route as AdminPostsEditIdRouteImport } from './routes/admin/posts/edit.$id'
 
 const AdminRouteRoute = AdminRouteRouteImport.update({
@@ -164,6 +165,11 @@ const PublicPostSlugRoute = PublicPostSlugRouteImport.update({
   path: '/post/$slug',
   getParentRoute: () => PublicRouteRoute,
 } as any)
+const PublicNavNavIdRoute = PublicNavNavIdRouteImport.update({
+  id: '/nav/$navId',
+  path: '/nav/$navId',
+  getParentRoute: () => PublicRouteRoute,
+} as any)
 const AdminPostsEditIdRoute = AdminPostsEditIdRouteImport.update({
   id: '/edit/$id',
   path: '/edit/$id',
@@ -187,6 +193,7 @@ export interface FileRoutesByFullPath {
   '/submit-friend-link': typeof UserSubmitFriendLinkRoute
   '/oauth/consent': typeof OauthConsentRoute
   '/admin/': typeof AdminIndexRoute
+  '/nav/$navId': typeof PublicNavNavIdRoute
   '/post/$slug': typeof PublicPostSlugRoute
   '/admin/comments/': typeof AdminCommentsIndexRoute
   '/admin/friend-links/': typeof AdminFriendLinksIndexRoute
@@ -211,6 +218,7 @@ export interface FileRoutesByTo {
   '/submit-friend-link': typeof UserSubmitFriendLinkRoute
   '/oauth/consent': typeof OauthConsentRoute
   '/admin': typeof AdminIndexRoute
+  '/nav/$navId': typeof PublicNavNavIdRoute
   '/post/$slug': typeof PublicPostSlugRoute
   '/admin/comments': typeof AdminCommentsIndexRoute
   '/admin/friend-links': typeof AdminFriendLinksIndexRoute
@@ -241,6 +249,7 @@ export interface FileRoutesById {
   '/oauth/consent': typeof OauthConsentRoute
   '/_public/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
+  '/_public/nav/$navId': typeof PublicNavNavIdRoute
   '/_public/post/$slug': typeof PublicPostSlugRoute
   '/admin/comments/': typeof AdminCommentsIndexRoute
   '/admin/friend-links/': typeof AdminFriendLinksIndexRoute
@@ -269,6 +278,7 @@ export interface FileRouteTypes {
     | '/submit-friend-link'
     | '/oauth/consent'
     | '/admin/'
+    | '/nav/$navId'
     | '/post/$slug'
     | '/admin/comments/'
     | '/admin/friend-links/'
@@ -293,6 +303,7 @@ export interface FileRouteTypes {
     | '/submit-friend-link'
     | '/oauth/consent'
     | '/admin'
+    | '/nav/$navId'
     | '/post/$slug'
     | '/admin/comments'
     | '/admin/friend-links'
@@ -322,6 +333,7 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/_public/'
     | '/admin/'
+    | '/_public/nav/$navId'
     | '/_public/post/$slug'
     | '/admin/comments/'
     | '/admin/friend-links/'
@@ -524,6 +536,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicPostSlugRouteImport
       parentRoute: typeof PublicRouteRoute
     }
+    '/_public/nav/$navId': {
+      id: '/_public/nav/$navId'
+      path: '/nav/$navId'
+      fullPath: '/nav/$navId'
+      preLoaderRoute: typeof PublicNavNavIdRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
     '/admin/posts/edit/$id': {
       id: '/admin/posts/edit/$id'
       path: '/edit/$id'
@@ -560,6 +579,7 @@ interface PublicRouteRouteChildren {
   PublicSearchRoute: typeof PublicSearchRoute
   PublicUnsubscribeRoute: typeof PublicUnsubscribeRoute
   PublicIndexRoute: typeof PublicIndexRoute
+  PublicNavNavIdRoute: typeof PublicNavNavIdRoute
   PublicPostSlugRoute: typeof PublicPostSlugRoute
 }
 
@@ -569,6 +589,7 @@ const PublicRouteRouteChildren: PublicRouteRouteChildren = {
   PublicSearchRoute: PublicSearchRoute,
   PublicUnsubscribeRoute: PublicUnsubscribeRoute,
   PublicIndexRoute: PublicIndexRoute,
+  PublicNavNavIdRoute: PublicNavNavIdRoute,
   PublicPostSlugRoute: PublicPostSlugRoute,
 }
 

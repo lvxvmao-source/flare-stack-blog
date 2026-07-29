@@ -55,7 +55,6 @@ export const Route = createFileRoute("/_public/nav/$navId")({
 });
 
 function RouteComponent() {
-  const { navId } = Route.useParams();
   const loaderData = Route.useLoaderData();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
