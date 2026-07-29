@@ -7,6 +7,7 @@ import {
   LayoutTemplate,
   Loader2,
   Mail,
+  Menu,
   Webhook,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -17,6 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MaintenanceSection } from "@/features/config/components/maintenance-section";
 import { SectionSkeleton } from "@/features/config/components/settings-skeleton";
 import { SiteSettingsSection } from "@/features/config/components/site-settings-section";
+import { NavItemsEditor } from "@/features/config/components/nav-items-editor";
 import type { SystemConfig } from "@/features/config/config.schema";
 import {
   createSystemConfigFormSchema,
@@ -76,6 +78,11 @@ function RouteComponent() {
       value: "integrations",
       icon: KeyRound,
       label: m.settings_tab_mcp(),
+    },
+    {
+      value: "nav",
+      icon: Menu,
+      label: m.settings_nav_title(),
     },
   ] as const;
 
@@ -225,6 +232,18 @@ function RouteComponent() {
                 </p>
               </div>
               <SiteSettingsSection />
+            </TabsContent>
+
+            <TabsContent value="nav" className="mt-0 space-y-10">
+              <div className="space-y-2 pb-6 border-b border-border/30">
+                <h2 className="text-2xl font-serif font-medium tracking-tight">
+                  {m.settings_nav_title()}
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  {m.settings_nav_desc()}
+                </p>
+              </div>
+              <NavItemsEditor />
             </TabsContent>
 
             <TabsContent value="integrations" className="mt-0 space-y-10">

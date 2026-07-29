@@ -49,18 +49,35 @@ export function Navbar({
 
           {/* Center: Main Nav */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navOptions.map((option) => (
-              <Link
-                key={option.id}
-                to={option.to}
-                className="text-[11px] font-medium uppercase tracking-widest text-muted-foreground/60 hover:text-foreground transition-colors"
-                activeProps={{
-                  className: "!text-foreground",
-                }}
-              >
-                {option.label}
-              </Link>
-            ))}
+            {navOptions.map((option) => {
+              const className =
+                "text-[11px] font-medium uppercase tracking-widest text-muted-foreground/60 hover:text-foreground transition-colors";
+              if (option.external) {
+                return (
+                  <a
+                    key={option.id}
+                    href={option.to}
+                    target={option.openInNewTab ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    className={className}
+                  >
+                    {option.label}
+                  </a>
+                );
+              }
+              return (
+                <Link
+                  key={option.id}
+                  to={option.to}
+                  className={className}
+                  activeProps={{
+                    className: "!text-foreground",
+                  }}
+                >
+                  {option.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Right: Actions */}

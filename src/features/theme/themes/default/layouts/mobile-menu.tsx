@@ -60,16 +60,39 @@ export function MobileMenu({
 
         {/* Links: Terminal Style */}
         <nav className="flex-1 flex flex-col justify-center space-y-6 md:space-y-8 font-mono">
-          {navOptions.map((item, idx) => (
+          {navOptions.map((item, idx) => {
+          const linkClass = `group flex items-center gap-4 transition-all duration-500 ${
+            isOpen ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
+          }`;
+          const terminalPrefix = (
+            <span className="text-sm md:text-base text-muted-foreground/50 transition-colors group-hover:text-foreground">
+              &gt;_
+            </span>
+          );
+          if (item.external) {
+            return (
+              <a
+                key={item.id}
+                href={item.to}
+                target={item.openInNewTab ? "_blank" : undefined}
+                rel="noopener noreferrer"
+                onClick={onClose}
+                className={linkClass}
+                style={{ transitionDelay: isOpen ? `${50 + idx * 50}ms` : "0ms" }}
+              >
+                {terminalPrefix}
+                <span className="text-3xl md:text-5xl font-bold tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
+                  {item.label}
+                </span>
+              </a>
+            );
+          }
+          return (
             <Link
               key={item.id}
               to={item.to}
               onClick={onClose}
-              className={`group flex items-center gap-4 transition-all duration-500 ${
-                isOpen
-                  ? "translate-x-0 opacity-100"
-                  : "-translate-x-8 opacity-0"
-              }`}
+              className={linkClass}
               activeProps={{
                 className: "!text-foreground",
               }}
@@ -95,7 +118,8 @@ export function MobileMenu({
                 </>
               )}
             </Link>
-          ))}
+          );
+        })}
 
           {user?.role === "admin" && (
             <Link

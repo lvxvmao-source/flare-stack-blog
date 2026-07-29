@@ -9,6 +9,37 @@ export const SocialLinkSchema = z.object({
   label: z.string().optional(),
 });
 
+export function createNavItemSchema(messages?: Messages) {
+  const safeMessages = messages as
+    | Partial<Record<string, (...args: unknown[]) => string>>
+    | undefined;
+  const invalidLinkMessage =
+    safeMessages?.settings_nav_validation_invalid_link?.() ??
+    "站内链接需以 / 开头，外部链接需为合法 http(s) URL";
+
+  return z
+    .object({
+      id: z.string().min(1),
+      label: z.object({
+        zh: z.string().trim().max(60),
+        en: z.string().trim().max(60),
+      }),
+      type: z.enum(["internal", "external"]),
+      to: z.string().min(1),
+      openInNewTab: z.boolean().optional(),
+    })
+    .refine(
+      (item) =>
+        item.type === "internal"
+          ? item.to.startsWith("/")
+          : /^https?:\/\//i.test(item.to),
+      { message: invalidLinkMessage, path: ["to"] },
+    );
+}
+
+export const NavItemSchema = createNavItemSchema();
+export type NavItem = z.infer<typeof NavItemSchema>;
+
 export const DEFAULT_THEME_OPACITY_MIN = 0;
 export const DEFAULT_THEME_OPACITY_MAX = 0.4;
 export const DEFAULT_THEME_BLUR_MIN = 0;
@@ -299,6 +330,7 @@ export const FullSiteConfigSchema = z.object({
     default: defaultThemeSiteConfigSchema,
     fuwari: fuwariThemeSiteConfigSchema,
   }),
+  navItems: z.array(NavItemSchema).optional(),
 });
 
 export function createSiteConfigInputFormSchema(messages: Messages) {
@@ -324,6 +356,7 @@ export function createSiteConfigInputFormSchema(messages: Messages) {
         fuwari: createFuwariThemeSiteConfigInputFormSchema(messages).optional(),
       })
       .optional(),
+    navItems: z.array(createNavItemSchema(messages)).optional(),
   });
 }
 
@@ -348,6 +381,7 @@ export const SiteConfigInputSchema = z.object({
       fuwari: fuwariThemeSiteConfigInputSchema.optional(),
     })
     .optional(),
+  navItems: z.array(NavItemSchema).optional(),
 });
 
 export const SiteConfigSchema = SiteConfigInputSchema;

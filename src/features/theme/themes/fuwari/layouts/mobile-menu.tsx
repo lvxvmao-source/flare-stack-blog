@@ -42,20 +42,38 @@ export function MobileMenu({
         <div className="fuwari-card-base p-2 flex flex-col gap-1 shadow-xl ring-1 ring-black/5 dark:ring-white/10">
           {/* Navigation Items */}
           <nav className="flex flex-col">
-            {navOptions.map((item) => (
-              <Link
-                key={item.id}
-                to={item.to}
-                onClick={onClose}
-                className="flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors fuwari-text-75 hover:bg-(--fuwari-btn-regular-bg) hover:text-(--fuwari-primary) active:scale-[0.98]"
-                activeProps={{
-                  className:
-                    "!bg-[var(--fuwari-btn-regular-bg)] !text-[var(--fuwari-primary)]",
-                }}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navOptions.map((item) => {
+              const className =
+                "flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors fuwari-text-75 hover:bg-(--fuwari-btn-regular-bg) hover:text-(--fuwari-primary) active:scale-[0.98]";
+              if (item.external) {
+                return (
+                  <a
+                    key={item.id}
+                    href={item.to}
+                    target={item.openInNewTab ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    onClick={onClose}
+                    className={className}
+                  >
+                    {item.label}
+                  </a>
+                );
+              }
+              return (
+                <Link
+                  key={item.id}
+                  to={item.to}
+                  onClick={onClose}
+                  className={className}
+                  activeProps={{
+                    className:
+                      "!bg-[var(--fuwari-btn-regular-bg)] !text-[var(--fuwari-primary)]",
+                  }}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
 
             {user?.role === "admin" && (
               <Link

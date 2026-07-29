@@ -28,4 +28,5 @@ export const blogConfig = {
       primaryHue: 250,
     },
   },
+  navItems: [],
 } as const satisfies SiteConfig;

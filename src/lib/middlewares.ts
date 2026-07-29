@@ -32,6 +32,15 @@ export const errorLoggingMiddleware = createMiddleware({
                 name: error.name,
                 message: error.message,
                 stack: error.stack,
+                cause:
+                  (error as Error & { cause?: unknown }).cause instanceof Error
+                    ? {
+                        name: (error as Error & { cause: Error }).cause.name,
+                        message: (error as Error & { cause: Error }).cause
+                          .message,
+                        stack: (error as Error & { cause: Error }).cause.stack,
+                      }
+                    : undefined,
               }
             : String(error),
         timestamp: new Date().toISOString(),

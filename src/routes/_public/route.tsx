@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useNavigate, useRouteContext } from "@tanstack/react-router";
 import theme from "@theme";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -9,6 +9,8 @@ import { authClient } from "@/lib/auth/auth.client";
 import { getLogoutAuthErrorMessage } from "@/lib/auth/auth-errors";
 import { CACHE_CONTROL } from "@/lib/constants";
 import { m } from "@/paraglide/messages";
+import { getLocale } from "@/paraglide/runtime";
+import type { NavOption } from "@/features/theme/contract/layouts";
 
 export const Route = createFileRoute("/_public")({
   loader: ({ context }) => ({
@@ -33,15 +35,26 @@ function PublicLayout() {
     authClient.useSession();
   const queryClient = useQueryClient();
 
-  const navOptions = [
-    { label: m.nav_home(), to: "/" as const, id: "home" },
-    { label: m.nav_posts(), to: "/posts" as const, id: "posts" },
-    {
-      label: m.nav_friend_links(),
-      to: "/friend-links" as const,
-      id: "friend-links",
-    },
+  const { siteConfig } = useRouteContext({ from: "__root__" });
+  const locale = getLocale();
+
+  const builtInNavOptions: NavOption[] = [
+    { label: m.nav_home(), to: "/", id: "home" },
+    { label: m.nav_posts(), to: "/posts", id: "posts" },
+    { label: m.nav_friend_links(), to: "/friend-links", id: "friend-links" },
   ];
+
+  const customNavOptions: NavOption[] = (siteConfig.navItems ?? []).map(
+    (item) => ({
+      id: item.id,
+      label: item.label[locale] ?? item.label.zh,
+      to: item.to,
+      external: item.type === "external",
+      openInNewTab: item.openInNewTab,
+    }),
+  );
+
+  const navOptions = [...builtInNavOptions, ...customNavOptions];
 
   const logout = async () => {
     const { error } = await authClient.signOut();

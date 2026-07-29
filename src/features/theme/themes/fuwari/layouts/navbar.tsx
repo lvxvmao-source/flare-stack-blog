@@ -80,18 +80,35 @@ export function Navbar({
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
-            {navOptions.map((option) => (
-              <Link
-                key={option.id}
-                to={option.to}
-                className="fuwari-expand-animation rounded-lg h-11 font-bold px-5 active:scale-95 flex items-center fuwari-text-75 hover:text-(--fuwari-primary)"
-                activeProps={{
-                  className: "!text-[var(--fuwari-primary)]",
-                }}
-              >
-                {option.label}
-              </Link>
-            ))}
+            {navOptions.map((option) => {
+              const className =
+                "fuwari-expand-animation rounded-lg h-11 font-bold px-5 active:scale-95 flex items-center fuwari-text-75 hover:text-(--fuwari-primary)";
+              if (option.external) {
+                return (
+                  <a
+                    key={option.id}
+                    href={option.to}
+                    target={option.openInNewTab ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    className={className}
+                  >
+                    {option.label}
+                  </a>
+                );
+              }
+              return (
+                <Link
+                  key={option.id}
+                  to={option.to}
+                  className={className}
+                  activeProps={{
+                    className: "!text-[var(--fuwari-primary)]",
+                  }}
+                >
+                  {option.label}
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-1">
