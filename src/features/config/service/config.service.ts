@@ -133,6 +133,7 @@ export function resolveSiteConfig(
           blogConfig.theme.fuwari.primaryHue,
       },
     },
+    navItems: config?.site?.navItems ?? blogConfig.navItems,
   });
 }
 
