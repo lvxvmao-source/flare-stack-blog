@@ -14,9 +14,9 @@ import { getLocale } from "@/paraglide/runtime";
 import type { NavOption } from "@/features/theme/contract/layouts";
 
 export const Route = createFileRoute("/_public")({
-  loader: ({ context }) => {
+  loader: async ({ context }) => {
     const themeName = (context.siteConfig?.themeName ?? "default") as ThemeName;
-    void context.queryClient.ensureQueryData(siteStatsQueryOptions);
+    await context.queryClient.ensureQueryData(siteStatsQueryOptions);
     return {
       preloadImages: getThemePreloadImages(context.siteConfig, themeName),
     };
