@@ -2,7 +2,7 @@ import { useLocation, useRouteContext } from "@tanstack/react-router";
 import { useState } from "react";
 import type { PublicLayoutProps } from "@/features/theme/contract/layouts";
 import { BackToTop } from "../components/control/back-to-top";
-import { RightSidebar } from "../components/right-sidebar";
+import { RightSidebar } from "@/features/theme/themes/fuwari/components/right-sidebar";
 import { Sidebar } from "../components/sidebar";
 import { Footer } from "./footer";
 import { MobileMenu } from "./mobile-menu";
