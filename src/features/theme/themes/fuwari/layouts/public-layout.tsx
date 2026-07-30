@@ -2,6 +2,7 @@ import { useLocation, useRouteContext } from "@tanstack/react-router";
 import { useState } from "react";
 import type { PublicLayoutProps } from "@/features/theme/contract/layouts";
 import { BackToTop } from "../components/control/back-to-top";
+import { RightSidebar } from "../components/right-sidebar";
 import { Sidebar } from "../components/sidebar";
 import { Footer } from "./footer";
 import { MobileMenu } from "./mobile-menu";
@@ -69,10 +70,10 @@ export function PublicLayout({
         }}
       >
         <div
-          className="relative mx-auto px-0 md:px-4 pb-8 grid grid-cols-1 lg:grid-cols-[17.5rem_1fr] gap-4"
+          className="relative mx-auto px-0 md:px-4 pb-8 grid grid-cols-1 lg:grid-cols-[17.5rem_1fr_14rem] gap-4"
           style={{ maxWidth: "var(--fuwari-page-width)" }}
         >
-          {/* Sidebar Column */}
+          {/* Left Sidebar Column */}
           <Sidebar className="order-2 lg:order-1" />
 
           {/* Main Content Column */}
@@ -80,9 +81,12 @@ export function PublicLayout({
             {children}
           </main>
 
+          {/* Right Sidebar Column */}
+          <RightSidebar />
+
           {/* Footer Column (Desktop: below main, Mobile: below sidebar) */}
           <div
-            className="order-3 lg:col-start-2 fuwari-onload-animation mt-auto"
+            className="order-4 lg:col-start-2 fuwari-onload-animation mt-auto"
             style={{ animationDelay: "250ms" }}
           >
             <Footer navOptions={navOptions} />

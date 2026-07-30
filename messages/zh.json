@@ -1487,5 +1487,11 @@
   "email_webhook_friend_link_submitted_message": "{submitterName} 提交了友链申请：{siteName}（{siteUrl}）",
   "email_webhook_friend_link_approved_message": "{siteName} 的友链申请已通过审核。",
   "email_webhook_friend_link_rejected_message": "{siteName} 的友链申请未通过：{rejectionReason}",
-  "email_webhook_friend_link_rejected_message_no_reason": "{siteName} 的友链申请未通过。"
+  "email_webhook_friend_link_rejected_message_no_reason": "{siteName} 的友链申请未通过。",
+  "site_stats_title": "站点统计",
+  "site_stats_posts": "文章",
+  "site_stats_tags": "标签",
+  "site_stats_views": "浏览量",
+  "site_stats_running_days": "运行天数",
+  "calendar_title": "日历"
 }

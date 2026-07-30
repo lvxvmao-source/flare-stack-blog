@@ -65,3 +65,18 @@ export function formatBytes(bytes: number, decimals = 2) {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return `${Number.parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
 }
+
+export function differenceInDays(dateLeft: Date, dateRight: Date): number {
+  const msPerDay = 1000 * 60 * 60 * 24;
+  const utcLeft = Date.UTC(
+    dateLeft.getFullYear(),
+    dateLeft.getMonth(),
+    dateLeft.getDate(),
+  );
+  const utcRight = Date.UTC(
+    dateRight.getFullYear(),
+    dateRight.getMonth(),
+    dateRight.getDate(),
+  );
+  return Math.floor((utcLeft - utcRight) / msPerDay);
+}
