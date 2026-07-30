@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ClientOnly, Link } from "@tanstack/react-router";
+import { ClientOnly } from "@tanstack/react-router";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PostLink } from "@/features/posts/components/post-link";
 import { relatedPostsQuery } from "@/features/posts/queries";
 import { formatDate } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
@@ -30,10 +31,10 @@ export function RelatedPosts({ slug }: RelatedPostsProps) {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 transition">
           {posts.map((post) => (
-            <Link
+            <PostLink
               key={post.id}
-              to="/post/$slug"
-              params={{ slug: post.slug }}
+              slug={post.slug}
+              navId={post.navId}
               className="group flex flex-col justify-between p-4 rounded-xl border border-black/5 dark:border-white/5 hover:bg-(--fuwari-btn-plain-bg-hover) active:bg-(--fuwari-btn-plain-bg-active) transition-colors h-full"
             >
               <h3 className="text-lg font-bold fuwari-text-75 group-hover:text-(--fuwari-primary) mb-2 line-clamp-2">
@@ -49,7 +50,7 @@ export function RelatedPosts({ slug }: RelatedPostsProps) {
                 <span className="w-1 h-1 rounded-full bg-black/20 dark:bg-white/20" />
                 <span>{m.read_time({ count: post.readTimeInMinutes })}</span>
               </div>
-            </Link>
+            </PostLink>
           ))}
         </div>
       )}

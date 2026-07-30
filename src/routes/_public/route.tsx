@@ -14,9 +14,9 @@ import { getLocale } from "@/paraglide/runtime";
 import type { NavOption } from "@/features/theme/contract/layouts";
 
 export const Route = createFileRoute("/_public")({
-  loader: ({ context }) => {
+  loader: async ({ context }) => {
     const themeName = (context.siteConfig?.themeName ?? "default") as ThemeName;
-    void context.queryClient.ensureQueryData(siteStatsQueryOptions);
+    await context.queryClient.ensureQueryData(siteStatsQueryOptions);
     return {
       preloadImages: getThemePreloadImages(context.siteConfig, themeName),
     };
@@ -53,7 +53,7 @@ function PublicLayout() {
     (item) => ({
       id: item.id,
       label: item.label[locale] ?? item.label.zh,
-      to: item.type === "internal" ? `/nav/${item.id}` : item.to,
+      to: item.type === "internal" ? item.to : item.to,
       external: item.type === "external",
       openInNewTab: item.openInNewTab,
     }),

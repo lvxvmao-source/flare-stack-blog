@@ -1,7 +1,8 @@
-import { ClientOnly, Link } from "@tanstack/react-router";
+import { ClientOnly } from "@tanstack/react-router";
 import { Eye, Pin } from "lucide-react";
 import { memo } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PostLink } from "@/features/posts/components/post-link";
 import type { PostItem as PostItemType } from "@/features/posts/schema/posts.schema";
 import { formatDate } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
@@ -17,9 +18,9 @@ export const PostItem = memo(
   ({ post, pinned, views, isLoadingViews }: PostItemProps) => {
     return (
       <div className="group border-b border-border/40 last:border-0">
-        <Link
-          to="/post/$slug"
-          params={{ slug: post.slug }}
+        <PostLink
+          slug={post.slug}
+          navId={post.navId}
           className="block py-8 md:py-10 transition-all duration-300 hover:pl-4"
         >
           <div className="flex flex-col gap-3">
@@ -86,7 +87,7 @@ export const PostItem = memo(
               {post.summary}
             </p>
           </div>
-        </Link>
+        </PostLink>
       </div>
     );
   },

@@ -9,6 +9,7 @@ import {
   Tag,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PostLink } from "@/features/posts/components/post-link";
 import type { PostItem } from "@/features/posts/schema/posts.schema";
 import { formatDate } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
@@ -65,9 +66,9 @@ export function PostCard({
           </div>
         )}
 
-        <Link
-          to="/post/$slug"
-          params={{ slug: post.slug }}
+        <PostLink
+          slug={post.slug}
+          navId={post.navId}
           className="transition group w-full block font-bold mb-3 text-3xl fuwari-text-90 hover:text-(--fuwari-primary) active:text-(--fuwari-primary) relative before:w-1 before:h-5 before:rounded-md before:absolute before:-left-5 before:top-1/2 before:-translate-y-1/2 before:hidden md:before:block before:bg-(--fuwari-primary)"
         >
           {post.title}
@@ -155,17 +156,17 @@ export function PostCard({
       </div>
 
       {/* Enter button */}
-      <Link
-        to="/post/$slug"
-        params={{ slug: post.slug }}
-        aria-label={post.title}
+      <PostLink
+        slug={post.slug}
+        navId={post.navId}
+        ariaLabel={post.title}
         className="hidden md:flex fuwari-btn-regular w-13 absolute right-3 top-3 bottom-3 rounded-xl active:scale-95"
       >
         <ChevronRight
           className="text-(--fuwari-primary) text-4xl mx-auto"
           strokeWidth={2}
         />
-      </Link>
+      </PostLink>
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ClientOnly, Link } from "@tanstack/react-router";
+import { ClientOnly } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PostLink } from "@/features/posts/components/post-link";
 import { relatedPostsQuery } from "@/features/posts/queries";
 import { formatDate } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
@@ -29,10 +30,10 @@ export function RelatedPosts({ slug }: RelatedPostsProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {posts.map((post) => (
-          <Link
+          <PostLink
             key={post.id}
-            to="/post/$slug"
-            params={{ slug: post.slug }}
+            slug={post.slug}
+            navId={post.navId}
             className="group flex flex-col h-full space-y-3 p-4 -mx-4 md:mx-0 md:p-0 rounded-lg hover:bg-muted/40 md:hover:bg-transparent transition-colors"
           >
             <div className="flex items-center gap-2 text-[10px] text-muted-foreground/60 font-mono tracking-wider">
@@ -56,7 +57,7 @@ export function RelatedPosts({ slug }: RelatedPostsProps) {
                 className="-ml-0.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
               />
             </div>
-          </Link>
+          </PostLink>
         ))}
       </div>
     </section>

@@ -1,5 +1,6 @@
-import { ClientOnly, Link } from "@tanstack/react-router";
+import { ClientOnly } from "@tanstack/react-router";
 import type { PostItem } from "@/features/posts/schema/posts.schema";
+import { PostLink } from "@/features/posts/components/post-link";
 import { m } from "@/paraglide/messages";
 
 interface ArchivePostProps {
@@ -10,11 +11,11 @@ export function ArchivePost({ post }: ArchivePostProps) {
   const date = post.publishedAt ? new Date(post.publishedAt) : null;
 
   return (
-    <Link
-      to="/post/$slug"
-      params={{ slug: post.slug }}
+    <PostLink
+      slug={post.slug}
+      navId={post.navId}
       className="group block! h-10 w-full rounded-lg hover:bg-(--fuwari-btn-plain-bg-hover) active:bg-(--fuwari-btn-plain-bg-active) transition-colors"
-      aria-label={post.title}
+      ariaLabel={post.title}
     >
       <div className="flex flex-row justify-start items-center h-full">
         {/* Date */}
@@ -50,6 +51,6 @@ export function ArchivePost({ post }: ArchivePostProps) {
           {post.tags?.map((t) => `#${t.name}`).join(" ")}
         </div>
       </div>
-    </Link>
+    </PostLink>
   );
 }
