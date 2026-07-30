@@ -18,16 +18,21 @@ export const Route = createFileRoute("/_public/$navSlug/$postSlug")({
   pendingComponent: PostPageSkeleton,
   pendingMs: 500,
   loader: async ({ context, params }) => {
-    const { navId, navItem } = context as { navId: string; navItem: { to: string } };
-    const [post, domain, siteConfig] = await Promise.all([
+    const siteConfig =
+      await context.queryClient.ensureQueryData(siteConfigQuery);
+    const navItem = (siteConfig.navItems ?? []).find(
+      (item) => item.to.replace(/^\//, "") === params.navSlug,
+    );
+    if (!navItem) throw notFound();
+
+    const [post, domain] = await Promise.all([
       context.queryClient.ensureQueryData(postBySlugQuery(params.postSlug)),
       context.queryClient.ensureQueryData(siteDomainQuery),
-      context.queryClient.ensureQueryData(siteConfigQuery),
     ]);
 
     if (!post) throw notFound();
     // Verify post belongs to this nav
-    if (post.navId !== navId) throw notFound();
+    if (post.navId !== navItem.id) throw notFound();
 
     void context.queryClient.prefetchQuery(
       relatedPostsQuery(params.postSlug, relatedPostsLimit),

@@ -28,14 +28,17 @@ import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/_auth/forgot-password'
 import { Route as AdminPostsRouteRouteImport } from './routes/admin/posts/route'
+import { Route as PublicNavSlugRouteRouteImport } from './routes/_public/$navSlug/route'
 import { Route as AdminTagsIndexRouteImport } from './routes/admin/tags/index'
 import { Route as AdminSettingsIndexRouteImport } from './routes/admin/settings/index'
 import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
 import { Route as AdminMediaIndexRouteImport } from './routes/admin/media/index'
 import { Route as AdminFriendLinksIndexRouteImport } from './routes/admin/friend-links/index'
 import { Route as AdminCommentsIndexRouteImport } from './routes/admin/comments/index'
+import { Route as PublicNavSlugIndexRouteImport } from './routes/_public/$navSlug/index'
 import { Route as PublicPostSlugRouteImport } from './routes/_public/post/$slug'
 import { Route as PublicNavNavIdRouteImport } from './routes/_public/nav/$navId'
+import { Route as PublicNavSlugPostSlugRouteImport } from './routes/_public/$navSlug/$postSlug'
 import { Route as AdminPostsEditIdRouteImport } from './routes/admin/posts/edit.$id'
 
 const AdminRouteRoute = AdminRouteRouteImport.update({
@@ -130,6 +133,11 @@ const AdminPostsRouteRoute = AdminPostsRouteRouteImport.update({
   path: '/posts',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const PublicNavSlugRouteRoute = PublicNavSlugRouteRouteImport.update({
+  id: '/$navSlug',
+  path: '/$navSlug',
+  getParentRoute: () => PublicRouteRoute,
+} as any)
 const AdminTagsIndexRoute = AdminTagsIndexRouteImport.update({
   id: '/tags/',
   path: '/tags/',
@@ -160,6 +168,11 @@ const AdminCommentsIndexRoute = AdminCommentsIndexRouteImport.update({
   path: '/comments/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const PublicNavSlugIndexRoute = PublicNavSlugIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PublicNavSlugRouteRoute,
+} as any)
 const PublicPostSlugRoute = PublicPostSlugRouteImport.update({
   id: '/post/$slug',
   path: '/post/$slug',
@@ -170,6 +183,11 @@ const PublicNavNavIdRoute = PublicNavNavIdRouteImport.update({
   path: '/nav/$navId',
   getParentRoute: () => PublicRouteRoute,
 } as any)
+const PublicNavSlugPostSlugRoute = PublicNavSlugPostSlugRouteImport.update({
+  id: '/$postSlug',
+  path: '/$postSlug',
+  getParentRoute: () => PublicNavSlugRouteRoute,
+} as any)
 const AdminPostsEditIdRoute = AdminPostsEditIdRouteImport.update({
   id: '/edit/$id',
   path: '/edit/$id',
@@ -179,6 +197,7 @@ const AdminPostsEditIdRoute = AdminPostsEditIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
+  '/$navSlug': typeof PublicNavSlugRouteRouteWithChildren
   '/admin/posts': typeof AdminPostsRouteRouteWithChildren
   '/forgot-password': typeof AuthForgotPasswordRoute
   '/login': typeof AuthLoginRoute
@@ -193,8 +212,10 @@ export interface FileRoutesByFullPath {
   '/submit-friend-link': typeof UserSubmitFriendLinkRoute
   '/oauth/consent': typeof OauthConsentRoute
   '/admin/': typeof AdminIndexRoute
+  '/$navSlug/$postSlug': typeof PublicNavSlugPostSlugRoute
   '/nav/$navId': typeof PublicNavNavIdRoute
   '/post/$slug': typeof PublicPostSlugRoute
+  '/$navSlug/': typeof PublicNavSlugIndexRoute
   '/admin/comments/': typeof AdminCommentsIndexRoute
   '/admin/friend-links/': typeof AdminFriendLinksIndexRoute
   '/admin/media/': typeof AdminMediaIndexRoute
@@ -218,8 +239,10 @@ export interface FileRoutesByTo {
   '/submit-friend-link': typeof UserSubmitFriendLinkRoute
   '/oauth/consent': typeof OauthConsentRoute
   '/admin': typeof AdminIndexRoute
+  '/$navSlug/$postSlug': typeof PublicNavSlugPostSlugRoute
   '/nav/$navId': typeof PublicNavNavIdRoute
   '/post/$slug': typeof PublicPostSlugRoute
+  '/$navSlug': typeof PublicNavSlugIndexRoute
   '/admin/comments': typeof AdminCommentsIndexRoute
   '/admin/friend-links': typeof AdminFriendLinksIndexRoute
   '/admin/media': typeof AdminMediaIndexRoute
@@ -234,6 +257,7 @@ export interface FileRoutesById {
   '/_public': typeof PublicRouteRouteWithChildren
   '/_user': typeof UserRouteRouteWithChildren
   '/admin': typeof AdminRouteRouteWithChildren
+  '/_public/$navSlug': typeof PublicNavSlugRouteRouteWithChildren
   '/admin/posts': typeof AdminPostsRouteRouteWithChildren
   '/_auth/forgot-password': typeof AuthForgotPasswordRoute
   '/_auth/login': typeof AuthLoginRoute
@@ -249,8 +273,10 @@ export interface FileRoutesById {
   '/oauth/consent': typeof OauthConsentRoute
   '/_public/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
+  '/_public/$navSlug/$postSlug': typeof PublicNavSlugPostSlugRoute
   '/_public/nav/$navId': typeof PublicNavNavIdRoute
   '/_public/post/$slug': typeof PublicPostSlugRoute
+  '/_public/$navSlug/': typeof PublicNavSlugIndexRoute
   '/admin/comments/': typeof AdminCommentsIndexRoute
   '/admin/friend-links/': typeof AdminFriendLinksIndexRoute
   '/admin/media/': typeof AdminMediaIndexRoute
@@ -264,6 +290,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/$navSlug'
     | '/admin/posts'
     | '/forgot-password'
     | '/login'
@@ -278,8 +305,10 @@ export interface FileRouteTypes {
     | '/submit-friend-link'
     | '/oauth/consent'
     | '/admin/'
+    | '/$navSlug/$postSlug'
     | '/nav/$navId'
     | '/post/$slug'
+    | '/$navSlug/'
     | '/admin/comments/'
     | '/admin/friend-links/'
     | '/admin/media/'
@@ -303,8 +332,10 @@ export interface FileRouteTypes {
     | '/submit-friend-link'
     | '/oauth/consent'
     | '/admin'
+    | '/$navSlug/$postSlug'
     | '/nav/$navId'
     | '/post/$slug'
+    | '/$navSlug'
     | '/admin/comments'
     | '/admin/friend-links'
     | '/admin/media'
@@ -318,6 +349,7 @@ export interface FileRouteTypes {
     | '/_public'
     | '/_user'
     | '/admin'
+    | '/_public/$navSlug'
     | '/admin/posts'
     | '/_auth/forgot-password'
     | '/_auth/login'
@@ -333,8 +365,10 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/_public/'
     | '/admin/'
+    | '/_public/$navSlug/$postSlug'
     | '/_public/nav/$navId'
     | '/_public/post/$slug'
+    | '/_public/$navSlug/'
     | '/admin/comments/'
     | '/admin/friend-links/'
     | '/admin/media/'
@@ -487,6 +521,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPostsRouteRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/_public/$navSlug': {
+      id: '/_public/$navSlug'
+      path: '/$navSlug'
+      fullPath: '/$navSlug'
+      preLoaderRoute: typeof PublicNavSlugRouteRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
     '/admin/tags/': {
       id: '/admin/tags/'
       path: '/tags'
@@ -529,6 +570,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCommentsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/_public/$navSlug/': {
+      id: '/_public/$navSlug/'
+      path: '/'
+      fullPath: '/$navSlug/'
+      preLoaderRoute: typeof PublicNavSlugIndexRouteImport
+      parentRoute: typeof PublicNavSlugRouteRoute
+    }
     '/_public/post/$slug': {
       id: '/_public/post/$slug'
       path: '/post/$slug'
@@ -542,6 +590,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/nav/$navId'
       preLoaderRoute: typeof PublicNavNavIdRouteImport
       parentRoute: typeof PublicRouteRoute
+    }
+    '/_public/$navSlug/$postSlug': {
+      id: '/_public/$navSlug/$postSlug'
+      path: '/$postSlug'
+      fullPath: '/$navSlug/$postSlug'
+      preLoaderRoute: typeof PublicNavSlugPostSlugRouteImport
+      parentRoute: typeof PublicNavSlugRouteRoute
     }
     '/admin/posts/edit/$id': {
       id: '/admin/posts/edit/$id'
@@ -573,7 +628,21 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
   AuthRouteRouteChildren,
 )
 
+interface PublicNavSlugRouteRouteChildren {
+  PublicNavSlugPostSlugRoute: typeof PublicNavSlugPostSlugRoute
+  PublicNavSlugIndexRoute: typeof PublicNavSlugIndexRoute
+}
+
+const PublicNavSlugRouteRouteChildren: PublicNavSlugRouteRouteChildren = {
+  PublicNavSlugPostSlugRoute: PublicNavSlugPostSlugRoute,
+  PublicNavSlugIndexRoute: PublicNavSlugIndexRoute,
+}
+
+const PublicNavSlugRouteRouteWithChildren =
+  PublicNavSlugRouteRoute._addFileChildren(PublicNavSlugRouteRouteChildren)
+
 interface PublicRouteRouteChildren {
+  PublicNavSlugRouteRoute: typeof PublicNavSlugRouteRouteWithChildren
   PublicFriendLinksRoute: typeof PublicFriendLinksRoute
   PublicPostsRoute: typeof PublicPostsRoute
   PublicSearchRoute: typeof PublicSearchRoute
@@ -584,6 +653,7 @@ interface PublicRouteRouteChildren {
 }
 
 const PublicRouteRouteChildren: PublicRouteRouteChildren = {
+  PublicNavSlugRouteRoute: PublicNavSlugRouteRouteWithChildren,
   PublicFriendLinksRoute: PublicFriendLinksRoute,
   PublicPostsRoute: PublicPostsRoute,
   PublicSearchRoute: PublicSearchRoute,

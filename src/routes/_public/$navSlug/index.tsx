@@ -1,8 +1,8 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { useSiteTheme } from "@/features/theme/theme-context";
-import { siteDomainQuery } from "@/features/config/queries";
+import { siteConfigQuery, siteDomainQuery } from "@/features/config/queries";
 import { postsInfiniteQueryOptions } from "@/features/posts/queries";
 import { buildCanonicalUrl, canonicalLink } from "@/lib/seo";
 import { getLocale } from "@/paraglide/runtime";
@@ -12,8 +12,15 @@ const postsPerPage = 12;
 export const Route = createFileRoute("/_public/$navSlug/")({
   component: RouteComponent,
   pendingComponent: NavPageSkeleton,
-  loader: async ({ context }) => {
-    const { navId, navItem } = context as { navId: string; navItem: { label: Record<string, string>; description?: Record<string, string>; to: string } };
+  loader: async ({ context, params }) => {
+    const siteConfig =
+      await context.queryClient.ensureQueryData(siteConfigQuery);
+    const navItem = (siteConfig.navItems ?? []).find(
+      (item) => item.to.replace(/^\//, "") === params.navSlug,
+    );
+    if (!navItem) throw notFound();
+
+    const navId = navItem.id;
     const [domain] = await Promise.all([
       context.queryClient.ensureQueryData(siteDomainQuery),
       context.queryClient.prefetchInfiniteQuery(
@@ -27,6 +34,8 @@ export const Route = createFileRoute("/_public/$navSlug/")({
       navItem.description?.[locale as "zh" | "en"] ?? "";
 
     return {
+      navId,
+      navItem,
       title,
       description,
       canonicalHref: buildCanonicalUrl(domain, navItem.to),
@@ -46,9 +55,7 @@ export const Route = createFileRoute("/_public/$navSlug/")({
 });
 
 function RouteComponent() {
-  const { navId, navItem } = Route.useLoaderData({
-    from: "/_public/$navSlug",
-  });
+  const { navId, navItem } = Route.useLoaderData();
   const theme = useSiteTheme();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =

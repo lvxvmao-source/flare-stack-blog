@@ -5,6 +5,7 @@
 export const ROUTE_REGEXPS: Array<RegExp> = [
   /^\/$/,
   /^\/admin\/?$/,
+  /^\/[^/]+\/?$/,
   /^\/admin\/posts\/?$/,
   /^\/forgot-password\/?$/,
   /^\/login\/?$/,
@@ -18,6 +19,8 @@ export const ROUTE_REGEXPS: Array<RegExp> = [
   /^\/profile\/?$/,
   /^\/submit-friend-link\/?$/,
   /^\/oauth\/consent\/?$/,
+  /^\/[^/]+\/[^/]+\/?$/,
+  /^\/nav\/[^/]+\/?$/,
   /^\/post\/[^/]+\/?$/,
   /^\/admin\/comments\/?$/,
   /^\/admin\/friend-links\/?$/,
