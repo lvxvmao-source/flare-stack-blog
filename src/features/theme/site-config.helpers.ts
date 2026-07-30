@@ -1,8 +1,11 @@
-import type { SiteConfig } from "@/features/config/site-config.schema";
+import type { SiteConfig, ThemeName } from "@/features/config/site-config.schema";
 
 // if the theme doesn't have a preload image, return an empty array
-export function getThemePreloadImages(siteConfig: SiteConfig): Array<string> {
-  switch (__THEME_NAME__) {
+export function getThemePreloadImages(
+  siteConfig: SiteConfig,
+  themeName: ThemeName,
+): Array<string> {
+  switch (themeName) {
     case "fuwari":
       return siteConfig.theme.fuwari.homeBg
         ? [siteConfig.theme.fuwari.homeBg]
@@ -18,7 +21,7 @@ export function getThemePreloadImages(siteConfig: SiteConfig): Array<string> {
         siteConfig.theme.default.background?.globalImage,
       ].filter((image): image is string => Boolean(image));
     default:
-      __THEME_NAME__ satisfies never;
+      themeName satisfies never;
       return [];
   }
 }

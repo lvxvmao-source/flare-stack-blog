@@ -1131,7 +1131,7 @@
   "settings_site_title": "个性化配置",
   "settings_site_desc": "配置站点与当前主题的个性化选项。",
   "settings_site_section_theme_title": "主题",
-  "settings_site_section_theme_desc": "当前构建主题：{theme}。这里只展示当前主题会用到的配置。",
+  "settings_site_section_theme_desc": "前端使用的主题样式。切换后即时生效，无需重新部署。",
   "settings_site_section_basic_title": "基础信息",
   "settings_site_section_basic_desc": "配置站点标题、作者、描述等基础信息。",
   "settings_site_section_social_title": "社交链接",

@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import theme from "@theme";
 import { z } from "zod";
+import { useSiteTheme } from "@/features/theme/theme-context";
 import { useVerifyEmail } from "@/features/auth/hooks";
 import { m } from "@/paraglide/messages";
 
@@ -25,6 +25,7 @@ export const Route = createFileRoute("/_auth/verify-email")({
 });
 
 function RouteComponent() {
+  const theme = useSiteTheme();
   const { error } = Route.useSearch();
   const { status } = useVerifyEmail({ error });
 

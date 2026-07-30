@@ -1,8 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useNavigate, useRouteContext } from "@tanstack/react-router";
-import theme from "@theme";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { useSiteTheme } from "@/features/theme/theme-context";
 import { ErrorPage } from "@/components/common/error-page";
 import { AUTH_KEYS, sessionQuery } from "@/features/auth/queries";
 import { authClient } from "@/lib/auth/auth.client";
@@ -25,6 +25,7 @@ export const Route = createFileRoute("/_user")({
 });
 
 function UserLayout() {
+  const theme = useSiteTheme();
   const { session } = Route.useLoaderData();
   const navigate = useNavigate();
   const { isPending: isSessionPending } = authClient.useSession();

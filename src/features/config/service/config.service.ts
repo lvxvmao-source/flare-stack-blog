@@ -155,6 +155,7 @@ export function resolveSiteConfig(
       },
     },
     navItems: config?.site?.navItems ?? blogConfig.navItems,
+    themeName: config?.site?.themeName ?? blogConfig.themeName,
   });
 }
 

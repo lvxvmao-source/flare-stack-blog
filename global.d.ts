@@ -1,5 +1,4 @@
 import type { OAuthHelpers } from "@cloudflare/workers-oauth-provider";
-import type { ThemeName, ThemeRouterConfig } from "@/features/theme/registry";
 import type {
   Auth as AuthType,
   Session as SessionType,
@@ -76,6 +75,4 @@ declare global {
   };
 
   const __APP_VERSION__: string;
-  const __THEME_NAME__: ThemeName;
-  const __THEME_CONFIG__: ThemeRouterConfig;
 }

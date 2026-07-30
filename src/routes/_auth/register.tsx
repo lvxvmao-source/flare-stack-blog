@@ -3,7 +3,7 @@ import {
   redirect,
   useRouteContext,
 } from "@tanstack/react-router";
-import theme from "@theme";
+import { useSiteTheme } from "@/features/theme/theme-context";
 import { Turnstile, useTurnstile } from "@/components/common/turnstile";
 import { useRegisterForm } from "@/features/auth/hooks";
 import { m } from "@/paraglide/messages";
@@ -25,6 +25,7 @@ export const Route = createFileRoute("/_auth/register")({
 });
 
 function RouteComponent() {
+  const theme = useSiteTheme();
   const { isEmailConfigured } = useRouteContext({ from: "/_auth" });
   const {
     isPending: turnstilePending,

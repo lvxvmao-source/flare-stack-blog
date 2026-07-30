@@ -1,13 +1,13 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import theme from "@theme";
 import { useMemo } from "react";
+import { useSiteTheme } from "@/features/theme/theme-context";
 import { siteConfigQuery, siteDomainQuery } from "@/features/config/queries";
 import { postsInfiniteQueryOptions } from "@/features/posts/queries";
 import { getLocale } from "@/paraglide/runtime";
 import { buildCanonicalUrl, canonicalLink } from "@/lib/seo";
 
-const { postsPerPage } = theme.config.posts;
+const postsPerPage = 12;
 
 export const Route = createFileRoute("/_public/nav/$navId")({
   component: RouteComponent,
@@ -58,6 +58,7 @@ export const Route = createFileRoute("/_public/nav/$navId")({
 function RouteComponent() {
   const { navId } = Route.useParams();
   const loaderData = Route.useLoaderData();
+  const theme = useSiteTheme();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useSuspenseInfiniteQuery(
@@ -81,5 +82,6 @@ function RouteComponent() {
 }
 
 function NavPageSkeleton() {
+  const theme = useSiteTheme();
   return <theme.NavPageSkeleton />;
 }

@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import theme from "@theme";
 import { z } from "zod";
+import { useSiteTheme } from "@/features/theme/theme-context";
 import { useResetPasswordForm } from "@/features/auth/hooks";
 import { m } from "@/paraglide/messages";
 
@@ -25,6 +25,7 @@ export const Route = createFileRoute("/_auth/reset-link")({
 });
 
 function RouteComponent() {
+  const theme = useSiteTheme();
   const { token, error } = Route.useSearch();
   const resetPasswordForm = useResetPasswordForm({ token });
 

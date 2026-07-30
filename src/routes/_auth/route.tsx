@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
-import theme from "@theme";
+import { useSiteTheme } from "@/features/theme/theme-context";
 import { emailConfiguredQuery, sessionQuery } from "@/features/auth/queries";
 import { useNavigateBack } from "@/hooks/use-navigate-back";
 import { CACHE_CONTROL } from "@/lib/constants";
@@ -24,6 +24,7 @@ export const Route = createFileRoute("/_auth")({
 
 function RouteComponent() {
   const navigateBack = useNavigateBack();
+  const theme = useSiteTheme();
   return (
     <>
       <theme.AuthLayout onBack={navigateBack}>

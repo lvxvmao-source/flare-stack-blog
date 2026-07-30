@@ -1,10 +1,10 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useNavigate, useRouteContext } from "@tanstack/react-router";
-import theme from "@theme";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { AUTH_KEYS } from "@/features/auth/queries";
 import { getThemePreloadImages } from "@/features/theme/site-config.helpers";
+import { useSiteTheme, type ThemeName } from "@/features/theme/theme-context";
 import { authClient } from "@/lib/auth/auth.client";
 import { getLogoutAuthErrorMessage } from "@/lib/auth/auth-errors";
 import { CACHE_CONTROL } from "@/lib/constants";
@@ -13,9 +13,12 @@ import { getLocale } from "@/paraglide/runtime";
 import type { NavOption } from "@/features/theme/contract/layouts";
 
 export const Route = createFileRoute("/_public")({
-  loader: ({ context }) => ({
-    preloadImages: getThemePreloadImages(context.siteConfig),
-  }),
+  loader: ({ context }) => {
+    const themeName = (context.siteConfig?.themeName ?? "default") as ThemeName;
+    return {
+      preloadImages: getThemePreloadImages(context.siteConfig, themeName),
+    };
+  },
   component: PublicLayout,
   headers: () => {
     return CACHE_CONTROL.public;
@@ -34,6 +37,7 @@ function PublicLayout() {
   const { data: session, isPending: isSessionPending } =
     authClient.useSession();
   const queryClient = useQueryClient();
+  const theme = useSiteTheme();
 
   const { siteConfig } = useRouteContext({ from: "__root__" });
   const locale = getLocale();

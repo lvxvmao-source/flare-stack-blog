@@ -5,7 +5,7 @@ export type ThemeName = (typeof themeNames)[number];
 
 /**
  * 路由级主题配置（viewTransition / pendingMs）
- * 通过 vite.config.ts 的 `define` 注入为全局常量 __THEME_CONFIG__
+ * 主题通过 context 在运行时动态切换，不再使用构建时常量。
  *
  * 注意：这与 contract/config.ts 中的 ThemeConfig（数据获取参数）是不同的接口。
  */

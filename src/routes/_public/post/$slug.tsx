@@ -1,8 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import theme from "@theme";
 import { useEffect } from "react";
 import { z } from "zod";
+import { useSiteTheme } from "@/features/theme/theme-context";
 import { siteConfigQuery, siteDomainQuery } from "@/features/config/queries";
 import { recordPageViewFn } from "@/features/pageview/api/pageview.api";
 import { postBySlugQuery, relatedPostsQuery } from "@/features/posts/queries";
@@ -11,6 +11,8 @@ import {
   buildCanonicalUrl,
   canonicalLink,
 } from "@/lib/seo";
+
+const relatedPostsLimit = 11;
 
 const searchSchema = z.object({
   highlightCommentId: z.coerce.number().optional(),
@@ -28,7 +30,7 @@ export const Route = createFileRoute("/_public/post/$slug")({
     ]);
 
     void context.queryClient.prefetchQuery(
-      relatedPostsQuery(params.slug, theme.config.post.relatedPostsLimit),
+      relatedPostsQuery(params.slug, relatedPostsLimit),
     );
 
     if (!post) throw notFound();
@@ -70,13 +72,19 @@ export const Route = createFileRoute("/_public/post/$slug")({
         : [],
     };
   },
-  pendingComponent: () => <theme.PostPageSkeleton />,
-  pendingMs: __THEME_CONFIG__.pendingMs,
+  pendingComponent: PostPageSkeleton,
+  pendingMs: 500,
 });
+
+function PostPageSkeleton() {
+  const theme = useSiteTheme();
+  return <theme.PostPageSkeleton />;
+}
 
 function PostPageRoute() {
   const { slug } = Route.useParams();
   const { data: post } = useSuspenseQuery(postBySlugQuery(slug));
+  const theme = useSiteTheme();
 
   useEffect(() => {
     if (!post?.id) return;

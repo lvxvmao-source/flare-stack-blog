@@ -7,9 +7,13 @@ import {
   useRouteContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import theme from "@theme";
 import { ThemeProvider } from "@/components/common/theme-provider";
 import { siteConfigQuery } from "@/features/config/queries";
+import {
+  SiteThemeProvider,
+  themeMap,
+  type ThemeName,
+} from "@/features/theme/theme-context";
 import TanStackQueryDevtools from "@/integrations/tanstack-query/devtools";
 import { clientEnv } from "@/lib/env/client.env";
 import { getLocale } from "@/paraglide/runtime";
@@ -26,7 +30,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     return { siteConfig };
   },
   loader: async ({ context }) => {
-    return { siteConfig: context.siteConfig };
+    const themeName = (context.siteConfig?.themeName ?? "default") as ThemeName;
+    return { siteConfig: context.siteConfig, themeName };
   },
   head: ({ loaderData }) => {
     const env = clientEnv();
@@ -114,18 +119,24 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 function RootDocument({ children }: { children: React.ReactNode }) {
   const locale = getLocale();
   const { siteConfig } = useRouteContext({ from: "__root__" });
+  const themeName = (siteConfig?.themeName ?? "default") as ThemeName;
+  const currentTheme = themeMap[themeName] ?? themeMap.default;
 
   return (
     <html
       lang={locale}
       suppressHydrationWarning
-      style={theme.getDocumentStyle?.(siteConfig)}
+      style={currentTheme.getDocumentStyle?.(siteConfig)}
     >
       <head>
         <HeadContent />
       </head>
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <SiteThemeProvider themeName={themeName}>
+            {children}
+          </SiteThemeProvider>
+        </ThemeProvider>
         <TanStackDevtools
           config={{
             position: "bottom-right",

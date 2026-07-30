@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import theme from "@theme";
+import { useSiteTheme } from "@/features/theme/theme-context";
 import { Turnstile, useTurnstile } from "@/components/common/turnstile";
 import { useForgotPasswordForm } from "@/features/auth/hooks";
 import { m } from "@/paraglide/messages";
@@ -21,6 +21,7 @@ export const Route = createFileRoute("/_auth/forgot-password")({
 });
 
 function RouteComponent() {
+  const theme = useSiteTheme();
   const {
     isPending: turnstilePending,
     token: turnstileToken,

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import theme from "@theme";
+import { useSiteTheme } from "@/features/theme/theme-context";
 import { useFriendLinkSubmitForm } from "@/features/friend-links/hooks/use-friend-link-submit-form";
 import { myFriendLinksQuery } from "@/features/friend-links/queries";
 import { authClient } from "@/lib/auth/auth.client";
@@ -24,6 +24,7 @@ export const Route = createFileRoute("/_user/submit-friend-link")({
 });
 
 function SubmitFriendLinkRoute() {
+  const theme = useSiteTheme();
   const { data: session } = authClient.useSession();
   const user = session?.user;
   const { data: myLinks } = useQuery(myFriendLinksQuery());

@@ -3,8 +3,8 @@ import {
   useLocation,
   useRouteContext,
 } from "@tanstack/react-router";
-import theme from "@theme";
 import { z } from "zod";
+import { useSiteTheme } from "@/features/theme/theme-context";
 import { Turnstile, useTurnstile } from "@/components/common/turnstile";
 import { useLoginForm, useSocialLogin } from "@/features/auth/hooks";
 import { m } from "@/paraglide/messages";
@@ -24,6 +24,7 @@ export const Route = createFileRoute("/_auth/login")({
 });
 
 function RouteComponent() {
+  const theme = useSiteTheme();
   const { isEmailConfigured } = useRouteContext({ from: "/_auth" });
   const search = Route.useSearch();
   const location = useLocation();

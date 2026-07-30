@@ -8,22 +8,14 @@ import { DefaultThemeSettings } from "@/features/config/components/themes/defaul
 import { FuwariThemeSettings } from "@/features/config/components/themes/fuwari-theme-settings";
 import { AcgThemeSettings } from "@/features/config/components/themes/acg-theme-settings";
 import type { SystemConfig } from "@/features/config/config.schema";
+import { THEME_NAMES, type ThemeName } from "@/features/theme/theme-context";
 import { m } from "@/paraglide/messages";
 
-function ThemeSettingsContent() {
-  switch (__THEME_NAME__) {
-    case "default":
-      return <DefaultThemeSettings />;
-    case "fuwari":
-      return <FuwariThemeSettings />;
-    case "acg":
-      return <AcgThemeSettings />;
-    default: {
-      __THEME_NAME__ satisfies never;
-      return null;
-    }
-  }
-}
+const themeLabels: Record<ThemeName, string> = {
+  default: "Default",
+  fuwari: "Fuwari",
+  acg: "ACG",
+};
 
 function SectionShell({
   title,
@@ -48,11 +40,15 @@ function SectionShell({
 export function SiteSettingsSection() {
   const {
     register,
+    watch,
+    setValue,
     formState: { errors },
   } = useFormContext<SystemConfig>();
 
   const getInputClassName = (error?: string) =>
     error ? "border-destructive focus-visible:border-destructive" : undefined;
+
+  const activeThemeName = watch("site.themeName") ?? "default";
 
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
@@ -157,13 +153,79 @@ export function SiteSettingsSection() {
         />
       </SectionShell>
 
+      {/* Theme Section — active theme selector + expandable panels for all themes */}
       <SectionShell
         title={m.settings_site_section_theme_title()}
-        description={m.settings_site_section_theme_desc({
-          theme: __THEME_NAME__,
-        })}
+        description={m.settings_site_section_theme_desc()}
       >
-        <ThemeSettingsContent />
+        <div className="md:col-span-2 space-y-6">
+          {/* Active Theme Selector */}
+          <div className="flex items-center gap-4 p-4 rounded-xl bg-muted/30 border border-border/20">
+            <span className="text-sm font-medium text-foreground whitespace-nowrap">
+              Active Theme
+            </span>
+            <select
+              value={activeThemeName}
+              onChange={(e) =>
+                setValue("site.themeName", e.target.value as ThemeName, {
+                  shouldDirty: true,
+                })
+              }
+              className="h-10 rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring"
+            >
+              {THEME_NAMES.map((name) => (
+                <option key={name} value={name}>
+                  {themeLabels[name]}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Default Theme Settings */}
+          <details className="group border border-border/20 rounded-xl overflow-hidden">
+            <summary className="flex items-center justify-between px-6 py-4 cursor-pointer hover:bg-muted/20 transition-colors list-none">
+              <span className="text-sm font-medium text-foreground">
+                Default Theme Settings
+              </span>
+              <span className="text-xs text-muted-foreground transition-transform group-open:rotate-90">
+                ▶
+              </span>
+            </summary>
+            <div className="p-6 border-t border-border/20">
+              <DefaultThemeSettings />
+            </div>
+          </details>
+
+          {/* Fuwari Theme Settings */}
+          <details className="group border border-border/20 rounded-xl overflow-hidden">
+            <summary className="flex items-center justify-between px-6 py-4 cursor-pointer hover:bg-muted/20 transition-colors list-none">
+              <span className="text-sm font-medium text-foreground">
+                Fuwari Theme Settings
+              </span>
+              <span className="text-xs text-muted-foreground transition-transform group-open:rotate-90">
+                ▶
+              </span>
+            </summary>
+            <div className="p-6 border-t border-border/20">
+              <FuwariThemeSettings />
+            </div>
+          </details>
+
+          {/* ACG Theme Settings */}
+          <details className="group border border-border/20 rounded-xl overflow-hidden">
+            <summary className="flex items-center justify-between px-6 py-4 cursor-pointer hover:bg-muted/20 transition-colors list-none">
+              <span className="text-sm font-medium text-foreground">
+                ACG Theme Settings
+              </span>
+              <span className="text-xs text-muted-foreground transition-transform group-open:rotate-90">
+                ▶
+              </span>
+            </summary>
+            <div className="p-6 border-t border-border/20">
+              <AcgThemeSettings />
+            </div>
+          </details>
+        </div>
       </SectionShell>
     </div>
   );

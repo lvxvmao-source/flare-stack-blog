@@ -1,8 +1,8 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import theme from "@theme";
 import { useEffect, useMemo, useState } from "react";
 import { z } from "zod";
+import { useSiteTheme } from "@/features/theme/theme-context";
 import {
   searchDocsQueryOptions,
   searchMetaQuery,
@@ -36,6 +36,7 @@ export const Route = createFileRoute("/_public/search")({
 function SearchRoute() {
   const search = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
+  const theme = useSiteTheme();
 
   const [query, setQuery] = useState(search.q || "");
 

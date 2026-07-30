@@ -1,4 +1,3 @@
-import "./styles/index.css";
 import Toaster from "@/components/ui/toaster";
 import type { SiteConfig } from "@/features/config/site-config.schema";
 import type { ThemeComponents } from "@/features/theme/contract/components";

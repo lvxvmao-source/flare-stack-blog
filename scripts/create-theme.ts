@@ -259,7 +259,9 @@ export default {
   console.log(
     "  1. 在 src/features/theme/registry.ts 中注册新主题名并配置路由行为（详见 docs/theme-guide.md）",
   );
-  console.log(`  2. 在 .env 中设置 THEME=${name} 并启动开发`);
+  console.log(
+    `  2. 在 theme-context.tsx 中注册新主题，启动开发后在后台设置页选择该主题`,
+  );
 }
 
 async function main() {

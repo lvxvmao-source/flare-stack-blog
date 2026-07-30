@@ -344,6 +344,9 @@ export const fuwariThemeSiteConfigSchema = createFuwariThemeSiteConfigSchema();
 export const fuwariThemeSiteConfigInputSchema =
   createFuwariThemeSiteConfigInputSchema();
 
+export const themeNameEnum = z.enum(["default", "fuwari", "acg"]);
+export type ThemeName = z.infer<typeof themeNameEnum>;
+
 export const FullSiteConfigSchema = z.object({
   title: createSiteTextSchema(120),
   author: createSiteTextSchema(80),
@@ -362,6 +365,7 @@ export const FullSiteConfigSchema = z.object({
     fuwari: fuwariThemeSiteConfigSchema,
     acg: acgThemeSiteConfigSchema,
   }),
+  themeName: themeNameEnum.default("default"),
   navItems: z.array(NavItemSchema).optional(),
 });
 
@@ -389,6 +393,7 @@ export function createSiteConfigInputFormSchema(messages: Messages) {
         acg: createAcgThemeSiteConfigInputFormSchema(messages).optional(),
       })
       .optional(),
+    themeName: themeNameEnum.optional(),
     navItems: z.array(createNavItemSchema(messages)).optional(),
   });
 }
@@ -415,6 +420,7 @@ export const SiteConfigInputSchema = z.object({
       acg: acgThemeSiteConfigInputSchema.optional(),
     })
     .optional(),
+  themeName: themeNameEnum.optional(),
   navItems: z.array(NavItemSchema).optional(),
 });
 

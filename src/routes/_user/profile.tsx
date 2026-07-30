@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import theme from "@theme";
+import { useSiteTheme } from "@/features/theme/theme-context";
 import { userHasPasswordFn } from "@/features/auth/api/auth.api";
 import {
   useLogout,
@@ -30,6 +30,7 @@ export const Route = createFileRoute("/_user/profile")({
 });
 
 function ProfilePage() {
+  const theme = useSiteTheme();
   const { data: session } = authClient.useSession();
   const user = session?.user;
 

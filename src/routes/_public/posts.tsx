@@ -3,9 +3,9 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import theme from "@theme";
 import { useMemo } from "react";
 import { z } from "zod";
+import { useSiteTheme } from "@/features/theme/theme-context";
 import { siteConfigQuery, siteDomainQuery } from "@/features/config/queries";
 import { postsInfiniteQueryOptions } from "@/features/posts/queries";
 import { PostTagNameSchema } from "@/features/posts/schema/posts.schema";
@@ -14,7 +14,7 @@ import { tagsQueryOptions } from "@/features/tags/queries";
 import { buildCanonicalUrl, canonicalLink } from "@/lib/seo";
 import { m } from "@/paraglide/messages";
 
-const { postsPerPage } = theme.config.posts;
+const postsPerPage = 12;
 
 export const Route = createFileRoute("/_public/posts")({
   validateSearch: z.object({
@@ -62,6 +62,7 @@ export const Route = createFileRoute("/_public/posts")({
 function RouteComponent() {
   const { tagName } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
+  const theme = useSiteTheme();
 
   const { data: tags } = useSuspenseQuery(tagsQueryOptions);
 
@@ -95,5 +96,6 @@ function RouteComponent() {
 }
 
 function PostsSkeleton() {
+  const theme = useSiteTheme();
   return <theme.PostsPageSkeleton />;
 }

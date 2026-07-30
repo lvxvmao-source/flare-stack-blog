@@ -31,5 +31,6 @@ export const blogConfig = {
       navBarName: "导航栏名称",
     },
   },
+  themeName: "default" as const,
   navItems: [],
 } as const satisfies SiteConfig;

@@ -1,4 +1,3 @@
-import "./styles/index.css";
 import type { ThemeComponents } from "@/features/theme/contract/components";
 import { Toaster } from "./components/toaster";
 import { config } from "./config";
