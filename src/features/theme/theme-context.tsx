@@ -3,7 +3,6 @@ import defaultTheme from "@/features/theme/themes/default";
 import fuwariTheme from "@/features/theme/themes/fuwari";
 import acgTheme from "@/features/theme/themes/acg";
 import type { ThemeComponents } from "@/features/theme/contract/components";
-import type { ThemeRouterConfig } from "@/features/theme/registry";
 
 export type ThemeName = "default" | "fuwari" | "acg";
 
@@ -25,13 +24,6 @@ const themeCSSImports: Record<ThemeName, () => Promise<void>> = {
   acg: async () => {
     await import("./themes/acg/styles/index.css");
   },
-};
-
-/** Route-level config constants – use in loaders or module-level code that runs before React hydration. */
-export const themeRouteConfigs: Record<ThemeName, ThemeRouterConfig> = {
-  default: defaultTheme.config,
-  fuwari: fuwariTheme.config,
-  acg: acgTheme.config,
 };
 
 export const themeHomeConfigs = {
