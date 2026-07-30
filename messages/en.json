@@ -1207,7 +1207,7 @@
   "settings_site_validation_transition_range": "Value must be between 0 and 1500",
   "settings_asset_validation_file_required": "Please select a file to upload",
   "settings_asset_validation_path_required": "Asset path is required",
-  "settings_asset_validation_path_invalid": "Asset path must start with favicon/ or themes/default/ or themes/fuwari/",
+  "settings_asset_validation_path_invalid": "Asset path must start with favicon/ or themes/default/ or themes/fuwari/ or themes/acg/",
   "settings_asset_validation_file_too_large": "File size must be less than 2MB",
   "settings_asset_validation_file_invalid_type": "Only image files (JPEG, PNG, WebP, GIF, SVG, ICO) are supported",
   "settings_asset_upload_success": "Asset uploaded",

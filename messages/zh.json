@@ -1199,7 +1199,7 @@
   "settings_site_validation_transition_range": "取值范围应在 0 到 1500 之间",
   "settings_asset_validation_file_required": "请选择要上传的文件",
   "settings_asset_validation_path_required": "资源路径不能为空",
-  "settings_asset_validation_path_invalid": "资源路径必须以 favicon/、themes/default/ 或 themes/fuwari/ 开头",
+  "settings_asset_validation_path_invalid": "资源路径必须以 favicon/、themes/default/、themes/fuwari/ 或 themes/acg/ 开头",
   "settings_asset_validation_file_too_large": "文件大小不能超过 2MB",
   "settings_asset_validation_file_invalid_type": "仅支持图片格式（JPEG、PNG、WebP、GIF、SVG、ICO）",
   "settings_asset_upload_success": "资源已上传",

@@ -283,6 +283,28 @@ function createDefaultThemeSiteConfigInputFormSchema(messages: Messages) {
   });
 }
 
+function createAcgThemeSiteConfigSchema() {
+  return z.object({
+    navBarName: createSiteTextSchema(60),
+    background: createDefaultThemeBackgroundSchema().optional(),
+  });
+}
+
+function createAcgThemeSiteConfigInputSchema() {
+  return z.object({
+    navBarName: createSiteTextSchema(60).optional(),
+    background: createDefaultThemeBackgroundInputSchema().optional(),
+  });
+}
+
+function createAcgThemeSiteConfigInputFormSchema(messages: Messages) {
+  return z.object({
+    navBarName: createSiteTextFormSchema(60, messages).optional(),
+    background:
+      createDefaultThemeBackgroundInputFormSchema(messages).optional(),
+  });
+}
+
 function createFuwariThemeSiteConfigSchema() {
   return z.object({
     homeBg: createBackgroundImageRefSchema(),
@@ -315,6 +337,9 @@ export const defaultThemeSiteConfigSchema =
   createDefaultThemeSiteConfigSchema();
 export const defaultThemeSiteConfigInputSchema =
   createDefaultThemeSiteConfigInputSchema();
+export const acgThemeSiteConfigSchema = createAcgThemeSiteConfigSchema();
+export const acgThemeSiteConfigInputSchema =
+  createAcgThemeSiteConfigInputSchema();
 export const fuwariThemeSiteConfigSchema = createFuwariThemeSiteConfigSchema();
 export const fuwariThemeSiteConfigInputSchema =
   createFuwariThemeSiteConfigInputSchema();
@@ -335,6 +360,7 @@ export const FullSiteConfigSchema = z.object({
   theme: z.object({
     default: defaultThemeSiteConfigSchema,
     fuwari: fuwariThemeSiteConfigSchema,
+    acg: acgThemeSiteConfigSchema,
   }),
   navItems: z.array(NavItemSchema).optional(),
 });
@@ -360,6 +386,7 @@ export function createSiteConfigInputFormSchema(messages: Messages) {
         default:
           createDefaultThemeSiteConfigInputFormSchema(messages).optional(),
         fuwari: createFuwariThemeSiteConfigInputFormSchema(messages).optional(),
+        acg: createAcgThemeSiteConfigInputFormSchema(messages).optional(),
       })
       .optional(),
     navItems: z.array(createNavItemSchema(messages)).optional(),
@@ -385,6 +412,7 @@ export const SiteConfigInputSchema = z.object({
     .object({
       default: defaultThemeSiteConfigInputSchema.optional(),
       fuwari: fuwariThemeSiteConfigInputSchema.optional(),
+      acg: acgThemeSiteConfigInputSchema.optional(),
     })
     .optional(),
   navItems: z.array(NavItemSchema).optional(),
@@ -400,6 +428,10 @@ export type DefaultThemeBackground = z.infer<
 >;
 export type DefaultThemeSiteConfigInput = z.infer<
   typeof defaultThemeSiteConfigInputSchema
+>;
+export type AcgThemeSiteConfig = z.infer<typeof acgThemeSiteConfigSchema>;
+export type AcgThemeSiteConfigInput = z.infer<
+  typeof acgThemeSiteConfigInputSchema
 >;
 export type FuwariThemeSiteConfig = z.infer<typeof fuwariThemeSiteConfigSchema>;
 export type FuwariThemeSiteConfigInput = z.infer<

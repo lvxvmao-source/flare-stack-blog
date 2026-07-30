@@ -7,6 +7,11 @@ export function getThemePreloadImages(siteConfig: SiteConfig): Array<string> {
       return siteConfig.theme.fuwari.homeBg
         ? [siteConfig.theme.fuwari.homeBg]
         : [];
+    case "acg":
+      return [
+        siteConfig.theme.acg.background?.homeImage,
+        siteConfig.theme.acg.background?.globalImage,
+      ].filter((image): image is string => Boolean(image));
     case "default":
       return [
         siteConfig.theme.default.background?.homeImage,

@@ -85,6 +85,7 @@ export function resolveSiteConfig(
   config: SystemConfig | null | undefined,
 ): SiteConfig {
   const configDefaultBackground = config?.site?.theme?.default?.background;
+  const configAcgBackground = config?.site?.theme?.acg?.background;
 
   return FullSiteConfigSchema.parse({
     title: config?.site?.title ?? blogConfig.title,
@@ -120,6 +121,26 @@ export function resolveSiteConfig(
               backdropBlur: configDefaultBackground.backdropBlur ?? 8,
               transitionDuration:
                 configDefaultBackground.transitionDuration ?? 600,
+            }
+          : undefined,
+      },
+      acg: {
+        navBarName:
+          config?.site?.theme?.acg?.navBarName ??
+          blogConfig.theme.acg.navBarName,
+        background: configAcgBackground
+          ? {
+              homeImage: configAcgBackground.homeImage ?? "",
+              globalImage: configAcgBackground.globalImage ?? "",
+              light: {
+                opacity: configAcgBackground.light?.opacity ?? 0.15,
+              },
+              dark: {
+                opacity: configAcgBackground.dark?.opacity ?? 0.1,
+              },
+              backdropBlur: configAcgBackground.backdropBlur ?? 8,
+              transitionDuration:
+                configAcgBackground.transitionDuration ?? 600,
             }
           : undefined,
       },
