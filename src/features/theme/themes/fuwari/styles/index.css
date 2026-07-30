@@ -13,7 +13,7 @@
     --fuwari-radius-large: 1rem;
     --fuwari-content-delay: 150ms;
     --fuwari-hue: 250;
-    --fuwari-page-width: 75rem;
+    --fuwari-page-width: 90rem;
     --fuwari-toc-width: calc((100vw - var(--fuwari-page-width)) / 2 - 1rem);
 
     /* Light mode */

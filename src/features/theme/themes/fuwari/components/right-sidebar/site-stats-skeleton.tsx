@@ -6,7 +6,7 @@ export function SiteStatsSkeleton() {
         {Array.from({ length: 4 }).map((_, i) => (
           <div
             key={i}
-            className="flex flex-col items-center gap-2 p-3 rounded-lg bg-black/5 dark:bg-white/5"
+            className="flex flex-col items-center gap-1 p-2 rounded-lg bg-black/5 dark:bg-white/5"
           >
             <div className="size-[18px] rounded bg-black/10 dark:bg-white/10" />
             <div className="h-6 w-10 rounded bg-black/10 dark:bg-white/10" />

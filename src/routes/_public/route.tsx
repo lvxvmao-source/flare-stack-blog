@@ -3,6 +3,7 @@ import { createFileRoute, Outlet, useNavigate, useRouteContext } from "@tanstack
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { AUTH_KEYS } from "@/features/auth/queries";
+import { siteStatsQueryOptions } from "@/features/site-stats/queries";
 import { getThemePreloadImages } from "@/features/theme/site-config.helpers";
 import { useSiteTheme, type ThemeName } from "@/features/theme/theme-context";
 import { authClient } from "@/lib/auth/auth.client";
@@ -15,6 +16,7 @@ import type { NavOption } from "@/features/theme/contract/layouts";
 export const Route = createFileRoute("/_public")({
   loader: ({ context }) => {
     const themeName = (context.siteConfig?.themeName ?? "default") as ThemeName;
+    void context.queryClient.ensureQueryData(siteStatsQueryOptions);
     return {
       preloadImages: getThemePreloadImages(context.siteConfig, themeName),
     };
@@ -45,7 +47,6 @@ function PublicLayout() {
   const builtInNavOptions: NavOption[] = [
     { label: m.nav_home(), to: "/", id: "home" },
     { label: m.nav_posts(), to: "/posts", id: "posts" },
-    { label: m.nav_friend_links(), to: "/friend-links", id: "friend-links" },
   ];
 
   const customNavOptions: NavOption[] = (siteConfig.navItems ?? []).map(
@@ -58,7 +59,11 @@ function PublicLayout() {
     }),
   );
 
-  const navOptions = [...builtInNavOptions, ...customNavOptions];
+  const navOptions: NavOption[] = [
+    ...builtInNavOptions,
+    ...customNavOptions,
+    { label: m.nav_friend_links(), to: "/friend-links", id: "friend-links" },
+  ];
 
   const logout = async () => {
     const { error } = await authClient.signOut();
