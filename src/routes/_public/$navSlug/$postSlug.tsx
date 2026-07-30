@@ -1,4 +1,3 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useSiteTheme } from "@/features/theme/theme-context";
@@ -83,8 +82,8 @@ function PostPageSkeleton() {
 }
 
 function PostPageRoute() {
-  const { postSlug } = Route.useParams();
-  const { data: post } = useSuspenseQuery(postBySlugQuery(postSlug));
+  const loaderData = Route.useLoaderData();
+  const post = loaderData.post;
   const theme = useSiteTheme();
 
   useEffect(() => {

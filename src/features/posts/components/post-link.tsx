@@ -28,11 +28,25 @@ export function PostLink({
       (item) => item.id === navId,
     );
     if (navItem?.to?.startsWith("/") && navItem.to !== "/") {
-      const navSlug = navItem.to.replace(/^\//, "");
+      const navPath = navItem.to.replace(/^\//, "");
+      // Multi-segment nav paths (e.g. /nav/uuid) use navId-based route
+      if (navPath.includes("/")) {
+        return (
+          <Link
+            to="/nav/$navId/$postSlug"
+            params={{ navId, postSlug: slug }}
+            className={className}
+            aria-label={ariaLabel}
+          >
+            {children}
+          </Link>
+        );
+      }
+      // Single-segment nav paths (e.g. /blog) use friendly route
       return (
         <Link
           to="/$navSlug/$postSlug"
-          params={{ navSlug, postSlug: slug }}
+          params={{ navSlug: navPath, postSlug: slug }}
           className={className}
           aria-label={ariaLabel}
         >

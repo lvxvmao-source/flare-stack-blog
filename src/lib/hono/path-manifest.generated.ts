@@ -19,14 +19,15 @@ export const ROUTE_REGEXPS: Array<RegExp> = [
   /^\/profile\/?$/,
   /^\/submit-friend-link\/?$/,
   /^\/oauth\/consent\/?$/,
-  /^\/[^/]+\/[^/]+\/?$/,
   /^\/nav\/[^/]+\/?$/,
+  /^\/[^/]+\/[^/]+\/?$/,
   /^\/post\/[^/]+\/?$/,
   /^\/admin\/comments\/?$/,
   /^\/admin\/friend-links\/?$/,
   /^\/admin\/media\/?$/,
   /^\/admin\/settings\/?$/,
   /^\/admin\/tags\/?$/,
+  /^\/nav\/[^/]+\/[^/]+\/?$/,
   /^\/admin\/posts\/edit\/[^/]+\/?$/,
 ];
 
