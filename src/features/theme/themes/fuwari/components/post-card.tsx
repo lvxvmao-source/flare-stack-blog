@@ -78,7 +78,7 @@ export function PostCard({
               <ChevronRight className="text-(--fuwari-primary) text-[2rem] transition hidden md:inline absolute translate-y-0.5 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0" />
             </>
           }
-        </Link>
+        </PostLink>
 
         {/* Metadata */}
         <div className="flex flex-wrap fuwari-text-50 items-center gap-4 gap-x-4 gap-y-2 mb-4">
