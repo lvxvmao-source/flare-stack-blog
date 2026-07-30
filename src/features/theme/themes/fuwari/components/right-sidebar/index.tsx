@@ -5,7 +5,7 @@ import { MiniCalendar } from "./mini-calendar";
 
 export function RightSidebar() {
   return (
-    <aside className="hidden lg:flex flex-col gap-4 w-56 shrink-0">
+    <aside className="hidden lg:flex flex-col gap-4 w-56 shrink-0 order-3">
       <div className="sticky top-20">
         <div className="flex flex-col gap-4">
           <Suspense fallback={<SiteStatsSkeleton />}>
