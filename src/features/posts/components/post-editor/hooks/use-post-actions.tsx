@@ -136,9 +136,14 @@ export function usePostActions({
         setProcessState("IDLE");
       }, 3000);
     },
-    onSettled: (_data, error) => {
-      if (!error) return;
+    onError: (error) => {
       setProcessState("IDLE");
+      toast.error(m.editor_action_publish_start(), {
+        description:
+          error instanceof Error
+            ? error.message
+            : m.editor_action_unknown_error(),
+      });
     },
   });
 

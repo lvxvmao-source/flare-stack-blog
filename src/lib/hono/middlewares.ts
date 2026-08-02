@@ -71,22 +71,35 @@ export const cacheMiddleware = createMiddleware(async (c, next) => {
 
   const path = c.req.path;
 
-  // 排除需要 session 的 API（如 /api/auth, /api/send）
-  // 但包含 public API（/api/posts, /api/post, /api/tags, /api/search）
-  const EXCLUDED_PREFIXES = ["/api/auth", "/api/send"];
+  // 排除所有 API 路由、需要 session 的路由、以及 server function 调用
+  // API 路由有自己的 KV 缓存层，不需要 CDN 级别的 HTTP 缓存
+  const EXCLUDED_PREFIXES = ["/api/", "/_serverFn/"];
   if (EXCLUDED_PREFIXES.some((prefix) => path.startsWith(prefix))) {
     return next();
   }
 
-  // 缓存响应逻辑
+  // 缓存响应逻辑（仅用于静态 HTML 页面）
   const cache = (caches as unknown as { default: Cache }).default;
 
+  // Only serve cache if the response has a valid max-age (not stale)
   const cachedResponse = await cache.match(c.req.raw);
-  if (cachedResponse) return cachedResponse;
+  if (cachedResponse) {
+    const cacheControl = cachedResponse.headers.get("Cache-Control") ?? "";
+    const maxAgeMatch = cacheControl.match(/max-age=(\d+)/);
+    const maxAge = maxAgeMatch ? Number.parseInt(maxAgeMatch[1], 10) : 0;
+    // Only use cache if max-age > 0 (meaning it was explicitly cached with a TTL)
+    if (maxAge > 0) return cachedResponse;
+  }
 
   await next();
 
-  tryCacheResponse(c, cache);
+  // Only cache responses that have explicit positive max-age
+  const resCacheControl = c.res.headers.get("Cache-Control") ?? "";
+  const resMaxAgeMatch = resCacheControl.match(/max-age=(\d+)/);
+  const resMaxAge = resMaxAgeMatch ? Number.parseInt(resMaxAgeMatch[1], 10) : 0;
+  if (resMaxAge > 0) {
+    tryCacheResponse(c, cache);
+  }
 });
 
 const SHIELD_ALLOWED_PATHS = new Set([
