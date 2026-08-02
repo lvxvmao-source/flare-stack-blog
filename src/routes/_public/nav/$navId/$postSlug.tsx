@@ -13,15 +13,16 @@ import {
 
 const relatedPostsLimit = 11;
 
-export const Route = createFileRoute("/_public/$navSlug/$postSlug")({
+export const Route = createFileRoute("/_public/nav/$navId/$postSlug")({
   component: PostPageRoute,
   pendingComponent: PostPageSkeleton,
   pendingMs: 500,
   loader: async ({ context, params }) => {
+    const navId = params.navId;
     const siteConfig =
       await context.queryClient.ensureQueryData(siteConfigQuery);
     const navItem = (siteConfig.navItems ?? []).find(
-      (item) => item.to.replace(/^\//, "") === params.navSlug,
+      (item) => item.id === navId,
     );
     if (!navItem) throw notFound();
 
@@ -32,7 +33,7 @@ export const Route = createFileRoute("/_public/$navSlug/$postSlug")({
 
     if (!post) throw notFound();
     // Verify post belongs to this nav
-    if (post.navId !== navItem.id) throw notFound();
+    if (post.navId !== navId) throw notFound();
 
     void context.queryClient.prefetchQuery(
       relatedPostsQuery(params.postSlug, relatedPostsLimit),
