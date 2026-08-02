@@ -352,6 +352,24 @@ export async function updatePost(
     );
   }
 
+  // Invalidate caches for published posts so that navId changes and
+  // other metadata edits are reflected immediately.
+  if (updatedPost.status === "published") {
+    const tasks: Promise<unknown>[] = [
+      CacheService.bumpVersion(context, "posts:list"),
+    ];
+    tasks.push(
+      CacheService.deleteKey(
+        context,
+        POSTS_CACHE_KEYS.syncHash(updatedPost.id),
+      ),
+    );
+    if (context.env) {
+      tasks.push(purgePostCDNCache(context.env, updatedPost.slug));
+    }
+    context.executionCtx.waitUntil(Promise.all(tasks));
+  }
+
   context.executionCtx.waitUntil(
     PostAutoSnapshotService.enqueuePostAutoSnapshot(context, {
       postId: updatedPost.id,
