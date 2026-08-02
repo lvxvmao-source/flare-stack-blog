@@ -40,6 +40,7 @@ export function useAutoSave({
     readTimeInMinutes: number;
     publishedAt: number | null;
     pinnedAt: number | null;
+    navId: string | null;
     tagIds: string; // Serialize for easy comparison
     contentRef: PostEditorData["contentJson"];
   } | null>(null);
@@ -55,6 +56,7 @@ export function useAutoSave({
     readTimeInMinutes: p.readTimeInMinutes,
     publishedAt: p.publishedAt ? p.publishedAt.valueOf() : null,
     pinnedAt: p.pinnedAt ? p.pinnedAt.valueOf() : null,
+    navId: p.navId,
     tagIds: [...p.tagIds].sort().join(","),
     contentRef: p.contentJson,
   });
@@ -70,6 +72,7 @@ export function useAutoSave({
       prev.readTimeInMinutes !== curr.readTimeInMinutes ||
       prev.publishedAt !== curr.publishedAt ||
       prev.pinnedAt !== curr.pinnedAt ||
+      prev.navId !== curr.navId ||
       prev.tagIds !== curr.tagIds ||
       prev.contentRef !== curr.contentRef
     );

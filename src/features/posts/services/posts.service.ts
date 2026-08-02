@@ -428,6 +428,7 @@ export async function startPostProcessWorkflow(
         publishedAt: post.publishedAt,
         pinnedAt: post.pinnedAt,
         readTimeInMinutes: post.readTimeInMinutes,
+        navId: post.navId,
       });
 
       await PostRevisionRepo.insertPostRevision(context.db, {

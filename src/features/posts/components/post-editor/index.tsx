@@ -177,6 +177,7 @@ export function PostEditor({ initialData, onSave }: PostEditorProps) {
       readTimeInMinutes: post.readTimeInMinutes,
       contentJson: post.contentJson,
       tagIds: [...new Set(post.tagIds)].sort((a, b) => a - b),
+      navId: post.navId,
     }),
     [
       post.contentJson,

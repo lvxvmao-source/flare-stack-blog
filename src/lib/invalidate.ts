@@ -108,6 +108,8 @@ export async function purgePostCDNCache(env: Env, slug: string) {
     prefixes: [
       "/posts", // 列表页面
       "/api/posts", // 列表 API（复数）
+      "/nav", // 导航 ID 路径
+      "/api/nav", // 导航 API
       "/search", // 搜索页面
       "/api/search", // 搜索 API
     ],

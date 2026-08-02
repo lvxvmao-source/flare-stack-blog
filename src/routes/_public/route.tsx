@@ -8,7 +8,6 @@ import { getThemePreloadImages } from "@/features/theme/site-config.helpers";
 import { useSiteTheme, type ThemeName } from "@/features/theme/theme-context";
 import { authClient } from "@/lib/auth/auth.client";
 import { getLogoutAuthErrorMessage } from "@/lib/auth/auth-errors";
-import { CACHE_CONTROL } from "@/lib/constants";
 import { m } from "@/paraglide/messages";
 import { getLocale } from "@/paraglide/runtime";
 import type { NavOption } from "@/features/theme/contract/layouts";
@@ -22,9 +21,6 @@ export const Route = createFileRoute("/_public")({
     };
   },
   component: PublicLayout,
-  headers: () => {
-    return CACHE_CONTROL.public;
-  },
   head: ({ loaderData }) => ({
     links: (loaderData?.preloadImages ?? []).map((href) => ({
       rel: "preload" as const,
