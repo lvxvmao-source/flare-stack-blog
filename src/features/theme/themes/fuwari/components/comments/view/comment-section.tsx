@@ -1,9 +1,10 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getRouteApi, Link } from "@tanstack/react-router";
+import { Link, useSearch } from "@tanstack/react-router";
 import type { JSONContent } from "@tiptap/react";
 import { LogIn } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
 import { Turnstile, useTurnstile } from "@/components/common/turnstile";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useComments } from "@/features/comments/hooks/use-comments";
@@ -14,7 +15,10 @@ import { FuwariCommentEditor } from "../editor/comment-editor";
 import { FuwariCommentList } from "./comment-list";
 import FuwariConfirmationModal from "./confirmation-modal";
 
-const routeApi = getRouteApi("/_public/post/$slug");
+const FuwariCommentSectionSchema = z.object({
+  highlightCommentId: z.coerce.number().optional(),
+  rootId: z.number().optional(),
+});
 
 interface FuwariCommentSectionProps {
   postId: number;
@@ -22,7 +26,8 @@ interface FuwariCommentSectionProps {
 
 export function FuwariCommentSection({ postId }: FuwariCommentSectionProps) {
   const { data: session } = authClient.useSession();
-  const { rootId, highlightCommentId } = routeApi.useSearch();
+  const search = useSearch({ strict: false }) as z.infer<typeof FuwariCommentSectionSchema>;
+  const { rootId, highlightCommentId } = search ?? {};
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(
       rootCommentsByPostIdInfiniteQuery(postId, session?.user.id),
