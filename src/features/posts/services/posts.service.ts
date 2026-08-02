@@ -329,6 +329,7 @@ export async function findPostById(
       publishedAt: post.publishedAt,
       pinnedAt: post.pinnedAt,
       readTimeInMinutes: post.readTimeInMinutes,
+      navId: post.navId,
     });
     isSynced = dbHash === kvHash;
   }

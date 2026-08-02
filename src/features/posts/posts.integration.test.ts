@@ -1379,6 +1379,7 @@ describe("Posts Integration", () => {
           slug: post!.slug,
           publishedAt: post!.publishedAt,
           readTimeInMinutes: post!.readTimeInMinutes,
+          navId: post!.navId,
         }),
       );
 

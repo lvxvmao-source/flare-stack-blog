@@ -32,8 +32,6 @@ export const Route = createFileRoute("/_public/nav/$navId/$postSlug")({
     ]);
 
     if (!post) throw notFound();
-    // Verify post belongs to this nav
-    if (post.navId !== navId) throw notFound();
 
     void context.queryClient.prefetchQuery(
       relatedPostsQuery(params.postSlug, relatedPostsLimit),
