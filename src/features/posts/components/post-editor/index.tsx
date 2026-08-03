@@ -131,7 +131,7 @@ export function PostEditor({ initialData, onSave }: PostEditorProps) {
   }, []);
 
   const handleMarkdownImport = useCallback(
-    (rawContent: string) => {
+    async (rawContent: string) => {
       try {
         // 1. Parse frontmatter and markdown body
         const { data, content: mdContent } = parseFrontmatter(rawContent);
@@ -165,13 +165,14 @@ export function PostEditor({ initialData, onSave }: PostEditorProps) {
         }
         // 3. Convert markdown body to HTML and set editor content
         if (mdContent && editorInstance) {
-          const html = marked.parse(mdContent) as string;
+          const html = await marked.parse(mdContent);
           editorInstance.commands.setContent(html);
         }
         toast.success(m.editor_toast_import_success(), {
           description: m.editor_toast_import_success_desc(),
         });
-      } catch {
+      } catch (err) {
+        console.error("Markdown import failed:", err);
         toast.error(m.editor_toast_import_failed(), {
           description: m.editor_toast_import_failed_desc(),
         });
