@@ -179,7 +179,7 @@ const PublicNavSlugIndexRoute = PublicNavSlugIndexRouteImport.update({
 const PublicPostsSlugRoute = PublicPostsSlugRouteImport.update({
   id: '/posts/$slug',
   path: '/$slug',
-  getParentRoute: () => PublicRouteRoute,
+  getParentRoute: () => PublicPostsRoute,,
 } as any)
 const PublicNavSlugPostSlugRoute = PublicNavSlugPostSlugRouteImport.update({
   id: '/$postSlug',
@@ -451,7 +451,7 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof PublicIndexRouteImport
-      parentRoute: typeof PublicPostsRoute
+      parentRoute: typeof PublicRouteRoute
     }
     '/oauth/consent': {
       id: '/oauth/consent'
@@ -479,28 +479,28 @@ declare module '@tanstack/react-router' {
       path: '/unsubscribe'
       fullPath: '/unsubscribe'
       preLoaderRoute: typeof PublicUnsubscribeRouteImport
-      parentRoute: typeof PublicPostsRoute
+      parentRoute: typeof PublicRouteRoute
     }
     '/_public/search': {
       id: '/_public/search'
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof PublicSearchRouteImport
-      parentRoute: typeof PublicPostsRoute
+      parentRoute: typeof PublicRouteRoute
     }
     '/_public/posts': {
       id: '/_public/posts'
       path: '/posts'
       fullPath: '/posts'
       preLoaderRoute: typeof PublicPostsRouteImport
-      parentRoute: typeof PublicPostsRoute
+      parentRoute: typeof PublicRouteRoute
     }
     '/_public/friend-links': {
       id: '/_public/friend-links'
       path: '/friend-links'
       fullPath: '/friend-links'
       preLoaderRoute: typeof PublicFriendLinksRouteImport
-      parentRoute: typeof PublicPostsRoute
+      parentRoute: typeof PublicRouteRoute
     }
     '/_auth/verify-email': {
       id: '/_auth/verify-email'
