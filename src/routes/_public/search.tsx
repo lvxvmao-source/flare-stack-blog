@@ -79,7 +79,7 @@ function SearchRoute() {
   };
 
   const handleSelectPost = (slug: string) => {
-    navigate({ to: "/post/$slug", params: { slug } });
+    navigate({ to: "/posts/$slug", params: { slug } });
   };
 
   const handleBack = () => {

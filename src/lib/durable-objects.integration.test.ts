@@ -291,7 +291,7 @@ describe("Durable Objects Integration", () => {
       });
 
       it("should allow dynamic post slugs", async () => {
-        const res = await testRequest(app, "/post/hello-world");
+        const res = await testRequest(app, "/posts/hello-world");
         expect(res.status).not.toBe(403);
         expect(res.status).not.toBe(404);
       });

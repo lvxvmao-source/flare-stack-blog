@@ -129,7 +129,7 @@ export async function buildSitemapXml(env: Env) {
 
       return `
   <url>
-    <loc>https://${env.DOMAIN}/post/${encodeURIComponent(post.slug)}</loc>
+    <loc>https://${env.DOMAIN}/posts/${encodeURIComponent(post.slug)}</loc>
     ${lastModifiedAt ? `<lastmod>${lastModifiedAt}</lastmod>` : ""}
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

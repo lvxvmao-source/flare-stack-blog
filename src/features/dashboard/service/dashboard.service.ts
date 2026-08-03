@@ -118,7 +118,7 @@ export async function getDashboardStats(
           postTitle: c.posts!.title,
         }),
         time: c.comments.createdAt,
-        link: `/post/${c.posts!.slug}?highlightCommentId=${c.comments.id}&rootId=${c.comments.rootId ?? c.comments.id}#comment-${c.comments.id}`,
+        link: `/posts/${c.posts!.slug}?highlightCommentId=${c.comments.id}&rootId=${c.comments.rootId ?? c.comments.id}#comment-${c.comments.id}`,
         rootId: c.comments.rootId ?? c.comments.id,
       })),
     ...recentPosts.map((p) => ({
@@ -127,7 +127,7 @@ export async function getDashboardStats(
         postTitle: p.title,
       }),
       time: p.publishedAt,
-      link: `/post/${p.slug}`,
+      link: `/posts/${p.slug}`,
     })),
     ...recentUsers.map((u) => ({
       type: "user" as const,

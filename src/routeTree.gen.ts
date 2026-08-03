@@ -1,4 +1,4 @@
-/* eslint-disable */
+﻿/* eslint-disable */
 
 // @ts-nocheck
 
@@ -36,7 +36,8 @@ import { Route as AdminMediaIndexRouteImport } from './routes/admin/media/index'
 import { Route as AdminFriendLinksIndexRouteImport } from './routes/admin/friend-links/index'
 import { Route as AdminCommentsIndexRouteImport } from './routes/admin/comments/index'
 import { Route as PublicNavSlugIndexRouteImport } from './routes/_public/$navSlug/index'
-import { Route as PublicPostSlugRouteImport } from './routes/_public/post/$slug'
+import { Route as PublicPostsSlugRouteImport } from './routes/_public/posts/$slug'
+import { Route as PublicPostsIndexRouteImport } from './routes/_public/posts/index'
 import { Route as PublicNavSlugPostSlugRouteImport } from './routes/_public/$navSlug/$postSlug'
 import { Route as PublicNavNavIdRouteRouteImport } from './routes/_public/nav/$navId/route'
 import { Route as PublicNavNavIdIndexRouteImport } from './routes/_public/nav/$navId/index'
@@ -175,9 +176,9 @@ const PublicNavSlugIndexRoute = PublicNavSlugIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PublicNavSlugRouteRoute,
 } as any)
-const PublicPostSlugRoute = PublicPostSlugRouteImport.update({
-  id: '/post/$slug',
-  path: '/post/$slug',
+const PublicPostsSlugRoute = PublicPostsSlugRouteImport.update({
+  id: '/posts/$slug',
+  path: '/$slug',
   getParentRoute: () => PublicRouteRoute,
 } as any)
 const PublicNavSlugPostSlugRoute = PublicNavSlugPostSlugRouteImport.update({
@@ -226,7 +227,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/nav/$navId': typeof PublicNavNavIdRouteRouteWithChildren
   '/$navSlug/$postSlug': typeof PublicNavSlugPostSlugRoute
-  '/post/$slug': typeof PublicPostSlugRoute
+  '/posts/$slug': typeof PublicPostsSlugRoute
   '/$navSlug/': typeof PublicNavSlugIndexRoute
   '/admin/comments/': typeof AdminCommentsIndexRoute
   '/admin/friend-links/': typeof AdminFriendLinksIndexRoute
@@ -254,7 +255,7 @@ export interface FileRoutesByTo {
   '/oauth/consent': typeof OauthConsentRoute
   '/admin': typeof AdminIndexRoute
   '/$navSlug/$postSlug': typeof PublicNavSlugPostSlugRoute
-  '/post/$slug': typeof PublicPostSlugRoute
+  '/posts/$slug': typeof PublicPostsSlugRoute
   '/$navSlug': typeof PublicNavSlugIndexRoute
   '/admin/comments': typeof AdminCommentsIndexRoute
   '/admin/friend-links': typeof AdminFriendLinksIndexRoute
@@ -290,7 +291,7 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/_public/nav/$navId': typeof PublicNavNavIdRouteRouteWithChildren
   '/_public/$navSlug/$postSlug': typeof PublicNavSlugPostSlugRoute
-  '/_public/post/$slug': typeof PublicPostSlugRoute
+  '/_public/posts/$slug': typeof PublicPostsSlugRoute
   '/_public/$navSlug/': typeof PublicNavSlugIndexRoute
   '/admin/comments/': typeof AdminCommentsIndexRoute
   '/admin/friend-links/': typeof AdminFriendLinksIndexRoute
@@ -324,7 +325,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/nav/$navId'
     | '/$navSlug/$postSlug'
-    | '/post/$slug'
+    | '/posts/$slug'
     | '/$navSlug/'
     | '/admin/comments/'
     | '/admin/friend-links/'
@@ -352,7 +353,7 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/admin'
     | '/$navSlug/$postSlug'
-    | '/post/$slug'
+    | '/posts/$slug'
     | '/$navSlug'
     | '/admin/comments'
     | '/admin/friend-links'
@@ -387,7 +388,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/_public/nav/$navId'
     | '/_public/$navSlug/$postSlug'
-    | '/_public/post/$slug'
+    | '/_public/posts/$slug'
     | '/_public/$navSlug/'
     | '/admin/comments/'
     | '/admin/friend-links/'
@@ -450,7 +451,7 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof PublicIndexRouteImport
-      parentRoute: typeof PublicRouteRoute
+      parentRoute: typeof PublicPostsRoute
     }
     '/oauth/consent': {
       id: '/oauth/consent'
@@ -478,28 +479,28 @@ declare module '@tanstack/react-router' {
       path: '/unsubscribe'
       fullPath: '/unsubscribe'
       preLoaderRoute: typeof PublicUnsubscribeRouteImport
-      parentRoute: typeof PublicRouteRoute
+      parentRoute: typeof PublicPostsRoute
     }
     '/_public/search': {
       id: '/_public/search'
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof PublicSearchRouteImport
-      parentRoute: typeof PublicRouteRoute
+      parentRoute: typeof PublicPostsRoute
     }
     '/_public/posts': {
       id: '/_public/posts'
       path: '/posts'
       fullPath: '/posts'
       preLoaderRoute: typeof PublicPostsRouteImport
-      parentRoute: typeof PublicRouteRoute
+      parentRoute: typeof PublicPostsRoute
     }
     '/_public/friend-links': {
       id: '/_public/friend-links'
       path: '/friend-links'
       fullPath: '/friend-links'
       preLoaderRoute: typeof PublicFriendLinksRouteImport
-      parentRoute: typeof PublicRouteRoute
+      parentRoute: typeof PublicPostsRoute
     }
     '/_auth/verify-email': {
       id: '/_auth/verify-email'
@@ -548,7 +549,7 @@ declare module '@tanstack/react-router' {
       path: '/$navSlug'
       fullPath: '/$navSlug'
       preLoaderRoute: typeof PublicNavSlugRouteRouteImport
-      parentRoute: typeof PublicRouteRoute
+      parentRoute: typeof PublicPostsRoute
     }
     '/admin/tags/': {
       id: '/admin/tags/'
@@ -599,12 +600,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicNavSlugIndexRouteImport
       parentRoute: typeof PublicNavSlugRouteRoute
     }
-    '/_public/post/$slug': {
-      id: '/_public/post/$slug'
-      path: '/post/$slug'
-      fullPath: '/post/$slug'
-      preLoaderRoute: typeof PublicPostSlugRouteImport
-      parentRoute: typeof PublicRouteRoute
+    '/_public/posts/$slug': {
+      id: '/_public/posts/$slug'
+      path: '/$slug'
+      fullpath: '/$slug'
+      preLoaderRoute: typeof PublicPostsSlugRouteImport
+      parentRoute: typeof PublicPostsRoute
     }
     '/_public/$navSlug/$postSlug': {
       id: '/_public/$navSlug/$postSlug'
@@ -618,7 +619,7 @@ declare module '@tanstack/react-router' {
       path: '/nav/$navId'
       fullPath: '/nav/$navId'
       preLoaderRoute: typeof PublicNavNavIdRouteRouteImport
-      parentRoute: typeof PublicRouteRoute
+      parentRoute: typeof PublicPostsRoute
     }
     '/_public/nav/$navId/': {
       id: '/_public/nav/$navId/'
@@ -698,7 +699,7 @@ interface PublicRouteRouteChildren {
   PublicUnsubscribeRoute: typeof PublicUnsubscribeRoute
   PublicIndexRoute: typeof PublicIndexRoute
   PublicNavNavIdRouteRoute: typeof PublicNavNavIdRouteRouteWithChildren
-  PublicPostSlugRoute: typeof PublicPostSlugRoute
+  PublicPostsSlugRoute: typeof PublicPostsSlugRoute
 }
 
 const PublicRouteRouteChildren: PublicRouteRouteChildren = {
@@ -709,7 +710,7 @@ const PublicRouteRouteChildren: PublicRouteRouteChildren = {
   PublicUnsubscribeRoute: PublicUnsubscribeRoute,
   PublicIndexRoute: PublicIndexRoute,
   PublicNavNavIdRouteRoute: PublicNavNavIdRouteRouteWithChildren,
-  PublicPostSlugRoute: PublicPostSlugRoute,
+  PublicPostsSlugRoute: PublicPostsSlugRoute,
 }
 
 const PublicRouteRouteWithChildren = PublicRouteRoute._addFileChildren(

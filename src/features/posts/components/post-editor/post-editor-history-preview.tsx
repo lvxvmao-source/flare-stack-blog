@@ -131,7 +131,7 @@ export function PostEditorHistoryPreview({
                 {m.editor_history_slug_label()}
               </p>
               <p className="text-sm text-foreground">
-                /post/{revision.snapshotJson.slug}
+                /posts/{revision.snapshotJson.slug}
               </p>
             </div>
 

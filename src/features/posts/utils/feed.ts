@@ -74,7 +74,7 @@ export async function buildFeed(env: Env, executionCtx: ExecutionContext) {
     feed.addItem({
       title: post.title,
       id: post.id.toString(),
-      link: `https://${DOMAIN}/post/${encodeURIComponent(post.slug)}`,
+      link: `https://${DOMAIN}/posts/${encodeURIComponent(post.slug)}`,
       description: post.summary ?? "",
       content: convertToPlainText(post.contentJson),
       author: [feedAuthor],

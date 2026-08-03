@@ -81,7 +81,7 @@ export async function sendReplyNotification(
 
   // Build URL with comment anchor and query params for direct navigation
   const rootId = comment.rootId ?? comment.id;
-  const commentUrl = `https://${DOMAIN}/post/${post.slug}?highlightCommentId=${comment.id}&rootId=${rootId}#comment-${comment.id}`;
+  const commentUrl = `https://${DOMAIN}/posts/${post.slug}?highlightCommentId=${comment.id}&rootId=${rootId}#comment-${comment.id}`;
 
   try {
     await publishNotificationEvent(

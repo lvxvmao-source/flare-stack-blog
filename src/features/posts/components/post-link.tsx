@@ -58,7 +58,7 @@ export function PostLink({
 
   return (
     <Link
-      to="/post/$slug"
+      to="/posts/$slug"
       params={{ slug }}
       className={className}
       aria-label={ariaLabel}

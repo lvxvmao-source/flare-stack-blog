@@ -135,7 +135,7 @@ async function invalidateTagRelatedCache(
     // Purge CDN for affected posts and list pages
     const cdnUrls = ["/", "/posts"];
     for (const post of affectedPosts) {
-      cdnUrls.push(`/post/${post.slug}`);
+      cdnUrls.push(`/posts/${post.slug}`);
     }
     tasks.push(purgeCDNCache(context.env, { urls: cdnUrls }));
 

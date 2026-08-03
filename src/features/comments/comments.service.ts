@@ -181,7 +181,7 @@ export async function createComment(
           postTitle: post.title,
           commenterName,
           commentPreview: `${commentPreview}${commentPreview.length >= 100 ? "..." : ""}`,
-          commentUrl: `https://${DOMAIN}/post/${post.slug}?highlightCommentId=${comment.id}&rootId=${comment.id}#comment-${comment.id}`,
+          commentUrl: `https://${DOMAIN}/posts/${post.slug}?highlightCommentId=${comment.id}&rootId=${comment.id}#comment-${comment.id}`,
         },
       });
     }

@@ -7,7 +7,7 @@ import { m } from "@/paraglide/messages";
 
 export function PostPageSkeleton() {
   const navigate = useNavigate();
-  const { slug } = useParams({ from: "/_public/post/$slug" });
+  const { slug } = useParams({ from: "/_public/posts/$slug" });
   const queryClient = useQueryClient();
 
   // Optimistic UI: Try to get the post title from cache to verify transition immediately

@@ -47,7 +47,7 @@ export function PostEditorMetadata({
   const selectedNav = navItems.find((item) => item.id === post.navId);
   const slugPrefix = selectedNav
     ? `${selectedNav.to.startsWith("/") ? selectedNav.to : `/${selectedNav.to}`}/`
-    : "/post/";
+    : "/posts/";
 
   return (
     <>

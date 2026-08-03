@@ -290,7 +290,7 @@ export const CommentModerationTable = ({
                 <div className="flex flex-col gap-2 border-l border-border/50 pl-4 py-1">
                   {comment.post && (
                     <Link
-                      to="/post/$slug"
+                      to="/posts/$slug"
                       params={{ slug: comment.post.slug || "" }}
                       hash={`comment-${comment.id}`}
                       search={{
@@ -384,7 +384,7 @@ export const CommentModerationTable = ({
               <div className="flex flex-col gap-2 text-[10px] font-mono text-muted-foreground bg-muted/20 p-3">
                 {comment.post && (
                   <Link
-                    to="/post/$slug"
+                    to="/posts/$slug"
                     params={{ slug: comment.post.slug || "" }}
                     hash={`comment-${comment.id}`}
                     search={{
