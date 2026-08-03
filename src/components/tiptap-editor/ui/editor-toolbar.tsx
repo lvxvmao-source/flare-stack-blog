@@ -5,6 +5,7 @@ import type { LucideIcon } from "lucide-react";
 import {
   Bold,
   Code,
+  FileDown,
   Heading2,
   Heading3,
   Image as ImageIcon,
@@ -22,6 +23,7 @@ import {
   Underline as UnderlineIcon,
   Undo,
 } from "lucide-react";
+import { useRef, type ChangeEvent } from "react";
 import type React from "react";
 import { m } from "@/paraglide/messages";
 
@@ -31,6 +33,7 @@ interface EditorToolbarProps {
   onImageClick: () => void;
   onFormulaInlineClick: () => void;
   onFormulaBlockClick: () => void;
+  onMarkdownImport?: (content: string) => void;
 }
 
 interface ToolbarButtonProps {
@@ -68,7 +71,28 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   onImageClick,
   onFormulaInlineClick,
   onFormulaBlockClick,
+  onMarkdownImport,
 }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target?.result;
+      if (typeof text === "string") {
+        onMarkdownImport?.(text);
+      }
+    };
+    reader.readAsText(file);
+    // Reset so the same file can be re-imported
+    e.target.value = "";
+  };
   const {
     isBold,
     isHeading2,
@@ -259,6 +283,25 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         icon={ImageIcon}
         label={m.editor_toolbar_image()}
       />
+
+      {/* Markdown Import */}
+      {onMarkdownImport && (
+        <>
+          <div className="h-4 w-px bg-border/50 mx-2"></div>
+          <ToolbarButton
+            onClick={handleImportClick}
+            icon={FileDown}
+            label={m.editor_toolbar_import_md()}
+          />
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".md,.markdown,.txt"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </>
+      )}
 
       <div className="ml-auto flex gap-1">
         <ToolbarButton

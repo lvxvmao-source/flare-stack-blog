@@ -5,6 +5,7 @@ import type {
 } from "@tiptap/react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { marked } from "marked";
 import { normalizeLinkHref } from "@/lib/links/normalize-link-href";
 import { cn } from "@/lib/utils";
 import type { FormulaModalPayload } from "./formula-modal-store";
@@ -28,6 +29,7 @@ interface EditorProps {
   editable?: boolean;
   className?: string;
   contentClassName?: string;
+  onMarkdownImport?: (content: string) => void;
 }
 
 export const Editor = memo(function Editor({
@@ -38,6 +40,7 @@ export const Editor = memo(function Editor({
   editable = true,
   className,
   contentClassName,
+  onMarkdownImport,
 }: EditorProps) {
   const formulaOpenerKeyRef = useRef(Symbol("formula-modal-opener"));
   const [modalOpen, setModalOpen] = useState<ModalType>(null);
@@ -156,6 +159,14 @@ export const Editor = memo(function Editor({
     [editor],
   );
 
+  const handleMarkdownImport = useCallback(
+    (rawContent: string) => {
+      if (!editor) return;
+      onMarkdownImport?.(rawContent);
+    },
+    [editor, onMarkdownImport],
+  );
+
   const handleModalSubmit = (
     url: string,
     attrs?: { width?: number; height?: number },
@@ -189,6 +200,7 @@ export const Editor = memo(function Editor({
           onImageClick={openImageModal}
           onFormulaInlineClick={() => openFormulaModal("inline")}
           onFormulaBlockClick={() => openFormulaModal("block")}
+          onMarkdownImport={handleMarkdownImport}
         />
       )}
 

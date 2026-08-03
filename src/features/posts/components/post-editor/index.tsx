@@ -1,12 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { useBlocker } from "@tanstack/react-router";
 import type { JSONContent, Editor as TiptapEditor } from "@tiptap/react";
+import { marked } from "marked";
 import { History, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { useCallback, useMemo, useState } from "react";
 import { Editor } from "@/components/tiptap-editor";
 import { Button } from "@/components/ui/button";
 import ConfirmationModal from "@/components/ui/confirmation-modal";
 import { siteConfigQuery } from "@/features/config/queries";
+import { parseFrontmatter, normalizeFrontmatter } from "@/features/import-export/utils/frontmatter";
 import { extensions } from "@/features/posts/editor/config";
 import type { PostRevisionSnapshot } from "@/features/posts/schema/post-revisions.schema";
 import { tagsAdminQueryOptions } from "@/features/tags/queries";
@@ -126,6 +129,56 @@ export function PostEditor({ initialData, onSave }: PostEditorProps) {
   const handlePostChange = useCallback((updates: Partial<PostEditorData>) => {
     setPost((prev) => ({ ...prev, ...updates }));
   }, []);
+
+  const handleMarkdownImport = useCallback(
+    (rawContent: string) => {
+      try {
+        // 1. Parse frontmatter and markdown body
+        const { data, content: mdContent } = parseFrontmatter(rawContent);
+        // 2. Normalize frontmatter fields
+        const fm = normalizeFrontmatter(data);
+        if (fm) {
+          const updates: Partial<PostEditorData> = {};
+          if (fm.title) updates.title = fm.title;
+          if (fm.slug) updates.slug = fm.slug;
+          if (fm.summary) updates.summary = fm.summary;
+          if (fm.status) updates.status = fm.status;
+          if (fm.publishedAt) updates.publishedAt = new Date(fm.publishedAt);
+          if (fm.readTimeInMinutes != null)
+            updates.readTimeInMinutes = fm.readTimeInMinutes;
+          // Match tag names to existing tag IDs
+          if (fm.tags && fm.tags.length > 0) {
+            const matchedIds: number[] = [];
+            for (const tagName of fm.tags) {
+              const match = allTags.find(
+                (t) => t.name.toLowerCase() === tagName.toLowerCase(),
+              );
+              if (match) {
+                matchedIds.push(match.id);
+              }
+            }
+            if (matchedIds.length > 0) {
+              updates.tagIds = matchedIds;
+            }
+          }
+          handlePostChange(updates);
+        }
+        // 3. Convert markdown body to HTML and set editor content
+        if (mdContent && editorInstance) {
+          const html = marked.parse(mdContent) as string;
+          editorInstance.commands.setContent(html);
+        }
+        toast.success(m.editor_toast_import_success(), {
+          description: m.editor_toast_import_success_desc(),
+        });
+      } catch {
+        toast.error(m.editor_toast_import_failed(), {
+          description: m.editor_toast_import_failed_desc(),
+        });
+      }
+    },
+    [allTags, editorInstance, handlePostChange],
+  );
 
   const handleRestoreApplied = useCallback(
     ({
@@ -263,6 +316,7 @@ export function PostEditor({ initialData, onSave }: PostEditorProps) {
                 content={post.contentJson ?? ""}
                 onChange={handleContentChange}
                 onCreated={setEditorInstance}
+                onMarkdownImport={handleMarkdownImport}
               />
             </div>
           </div>
