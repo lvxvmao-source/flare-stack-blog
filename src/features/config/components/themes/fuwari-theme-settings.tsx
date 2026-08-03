@@ -348,7 +348,7 @@ function NavBannersSection() {
           assetPath={`themes/fuwari/nav-banners/${item.id}.webp`}
           accept=".png,.webp,.jpg,.jpeg"
           label={item.label.zh || item.id}
-          hint={m.settings_nav_banner_hint?.() ?? "Banner for this nav section and its sub-pages"}
+          hint="Banner for this nav section and its sub-pages"
           placeholder="Leave empty to use home background"
         />
       ))}
