@@ -32,8 +32,6 @@ export const blogConfig = {
       particlesEnabled: true,
       bannerAnimationType: "fade",
       postsBg: "",
-      postDetailBg: "",
-      searchBg: "",
       friendLinksBg: "",
       live2dEnabled: true,
       live2dModel: "haru",

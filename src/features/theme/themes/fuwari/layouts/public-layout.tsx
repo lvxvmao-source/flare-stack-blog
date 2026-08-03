@@ -33,13 +33,34 @@ export function PublicLayout({
   // Dynamic banner background per page
   const bannerBg = useMemo(() => {
     const path = location.pathname;
+
+    // Helper: check if path belongs to a custom nav item, return its banner if set
+    const customNavBanner = (() => {
+      const items = siteConfig.navItems ?? [];
+      for (const item of items) {
+        if (item.type !== "internal") continue;
+        const itemPath = item.to.replace(/^\//, "");
+        // Match: /nav/{id}, /nav/{id}/..., /{slug}, /{slug}/...
+        if (
+          path === `/${itemPath}` ||
+          path.startsWith(`/${itemPath}/`) ||
+          path === `/nav/${item.id}` ||
+          path.startsWith(`/nav/${item.id}/`)
+        ) {
+          // Use nav item's own banner if configured, otherwise fall through
+          if (item.banner) return item.banner;
+          break;
+        }
+      }
+      return null;
+    })();
+    if (customNavBanner) return customNavBanner;
+
     if (path === "/") return fuwari.homeBg;
     if (path === "/posts" || path.startsWith("/posts")) return fuwari.postsBg || fuwari.homeBg;
-    if (path.startsWith("/post/")) return fuwari.postDetailBg || fuwari.homeBg;
-    if (path === "/search") return fuwari.searchBg || fuwari.homeBg;
     if (path === "/friend-links") return fuwari.friendLinksBg || fuwari.homeBg;
     return fuwari.homeBg;
-  }, [location.pathname, fuwari]);
+  }, [location.pathname, fuwari, siteConfig.navItems]);
 
   return (
     <div className="relative min-h-screen bg-(--fuwari-page-bg) transition-colors">

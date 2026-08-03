@@ -206,7 +206,7 @@ function BgmPlaylistEditor() {
           <input
             type="text"
             {...register(`site.theme.fuwari.bgmPlaylist.${i}.url` as never)}
-            placeholder="Audio URL"
+            placeholder="Audio URL or Bilibili video link"
             className="flex-1 rounded-lg border border-border/50 bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-(--fuwari-primary)/30"
           />
           <button type="button" onClick={() => removeTrack(i)} className="text-red-500 text-xs px-2 py-2 hover:bg-red-50 rounded-lg transition-colors">
@@ -276,9 +276,9 @@ export function FuwariThemeSettings() {
       {/* ── Page Backgrounds ── */}
       <SectionShell title={m.settings_site_fuwari_page_bgs?.() ?? "Page Backgrounds"}>
         <AssetUploadField name="site.theme.fuwari.postsBg" assetPath="themes/fuwari/posts-bg.webp" accept=".png,.webp,.jpg,.jpeg" label={m.settings_site_fuwari_posts_bg?.() ?? "Posts Page Banner"} placeholder="Leave empty to use default home background" error={errors.site?.theme?.fuwari?.postsBg?.message} />
-        <AssetUploadField name="site.theme.fuwari.postDetailBg" assetPath="themes/fuwari/post-detail-bg.webp" accept=".png,.webp,.jpg,.jpeg" label={m.settings_site_fuwari_post_bg?.() ?? "Post Detail Banner"} placeholder="Leave empty to use default home background" error={errors.site?.theme?.fuwari?.postDetailBg?.message} />
-        <AssetUploadField name="site.theme.fuwari.searchBg" assetPath="themes/fuwari/search-bg.webp" accept=".png,.webp,.jpg,.jpeg" label={m.settings_site_fuwari_search_bg?.() ?? "Search Page Banner"} placeholder="Leave empty to use default home background" error={errors.site?.theme?.fuwari?.searchBg?.message} />
         <AssetUploadField name="site.theme.fuwari.friendLinksBg" assetPath="themes/fuwari/friend-links-bg.webp" accept=".png,.webp,.jpg,.jpeg" label={m.settings_site_fuwari_friendlinks_bg?.() ?? "Friend Links Banner"} placeholder="Leave empty to use default home background" error={errors.site?.theme?.fuwari?.friendLinksBg?.message} />
+        {/* Dynamic nav item banners */}
+        <NavBannersSection />
       </SectionShell>
 
       {/* ── Live2D Widget ── */}
@@ -327,6 +327,31 @@ export function FuwariThemeSettings() {
           { value: "noto", label: "Noto Sans SC" },
         ]} hint={m.settings_site_fuwari_display_font_hint?.() ?? "Font used for headings and decorative text"} />
       </SectionShell>
+    </>
+  );
+}
+
+/** Dynamic banner upload fields for custom nav items */
+function NavBannersSection() {
+  const { watch } = useFormContext<SystemConfig>();
+  const navItems = watch("site.navItems") as Array<{ id: string; label: { zh: string }; type: string }> | undefined;
+  const internalItems = (navItems ?? []).filter((item) => item.type === "internal");
+
+  if (internalItems.length === 0) return null;
+
+  return (
+    <>
+      {internalItems.map((item, index) => (
+        <AssetUploadField
+          key={item.id}
+          name={`site.navItems.${index}.banner`}
+          assetPath={`themes/fuwari/nav-banners/${item.id}.webp`}
+          accept=".png,.webp,.jpg,.jpeg"
+          label={item.label.zh || item.id}
+          hint={m.settings_nav_banner_hint?.() ?? "Banner for this nav section and its sub-pages"}
+          placeholder="Leave empty to use home background"
+        />
+      ))}
     </>
   );
 }

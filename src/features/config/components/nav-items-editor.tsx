@@ -15,6 +15,7 @@ function createEmptyItem() {
     type: "internal" as const,
     to: `/nav/${id}`,
     openInNewTab: false,
+    banner: "",
   };
 }
 

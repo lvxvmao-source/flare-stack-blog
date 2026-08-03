@@ -33,6 +33,7 @@ export function createNavItemSchema(messages?: Messages) {
       type: z.enum(["internal", "external"]),
       to: z.string().min(1),
       openInNewTab: z.boolean().optional(),
+      banner: z.string().optional(),
     })
     .refine(
       (item) =>
@@ -325,8 +326,6 @@ function createFuwariThemeSiteConfigSchema() {
     bannerAnimationType: z.enum(["fade", "parallax", "kenburns", "none"]),
     // Page-specific backgrounds
     postsBg: createBackgroundImageRefSchema(),
-    postDetailBg: createBackgroundImageRefSchema(),
-    searchBg: createBackgroundImageRefSchema(),
     friendLinksBg: createBackgroundImageRefSchema(),
     // Live2D widget
     live2dEnabled: z.boolean(),
@@ -359,8 +358,6 @@ function createFuwariThemeSiteConfigInputSchema() {
     particlesEnabled: z.boolean().optional(),
     bannerAnimationType: z.enum(["fade", "parallax", "kenburns", "none"]).optional(),
     postsBg: createBackgroundImageRefSchema().optional(),
-    postDetailBg: createBackgroundImageRefSchema().optional(),
-    searchBg: createBackgroundImageRefSchema().optional(),
     friendLinksBg: createBackgroundImageRefSchema().optional(),
     live2dEnabled: z.boolean().optional(),
     live2dModel: z.enum(["haru", "hijiki", "tororo", "shizuku"]).optional(),
@@ -387,8 +384,6 @@ function createFuwariThemeSiteConfigInputFormSchema(messages: Messages) {
     particlesEnabled: z.boolean().optional(),
     bannerAnimationType: z.enum(["fade", "parallax", "kenburns", "none"]).optional(),
     postsBg: createBackgroundImageRefFormSchema(messages).optional(),
-    postDetailBg: createBackgroundImageRefFormSchema(messages).optional(),
-    searchBg: createBackgroundImageRefFormSchema(messages).optional(),
     friendLinksBg: createBackgroundImageRefFormSchema(messages).optional(),
     live2dEnabled: z.boolean().optional(),
     live2dModel: z.enum(["haru", "hijiki", "tororo", "shizuku"]).optional(),

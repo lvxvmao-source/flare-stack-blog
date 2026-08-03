@@ -170,12 +170,6 @@ export function resolveSiteConfig(
         postsBg:
           config?.site?.theme?.fuwari?.postsBg ??
           blogConfig.theme.fuwari.postsBg,
-        postDetailBg:
-          config?.site?.theme?.fuwari?.postDetailBg ??
-          blogConfig.theme.fuwari.postDetailBg,
-        searchBg:
-          config?.site?.theme?.fuwari?.searchBg ??
-          blogConfig.theme.fuwari.searchBg,
         friendLinksBg:
           config?.site?.theme?.fuwari?.friendLinksBg ??
           blogConfig.theme.fuwari.friendLinksBg,
