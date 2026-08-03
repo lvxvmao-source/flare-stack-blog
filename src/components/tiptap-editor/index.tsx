@@ -5,7 +5,6 @@ import type {
 } from "@tiptap/react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
-import { marked } from "marked";
 import { normalizeLinkHref } from "@/lib/links/normalize-link-href";
 import { cn } from "@/lib/utils";
 import type { FormulaModalPayload } from "./formula-modal-store";
