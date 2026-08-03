@@ -1,9 +1,12 @@
 import { useLocation, useRouteContext } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import type { PublicLayoutProps } from "@/features/theme/contract/layouts";
 import { BackToTop } from "../components/control/back-to-top";
 import { RightSidebar } from "@/features/theme/themes/fuwari/components/right-sidebar";
 import { Sidebar } from "../components/sidebar";
+import { SakuraPetals } from "../components/effects/sakura-petals";
+import { BgmPlayer } from "../components/effects/bgm-player";
+import { Live2dWidget } from "../components/effects/live2d-widget";
 import { Footer } from "./footer";
 import { MobileMenu } from "./mobile-menu";
 import { Navbar } from "./navbar";
@@ -25,9 +28,28 @@ export function PublicLayout({
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const bannerHeightVh = isHomePage ? BANNER_HEIGHT_HOME : BANNER_HEIGHT_PAGE;
+  const fuwari = siteConfig.theme.fuwari;
+
+  // Dynamic banner background per page
+  const bannerBg = useMemo(() => {
+    const path = location.pathname;
+    if (path === "/") return fuwari.homeBg;
+    if (path === "/posts" || path.startsWith("/posts")) return fuwari.postsBg || fuwari.homeBg;
+    if (path.startsWith("/post/")) return fuwari.postDetailBg || fuwari.homeBg;
+    if (path === "/search") return fuwari.searchBg || fuwari.homeBg;
+    if (path === "/friend-links") return fuwari.friendLinksBg || fuwari.homeBg;
+    return fuwari.homeBg;
+  }, [location.pathname, fuwari]);
 
   return (
     <div className="relative min-h-screen bg-(--fuwari-page-bg) transition-colors">
+      {/* Sakura petal effect */}
+      <SakuraPetals
+        enabled={fuwari.sakuraEnabled}
+        density={fuwari.sakuraDensity}
+        speed={fuwari.sakuraSpeed}
+      />
+
       <MobileMenu
         navOptions={navOptions}
         isOpen={isMenuOpen}
@@ -55,11 +77,13 @@ export function PublicLayout({
         style={{ height: `${bannerHeightVh}vh` }}
       >
         <img
-          src={siteConfig.theme.fuwari.homeBg}
+          src={bannerBg}
           alt="banner"
           fetchPriority="high"
           className="w-full h-full object-cover object-center"
         />
+        {/* Anime gradient overlay */}
+        <div className="anime-banner-overlay" />
       </div>
 
       {/* Main content - overlaps banner by MAIN_OVERLAP_REM */}
@@ -86,7 +110,7 @@ export function PublicLayout({
 
           {/* Footer Column (Desktop: below main, Mobile: below sidebar) */}
           <div
-            className="order-4 lg:col-start-2 fuwari-onload-animation mt-auto"
+            className="order-4 lg:col-start-2 anime-onload mt-auto"
             style={{ animationDelay: "250ms" }}
           >
             <Footer navOptions={navOptions} />
@@ -95,6 +119,20 @@ export function PublicLayout({
           <BackToTop />
         </div>
       </div>
+
+      {/* BGM Player */}
+      <BgmPlayer
+        enabled={fuwari.bgmEnabled}
+        playlist={fuwari.bgmPlaylist}
+        defaultVolume={fuwari.bgmDefaultVolume}
+      />
+
+      {/* Live2D Widget */}
+      <Live2dWidget
+        enabled={fuwari.live2dEnabled}
+        model={fuwari.live2dModel}
+        position={fuwari.live2dPosition}
+      />
     </div>
   );
 }

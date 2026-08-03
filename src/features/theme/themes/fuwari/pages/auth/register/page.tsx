@@ -15,7 +15,7 @@ export function RegisterPage({
   if (registerForm.isSuccess) {
     return (
       <div className="flex flex-col items-center justify-center text-center space-y-8 animate-in fade-in zoom-in-95 duration-500 py-4">
-        <div className="w-16 h-16 rounded-full bg-(--fuwari-primary)/10 text-(--fuwari-primary) flex items-center justify-center mb-2">
+        <div className="w-16 h-16 rounded-full flex items-center justify-center mb-2" style={{ background: "var(--anime-sakura-pale)", color: "var(--anime-sakura)" }}>
           <MailCheck size={32} strokeWidth={1.5} />
         </div>
         <div className="space-y-3">
@@ -61,7 +61,7 @@ export function RegisterPage({
               {...register("name")}
               placeholder={m.register_nickname_placeholder()}
               disabled={isFormDisabled}
-              className="w-full bg-(--fuwari-input-bg) border border-(--fuwari-input-border) rounded-xl px-4 py-3 text-(--fuwari-text-90) placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-(--fuwari-primary)/50 focus:bg-(--fuwari-primary)/5 transition-all text-sm outline-none"
+              className="w-full bg-(--fuwari-input-bg) border border-(--fuwari-input-border) rounded-xl px-4 py-3 text-(--fuwari-text-90) placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-(--anime-sakura)/50 focus:bg-(--anime-sakura-pale)/30 transition-all text-sm outline-none"
             />
             {errors.name && (
               <span className="text-xs text-red-500 ml-1 mt-1 font-medium">
@@ -81,7 +81,7 @@ export function RegisterPage({
               {...register("email")}
               placeholder={m.login_email_placeholder()}
               disabled={isFormDisabled}
-              className="w-full bg-(--fuwari-input-bg) border border-(--fuwari-input-border) rounded-xl px-4 py-3 text-(--fuwari-text-90) placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-(--fuwari-primary)/50 focus:bg-(--fuwari-primary)/5 transition-all text-sm outline-none"
+              className="w-full bg-(--fuwari-input-bg) border border-(--fuwari-input-border) rounded-xl px-4 py-3 text-(--fuwari-text-90) placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-(--anime-sakura)/50 focus:bg-(--anime-sakura-pale)/30 transition-all text-sm outline-none"
             />
             {errors.email && (
               <span className="text-xs text-red-500 ml-1 mt-1 font-medium">
@@ -102,7 +102,7 @@ export function RegisterPage({
                 {...register("password")}
                 placeholder={m.login_password_placeholder()}
                 disabled={isFormDisabled}
-                className="w-full bg-(--fuwari-input-bg) border border-(--fuwari-input-border) rounded-xl px-4 py-3 text-(--fuwari-text-90) placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-(--fuwari-primary)/50 focus:bg-(--fuwari-primary)/5 transition-all text-sm outline-none"
+                className="w-full bg-(--fuwari-input-bg) border border-(--fuwari-input-border) rounded-xl px-4 py-3 text-(--fuwari-text-90) placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-(--anime-sakura)/50 focus:bg-(--anime-sakura-pale)/30 transition-all text-sm outline-none"
               />
               {errors.password && (
                 <span className="text-xs text-red-500 ml-1 mt-1 font-medium">
@@ -125,7 +125,7 @@ export function RegisterPage({
                 {...register("confirmPassword")}
                 placeholder={m.login_password_placeholder()}
                 disabled={isFormDisabled}
-                className="w-full bg-(--fuwari-input-bg) border border-(--fuwari-input-border) rounded-xl px-4 py-3 text-(--fuwari-text-90) placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-(--fuwari-primary)/50 focus:bg-(--fuwari-primary)/5 transition-all text-sm outline-none"
+                className="w-full bg-(--fuwari-input-bg) border border-(--fuwari-input-border) rounded-xl px-4 py-3 text-(--fuwari-text-90) placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-(--anime-sakura)/50 focus:bg-(--anime-sakura-pale)/30 transition-all text-sm outline-none"
               />
               {errors.confirmPassword && (
                 <span className="text-xs text-red-500 ml-1 mt-1 font-medium">
@@ -138,7 +138,7 @@ export function RegisterPage({
           <button
             type="submit"
             disabled={isFormDisabled}
-            className="mt-4 w-full py-3.5 rounded-xl fuwari-btn-primary font-bold text-sm tracking-wide active:scale-[0.98] transition-all gap-2"
+            className="mt-4 w-full py-3.5 rounded-xl fuwari-btn-primary font-bold text-sm tracking-wide active:scale-[0.98] transition-all gap-2 anime-btn-ripple"
           >
             {isSubmitting ? (
               <>
@@ -159,7 +159,7 @@ export function RegisterPage({
             {m.register_have_account()}{" "}
             <Link
               to="/login"
-              className="text-(--fuwari-primary) hover:underline"
+              className="text-(--anime-sakura) hover:underline"
             >
               {m.register_go_to_login()}
             </Link>

@@ -7,13 +7,13 @@ export function Sidebar({ className }: { className?: string }) {
   return (
     <aside className={cn("flex flex-col gap-4", className)}>
       <div
-        className="fuwari-onload-animation"
+        className="anime-onload"
         style={{ animationDelay: "100ms" }}
       >
         <Profile />
       </div>
       <div
-        className="sticky top-4 fuwari-onload-animation"
+        className="sticky top-4 anime-onload"
         style={{ animationDelay: "150ms" }}
       >
         <Suspense fallback={<TagsSkeleton />}>

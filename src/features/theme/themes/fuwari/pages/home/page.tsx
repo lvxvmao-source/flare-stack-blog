@@ -53,11 +53,11 @@ export function HomePage({ posts, pinnedPosts, popularPosts }: HomePageProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col rounded-(--fuwari-radius-large) bg-(--fuwari-card-bg) py-1 md:py-0 md:bg-transparent md:gap-4">
+      <div className="flex flex-col md:bg-transparent md:gap-4">
         {mergedPosts.map(({ post, pinned, popular }, i) => (
           <div
             key={post.slug}
-            className="fuwari-onload-animation"
+            className="anime-onload"
             style={{
               animationDelay: `calc(var(--fuwari-content-delay) + ${i * delayOffset}ms)`,
             }}
@@ -73,14 +73,14 @@ export function HomePage({ posts, pinnedPosts, popularPosts }: HomePageProps) {
           </div>
         ))}
         <div
-          className="fuwari-onload-animation"
+          className="anime-onload"
           style={{
             animationDelay: `calc(var(--fuwari-content-delay) + ${mergedPosts.length * delayOffset}ms)`,
           }}
         >
           <Link
             to="/posts"
-            className="fuwari-btn-regular mx-6 rounded-lg h-10 px-6 mt-4 flex items-center justify-center mb-4 md:mb-0 md:mx-auto"
+            className="anime-breathe mx-6 rounded-lg h-11 px-8 mt-4 flex items-center justify-center mb-4 md:mb-0 md:mx-auto font-bold text-(--anime-sakura) bg-(--anime-sakura-pale) hover:bg-(--anime-sakura-light) transition-colors shadow-sm hover:shadow-md"
           >
             {m.home_view_all_posts()}
           </Link>

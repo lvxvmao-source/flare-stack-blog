@@ -6,6 +6,7 @@ import {
   Eye,
   Flame,
   Pin,
+  Sparkles,
   Tag,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -33,12 +34,13 @@ export function PostCard({
 
   return (
     <div
-      className={`fuwari-card-base flex flex-col w-full rounded-(--fuwari-radius-large) overflow-hidden relative ${
-        pinned ? "border-2 border-(--fuwari-primary)/20 shadow-sm" : ""
+      className={`anime-card flex flex-col w-full overflow-hidden relative transition-all duration-300 ${
+        pinned ? "border-(--anime-sakura)/30 shadow-md!" : ""
       }`}
     >
       {pinned && (
-        <div className="absolute top-0 right-0 w-32 h-32 bg-(--fuwari-primary) opacity-5 rounded-bl-[100px] -z-10 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-[100px] -z-10 pointer-events-none opacity-10"
+          style={{ background: "var(--anime-sakura)" }} />
       )}
 
       <div className="pl-6 md:pl-9 pr-6 pt-6 md:pt-7 pb-6 relative w-full md:pr-24">
@@ -47,18 +49,15 @@ export function PostCard({
           <div className="flex items-center gap-1.5 font-medium text-sm mb-3">
             {pinned ? (
               <>
-                <Pin
-                  size={16}
-                  className="fill-current text-(--fuwari-primary)"
-                />
-                <span className="text-(--fuwari-primary)">
+                <Pin size={16} className="fill-current text-(--anime-sakura)" />
+                <span className="text-(--anime-sakura)">
                   {m.home_pinned_posts()}
                 </span>
               </>
             ) : (
               <>
-                <Flame size={16} className="text-orange-500" />
-                <span className="text-orange-500">
+                <Sparkles size={16} className="text-(--anime-gold)" />
+                <span className="text-(--anime-gold)">
                   {m.home_popular_posts()}
                 </span>
               </>
@@ -69,13 +68,13 @@ export function PostCard({
         <PostLink
           slug={post.slug}
           navId={post.navId}
-          className="transition group w-full block font-bold mb-3 text-3xl fuwari-text-90 hover:text-(--fuwari-primary) active:text-(--fuwari-primary) relative before:w-1 before:h-5 before:rounded-md before:absolute before:-left-5 before:top-1/2 before:-translate-y-1/2 before:hidden md:before:block before:bg-(--fuwari-primary)"
+          className="transition group w-full block font-bold mb-3 text-3xl fuwari-text-90 hover:text-(--anime-sakura) active:text-(--anime-sakura) relative before:w-1 before:h-5 before:rounded-md before:absolute before:-left-5 before:top-1/2 before:-translate-y-1/2 before:hidden md:before:block before:bg-(--anime-sakura)"
         >
           {post.title}
           {
             <>
-              <ChevronRight className="inline-block md:hidden text-[2rem] text-(--fuwari-primary) align-middle -mt-1 ml-1" />
-              <ChevronRight className="text-(--fuwari-primary) text-[2rem] transition hidden md:inline absolute translate-y-0.5 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0" />
+              <ChevronRight className="inline-block md:hidden text-[2rem] text-(--anime-sakura) align-middle -mt-1 ml-1" />
+              <ChevronRight className="text-(--anime-sakura) text-[2rem] transition hidden md:inline absolute translate-y-0.5 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0" />
             </>
           }
         </PostLink>
@@ -111,7 +110,7 @@ export function PostCard({
                     <Link
                       to="/posts"
                       search={{ tagName: name }}
-                      className="fuwari-expand-animation rounded-md px-1.5 py-1 -m-1.5 text-sm font-medium hover:text-(--fuwari-primary)"
+                      className="anime-btn-ripple rounded-md px-1.5 py-1 -m-1.5 text-sm font-medium hover:text-(--anime-sakura) transition-colors"
                     >
                       {name}
                     </Link>
@@ -160,10 +159,10 @@ export function PostCard({
         slug={post.slug}
         navId={post.navId}
         ariaLabel={post.title}
-        className="hidden md:flex fuwari-btn-regular w-13 absolute right-3 top-3 bottom-3 rounded-xl active:scale-95"
+        className="hidden md:flex fuwari-btn-regular w-13 absolute right-3 top-3 bottom-3 rounded-xl active:scale-95 hover:bg-(--anime-sakura-pale)! transition-colors"
       >
         <ChevronRight
-          className="text-(--fuwari-primary) text-4xl mx-auto"
+          className="text-(--anime-sakura) text-4xl mx-auto"
           strokeWidth={2}
         />
       </PostLink>

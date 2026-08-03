@@ -152,6 +152,66 @@ export function resolveSiteConfig(
         primaryHue:
           config?.site?.theme?.fuwari?.primaryHue ??
           blogConfig.theme.fuwari.primaryHue,
+        sakuraEnabled:
+          config?.site?.theme?.fuwari?.sakuraEnabled ??
+          blogConfig.theme.fuwari.sakuraEnabled,
+        sakuraDensity:
+          config?.site?.theme?.fuwari?.sakuraDensity ??
+          blogConfig.theme.fuwari.sakuraDensity,
+        sakuraSpeed:
+          config?.site?.theme?.fuwari?.sakuraSpeed ??
+          blogConfig.theme.fuwari.sakuraSpeed,
+        particlesEnabled:
+          config?.site?.theme?.fuwari?.particlesEnabled ??
+          blogConfig.theme.fuwari.particlesEnabled,
+        bannerAnimationType:
+          config?.site?.theme?.fuwari?.bannerAnimationType ??
+          blogConfig.theme.fuwari.bannerAnimationType,
+        postsBg:
+          config?.site?.theme?.fuwari?.postsBg ??
+          blogConfig.theme.fuwari.postsBg,
+        postDetailBg:
+          config?.site?.theme?.fuwari?.postDetailBg ??
+          blogConfig.theme.fuwari.postDetailBg,
+        searchBg:
+          config?.site?.theme?.fuwari?.searchBg ??
+          blogConfig.theme.fuwari.searchBg,
+        friendLinksBg:
+          config?.site?.theme?.fuwari?.friendLinksBg ??
+          blogConfig.theme.fuwari.friendLinksBg,
+        live2dEnabled:
+          config?.site?.theme?.fuwari?.live2dEnabled ??
+          blogConfig.theme.fuwari.live2dEnabled,
+        live2dModel:
+          config?.site?.theme?.fuwari?.live2dModel ??
+          blogConfig.theme.fuwari.live2dModel,
+        live2dPosition:
+          config?.site?.theme?.fuwari?.live2dPosition ??
+          blogConfig.theme.fuwari.live2dPosition,
+        bgmEnabled:
+          config?.site?.theme?.fuwari?.bgmEnabled ??
+          blogConfig.theme.fuwari.bgmEnabled,
+        bgmDefaultVolume:
+          config?.site?.theme?.fuwari?.bgmDefaultVolume ??
+          blogConfig.theme.fuwari.bgmDefaultVolume,
+        bgmPlaylist:
+          config?.site?.theme?.fuwari?.bgmPlaylist ??
+          blogConfig.theme.fuwari.bgmPlaylist,
+        commentStickersEnabled:
+          config?.site?.theme?.fuwari?.commentStickersEnabled ??
+          blogConfig.theme.fuwari.commentStickersEnabled,
+        cardBorderRadius:
+          config?.site?.theme?.fuwari?.cardBorderRadius ??
+          blogConfig.theme.fuwari.cardBorderRadius,
+        cardGlassIntensity:
+          config?.site?.theme?.fuwari?.cardGlassIntensity ??
+          blogConfig.theme.fuwari.cardGlassIntensity,
+        footerQuote:
+          config?.site?.theme?.fuwari?.footerQuote ??
+          blogConfig.theme.fuwari.footerQuote,
+        displayFont:
+          config?.site?.theme?.fuwari?.displayFont ??
+          blogConfig.theme.fuwari.displayFont,
       },
     },
     navItems: config?.site?.navItems ?? blogConfig.navItems,

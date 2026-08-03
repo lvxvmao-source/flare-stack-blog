@@ -305,11 +305,46 @@ function createAcgThemeSiteConfigInputFormSchema(messages: Messages) {
   });
 }
 
+function createBgmTrackSchema() {
+  return z.object({
+    title: z.string().min(1).max(200),
+    url: z.string().min(1),
+  });
+}
+
 function createFuwariThemeSiteConfigSchema() {
   return z.object({
     homeBg: createBackgroundImageRefSchema(),
     avatar: createAssetRefSchema(),
     primaryHue: createHueSchema(),
+    // Decoration effects
+    sakuraEnabled: z.boolean(),
+    sakuraDensity: z.number().int().min(1).max(10),
+    sakuraSpeed: z.number().int().min(1).max(5),
+    particlesEnabled: z.boolean(),
+    bannerAnimationType: z.enum(["fade", "parallax", "kenburns", "none"]),
+    // Page-specific backgrounds
+    postsBg: createBackgroundImageRefSchema(),
+    postDetailBg: createBackgroundImageRefSchema(),
+    searchBg: createBackgroundImageRefSchema(),
+    friendLinksBg: createBackgroundImageRefSchema(),
+    // Live2D widget
+    live2dEnabled: z.boolean(),
+    live2dModel: z.enum(["haru", "hijiki", "tororo", "shizuku"]),
+    live2dPosition: z.enum(["left", "right"]),
+    // BGM player
+    bgmEnabled: z.boolean(),
+    bgmDefaultVolume: z.number().int().min(0).max(100),
+    bgmPlaylist: z.array(createBgmTrackSchema()),
+    // Comment stickers
+    commentStickersEnabled: z.boolean(),
+    // Card style
+    cardBorderRadius: z.number().min(0.5).max(2),
+    cardGlassIntensity: z.number().min(0).max(1),
+    // Footer
+    footerQuote: z.string().max(200),
+    // Font
+    displayFont: z.enum(["zcool", "mashan", "noto"]),
   });
 }
 
@@ -318,6 +353,26 @@ function createFuwariThemeSiteConfigInputSchema() {
     homeBg: createBackgroundImageRefSchema().optional(),
     avatar: createAssetRefSchema().optional(),
     primaryHue: createHueSchema().optional(),
+    sakuraEnabled: z.boolean().optional(),
+    sakuraDensity: z.number().int().min(1).max(10).optional(),
+    sakuraSpeed: z.number().int().min(1).max(5).optional(),
+    particlesEnabled: z.boolean().optional(),
+    bannerAnimationType: z.enum(["fade", "parallax", "kenburns", "none"]).optional(),
+    postsBg: createBackgroundImageRefSchema().optional(),
+    postDetailBg: createBackgroundImageRefSchema().optional(),
+    searchBg: createBackgroundImageRefSchema().optional(),
+    friendLinksBg: createBackgroundImageRefSchema().optional(),
+    live2dEnabled: z.boolean().optional(),
+    live2dModel: z.enum(["haru", "hijiki", "tororo", "shizuku"]).optional(),
+    live2dPosition: z.enum(["left", "right"]).optional(),
+    bgmEnabled: z.boolean().optional(),
+    bgmDefaultVolume: z.number().int().min(0).max(100).optional(),
+    bgmPlaylist: z.array(createBgmTrackSchema()).optional(),
+    commentStickersEnabled: z.boolean().optional(),
+    cardBorderRadius: z.number().min(0.5).max(2).optional(),
+    cardGlassIntensity: z.number().min(0).max(1).optional(),
+    footerQuote: z.string().max(200).optional(),
+    displayFont: z.enum(["zcool", "mashan", "noto"]).optional(),
   });
 }
 
@@ -326,6 +381,26 @@ function createFuwariThemeSiteConfigInputFormSchema(messages: Messages) {
     homeBg: createBackgroundImageRefFormSchema(messages).optional(),
     avatar: createAssetRefFormSchema(messages).optional(),
     primaryHue: createHueFormSchema(messages).optional(),
+    sakuraEnabled: z.boolean().optional(),
+    sakuraDensity: z.number().int().min(1).max(10).optional(),
+    sakuraSpeed: z.number().int().min(1).max(5).optional(),
+    particlesEnabled: z.boolean().optional(),
+    bannerAnimationType: z.enum(["fade", "parallax", "kenburns", "none"]).optional(),
+    postsBg: createBackgroundImageRefFormSchema(messages).optional(),
+    postDetailBg: createBackgroundImageRefFormSchema(messages).optional(),
+    searchBg: createBackgroundImageRefFormSchema(messages).optional(),
+    friendLinksBg: createBackgroundImageRefFormSchema(messages).optional(),
+    live2dEnabled: z.boolean().optional(),
+    live2dModel: z.enum(["haru", "hijiki", "tororo", "shizuku"]).optional(),
+    live2dPosition: z.enum(["left", "right"]).optional(),
+    bgmEnabled: z.boolean().optional(),
+    bgmDefaultVolume: z.number().int().min(0).max(100).optional(),
+    bgmPlaylist: z.array(createBgmTrackSchema()).optional(),
+    commentStickersEnabled: z.boolean().optional(),
+    cardBorderRadius: z.number().min(0.5).max(2).optional(),
+    cardGlassIntensity: z.number().min(0).max(1).optional(),
+    footerQuote: z.string().max(200).optional(),
+    displayFont: z.enum(["zcool", "mashan", "noto"]).optional(),
   });
 }
 

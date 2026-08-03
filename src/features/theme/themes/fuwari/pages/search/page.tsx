@@ -23,12 +23,12 @@ export function SearchPage({
     <div className="w-full max-w-4xl mx-auto flex flex-col gap-6 pb-12">
       {/* Header Area */}
       <div
-        className="fuwari-card-base p-6 md:p-8 flex items-center gap-4 fuwari-onload-animation"
+        className="anime-glass p-6 md:p-8 flex items-center gap-4 anime-onload"
         style={{ animationDelay: "100ms" }}
       >
         <button
           onClick={onBack}
-          className="group flex items-center justify-center w-10 h-10 rounded-xl bg-(--fuwari-btn-regular-bg) text-(--fuwari-btn-content) hover:bg-(--fuwari-btn-regular-bg-hover) transition-colors shrink-0"
+          className="group flex items-center justify-center w-10 h-10 rounded-xl bg-(--fuwari-btn-regular-bg) text-(--fuwari-btn-content) hover:bg-(--anime-sakura-pale) transition-colors shrink-0"
           title={m.search_back()}
         >
           <ArrowLeft
@@ -37,7 +37,7 @@ export function SearchPage({
           />
         </button>
 
-        <div className="relative flex-1 flex items-center">
+        <div className="relative flex-1 flex items-center anime-search-glow rounded-xl">
           <Search className="absolute left-4 w-5 h-5 fuwari-text-30 pointer-events-none" />
           <input
             ref={inputRef}
@@ -45,7 +45,7 @@ export function SearchPage({
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
             placeholder={m.search_placeholder()}
-            className="w-full pl-12 pr-12 py-3 rounded-xl border border-(--fuwari-input-border) bg-(--fuwari-input-bg) focus:outline-none focus:border-(--fuwari-primary)/50 focus:bg-(--fuwari-primary)/5 transition-all fuwari-text-90 text-lg md:text-xl placeholder:text-black/30 dark:placeholder:text-white/30"
+            className="w-full pl-12 pr-12 py-3 rounded-xl border border-(--fuwari-input-border) bg-(--fuwari-input-bg) focus:outline-none focus:border-(--anime-sakura)/50 focus:bg-(--anime-sakura-pale)/30 transition-all fuwari-text-90 text-lg md:text-xl placeholder:text-black/30 dark:placeholder:text-white/30"
           />
           {isSearching && (
             <div className="absolute right-4 w-5 h-5 fuwari-text-50 pointer-events-none flex items-center justify-center">
@@ -59,10 +59,11 @@ export function SearchPage({
       <div className="flex flex-col gap-4">
         {query.trim() === "" && (
           <div
-            className="fuwari-card-base p-16 flex flex-col items-center justify-center text-center fuwari-onload-animation"
+            className="anime-glass p-16 flex flex-col items-center justify-center text-center anime-onload"
             style={{ animationDelay: "200ms" }}
           >
-            <div className="w-20 h-20 rounded-full bg-(--fuwari-btn-regular-bg) flex items-center justify-center mb-6 text-(--fuwari-btn-content)">
+            <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+              style={{ background: "var(--anime-sakura-pale)", color: "var(--anime-sakura)" }}>
               <Keyboard size={32} strokeWidth={1.5} />
             </div>
             <h3 className="text-xl font-bold fuwari-text-75 mb-3">
@@ -76,10 +77,11 @@ export function SearchPage({
 
         {query.trim() !== "" && !isSearching && results.length === 0 && (
           <div
-            className="fuwari-card-base p-12 flex flex-col items-center justify-center text-center fuwari-onload-animation"
+            className="anime-glass p-12 flex flex-col items-center justify-center text-center anime-onload"
             style={{ animationDelay: "200ms" }}
           >
-            <div className="w-16 h-16 rounded-full bg-(--fuwari-btn-regular-bg) flex items-center justify-center mb-4 text-(--fuwari-btn-content)">
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
+              style={{ background: "var(--anime-sakura-pale)", color: "var(--anime-sakura)" }}>
               <Search size={24} strokeWidth={1.5} />
             </div>
             <h3 className="text-lg font-bold fuwari-text-75 mb-2">
@@ -95,12 +97,12 @@ export function SearchPage({
           <button
             key={result.post.id}
             onClick={() => onSelectPost(result.post.slug)}
-            className="fuwari-card-base p-6 text-left w-full group hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex flex-col gap-3 fuwari-onload-animation outline-none focus-visible:ring-2 focus-visible:ring-(--fuwari-primary)/50"
+            className="anime-card p-6 text-left w-full group hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex flex-col gap-3 anime-onload outline-none focus-visible:ring-2 focus-visible:ring-(--anime-sakura)/50"
             style={{ animationDelay: `${200 + index * 50}ms` }}
           >
             {/* Title with highlighting */}
             <h2
-              className="text-xl font-bold fuwari-text-90 group-hover:text-(--fuwari-primary) transition-colors"
+              className="text-xl font-bold fuwari-text-90 group-hover:text-(--anime-sakura) transition-colors"
               style={{
                 viewTransitionName: `post-title-${result.post.slug}`,
               }}
@@ -127,7 +129,8 @@ export function SearchPage({
                 {result.post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-xs font-mono text-(--fuwari-btn-content) bg-(--fuwari-btn-regular-bg) px-2 py-1 rounded-md"
+                    className="text-xs text-(--fuwari-btn-content) px-2 py-1 rounded-md"
+                    style={{ background: "var(--anime-sakura-pale)" }}
                   >
                     #{tag}
                   </span>
@@ -141,7 +144,7 @@ export function SearchPage({
                 __html: `
               #search-card-${result.post.id} mark {
                 background-color: transparent;
-                color: var(--fuwari-primary);
+                color: var(--anime-sakura);
                 font-weight: 600;
               }
             `,
@@ -155,9 +158,9 @@ export function SearchPage({
         <style
           dangerouslySetInnerHTML={{
             __html: `
-          .fuwari-card-base mark {
+          .anime-card mark {
             background-color: transparent;
-            color: var(--fuwari-primary);
+            color: var(--anime-sakura);
             font-weight: 600;
             padding: 0 0.1em;
           }

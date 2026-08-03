@@ -19,7 +19,7 @@ export function FriendCard({ link, className, style }: FriendCardProps) {
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "fuwari-card-base block relative p-4 transition-all duration-300",
+        "anime-card anime-gradient-border block relative p-4 transition-all duration-300",
         "hover:-translate-y-1 hover:shadow-lg group active:scale-[0.98]",
         className,
       )}

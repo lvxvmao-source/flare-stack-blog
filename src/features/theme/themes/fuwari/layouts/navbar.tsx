@@ -61,20 +61,21 @@ export function Navbar({
     >
       <div
         id="fuwari-navbar"
-        className="fuwari-onload-animation"
+        className="anime-onload"
         style={{ animationDelay: "0ms" }}
       >
-        <div className="fuwari-card-base overflow-visible! rounded-t-none! mx-auto flex items-center justify-between px-4 h-18 max-w-(--fuwari-page-width)">
+        <div className="anime-glass rounded-t-none! mx-auto flex items-center justify-between px-4 h-18 max-w-(--fuwari-page-width)"
+          style={{ borderRadius: "0 0 var(--anime-radius) var(--anime-radius)" }}>
           <Link
             to="/"
-            className="fuwari-expand-animation rounded-lg h-13 px-5 font-bold active:scale-95 flex items-center"
+            className="anime-btn-ripple rounded-lg h-13 px-5 font-bold active:scale-95 flex items-center transition-all duration-200 hover:text-(--anime-sakura-deep)"
           >
             <Home
               size={28}
               strokeWidth={1.5}
-              className="text-(--fuwari-primary) mr-2 shrink-0"
+              className="text-(--anime-sakura) mr-2 shrink-0"
             />
-            <span className="text-(--fuwari-primary) text-base">
+            <span className="text-(--anime-sakura) text-base">
               {siteConfig.title}
             </span>
           </Link>
@@ -82,7 +83,7 @@ export function Navbar({
           <nav className="hidden md:flex items-center gap-1">
             {navOptions.map((option) => {
               const className =
-                "fuwari-expand-animation rounded-lg h-11 font-bold px-5 active:scale-95 flex items-center fuwari-text-75 hover:text-(--fuwari-primary)";
+                "anime-btn-ripple rounded-lg h-11 font-bold px-5 active:scale-95 flex items-center fuwari-text-75 hover:text-(--anime-sakura) transition-all duration-200";
               if (option.external) {
                 return (
                   <a
@@ -102,7 +103,7 @@ export function Navbar({
                   to={option.to}
                   className={className}
                   activeProps={{
-                    className: "!text-[var(--fuwari-primary)]",
+                    className: "!text-[var(--anime-sakura)]",
                   }}
                 >
                   {option.label}
@@ -114,12 +115,12 @@ export function Navbar({
           <div className="flex items-center gap-1">
             <Link
               to="/search"
-              className="hidden lg:flex items-center h-11 mr-2 rounded-lg bg-black/4 hover:bg-black/6 dark:bg-white/5 dark:hover:bg-white/10 transition-all active:scale-95 group w-52"
+              className="hidden lg:flex items-center h-11 mr-2 rounded-lg bg-black/3 hover:bg-black/5 dark:bg-white/4 dark:hover:bg-white/8 transition-all active:scale-95 group w-52"
               aria-label={m.nav_search()}
             >
               <Search
                 size={18}
-                className="ml-3 transition-colors text-black/30 dark:text-white/30 group-hover:text-black/50 dark:group-hover:text-white/50"
+                className="ml-3 transition-colors text-black/30 dark:text-white/30 group-hover:text-(--anime-sakura)"
                 strokeWidth={1.25}
               />
               <span className="ml-2 text-black/50 dark:text-white/50 text-sm bg-transparent outline-none truncate">
@@ -128,20 +129,20 @@ export function Navbar({
             </Link>
             <Link
               to="/search"
-              className="lg:hidden fuwari-expand-animation rounded-lg h-11 w-11 flex items-center justify-center active:scale-90 fuwari-text-75 hover:text-(--fuwari-primary)"
+              className="lg:hidden anime-btn-ripple rounded-lg h-11 w-11 flex items-center justify-center active:scale-90 fuwari-text-75 hover:text-(--anime-sakura) transition-all duration-200"
               aria-label={m.nav_search()}
             >
               <Search size={18} strokeWidth={1.25} />
             </Link>
-            <ThemeToggle className="fuwari-expand-animation rounded-lg h-11 w-11 flex items-center justify-center active:scale-90 fuwari-text-75 hover:text-(--fuwari-primary) p-0! bg-transparent! [&_svg]:w-4.5! [&_svg]:h-4.5! [&_div]:w-auto! [&_div]:h-auto!" />
-            <LanguageSwitcher className="fuwari-expand-animation rounded-lg h-11 w-11 flex items-center justify-center active:scale-90 fuwari-text-75 hover:text-(--fuwari-primary) p-0! bg-transparent! [&_svg]:w-4.5! [&_svg]:h-4.5!" />
+            <ThemeToggle className="anime-btn-ripple rounded-lg h-11 w-11 flex items-center justify-center active:scale-90 fuwari-text-75 hover:text-(--anime-sakura) transition-all duration-200 p-0! bg-transparent! [&_svg]:w-4.5! [&_svg]:h-4.5! [&_div]:w-auto! [&_div]:h-auto!" />
+            <LanguageSwitcher className="anime-btn-ripple rounded-lg h-11 w-11 flex items-center justify-center active:scale-90 fuwari-text-75 hover:text-(--anime-sakura) transition-all duration-200 p-0! bg-transparent! [&_svg]:w-4.5! [&_svg]:h-4.5!" />
             <div className="hidden md:flex items-center">
               {isLoading ? (
                 <Skeleton className="w-9 h-9 rounded-lg" />
               ) : user ? (
                 <Link
                   to="/profile"
-                  className="fuwari-expand-animation rounded-lg h-11 w-11 flex items-center justify-center active:scale-90"
+                  className="anime-btn-ripple rounded-lg h-11 w-11 flex items-center justify-center active:scale-90 transition-all duration-200"
                 >
                   {user.image ? (
                     <img
@@ -150,7 +151,7 @@ export function Navbar({
                       className="w-8 h-8 rounded-md object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-(--fuwari-btn-regular-bg) flex items-center justify-center">
+                    <div className="w-full h-full bg-(--fuwari-btn-regular-bg) flex items-center justify-center rounded-md">
                       <UserIcon
                         size={18}
                         strokeWidth={1.25}
@@ -162,7 +163,7 @@ export function Navbar({
               ) : (
                 <Link
                   to="/login"
-                  className="fuwari-expand-animation rounded-lg h-11 w-11 flex items-center justify-center active:scale-90 fuwari-text-75 hover:text-(--fuwari-primary)"
+                  className="anime-btn-ripple rounded-lg h-11 w-11 flex items-center justify-center active:scale-90 fuwari-text-75 hover:text-(--anime-sakura) transition-all duration-200"
                   aria-label={m.nav_login()}
                 >
                   <UserIcon size={18} strokeWidth={1.25} />
@@ -170,7 +171,7 @@ export function Navbar({
               )}
             </div>
             <button
-              className="fuwari-expand-animation rounded-lg w-11 h-11 flex items-center justify-center active:scale-90 md:hidden fuwari-text-75 hover:text-(--fuwari-primary)"
+              className="anime-btn-ripple rounded-lg w-11 h-11 flex items-center justify-center active:scale-90 md:hidden fuwari-text-75 hover:text-(--anime-sakura) transition-all duration-200"
               onClick={onMenuClick}
               aria-label={m.common_open_menu()}
               type="button"

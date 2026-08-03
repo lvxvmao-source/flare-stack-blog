@@ -9,11 +9,22 @@ interface FooterProps {
 export function Footer(_: FooterProps) {
   const { siteConfig } = useRouteContext({ from: "__root__" });
   const currentYear = new Date().getFullYear();
+  const fuwari = siteConfig.theme.fuwari;
 
   return (
     <>
-      <div className="border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-4 md:mx-32" />
-      <div className="border-dashed border-black/10 dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6 py-8">
+      <div className="anime-divider my-10 mx-4 md:mx-32">
+        <div className="anime-divider-dot" />
+      </div>
+      <div className="anime-glass rounded-2xl mb-12 flex flex-col items-center justify-center px-6 py-8 gap-3">
+        {/* Anime quote */}
+        {fuwari.footerQuote && (
+          <p className="text-sm fuwari-text-50 text-center italic max-w-md leading-relaxed"
+            style={{ fontFamily: "'ZCOOL XiaoWei', serif" }}>
+            「{fuwari.footerQuote}」
+          </p>
+        )}
+
         <div className="fuwari-text-50 text-sm text-center">
           <ClientOnly fallback="-">
             {m.footer_copyright({
@@ -26,7 +37,7 @@ export function Footer(_: FooterProps) {
             href="/rss.xml"
             target="_blank"
             rel="noreferrer"
-            className="fuwari-expand-animation rounded-md px-1 -m-1 font-medium hover:text-(--fuwari-primary) text-(--fuwari-primary)"
+            className="anime-btn-ripple rounded-md px-1 -m-1 font-medium hover:text-(--anime-sakura) text-(--anime-sakura) transition-colors"
           >
             RSS
           </a>{" "}
@@ -35,7 +46,7 @@ export function Footer(_: FooterProps) {
             href="/sitemap.xml"
             target="_blank"
             rel="noreferrer"
-            className="fuwari-expand-animation rounded-md px-1 -m-1 font-medium hover:text-(--fuwari-primary) text-(--fuwari-primary)"
+            className="anime-btn-ripple rounded-md px-1 -m-1 font-medium hover:text-(--anime-sakura) text-(--anime-sakura) transition-colors"
           >
             Sitemap
           </a>
@@ -45,7 +56,7 @@ export function Footer(_: FooterProps) {
             href="https://tanstack.com/start"
             target="_blank"
             rel="noreferrer"
-            className="fuwari-expand-animation rounded-md px-1 -m-1 font-medium hover:text-(--fuwari-primary) text-(--fuwari-primary)"
+            className="anime-btn-ripple rounded-md px-1 -m-1 font-medium hover:text-(--anime-sakura) text-(--anime-sakura) transition-colors"
           >
             Tanstack Start
           </a>{" "}
@@ -54,7 +65,7 @@ export function Footer(_: FooterProps) {
             href="https://github.com/du2333/flare-stack-blog"
             target="_blank"
             rel="noreferrer"
-            className="fuwari-expand-animation rounded-md px-1 -m-1 font-medium hover:text-(--fuwari-primary) text-(--fuwari-primary)"
+            className="anime-btn-ripple rounded-md px-1 -m-1 font-medium hover:text-(--anime-sakura) text-(--anime-sakura) transition-colors"
           >
             Flare Stack Blog
           </a>

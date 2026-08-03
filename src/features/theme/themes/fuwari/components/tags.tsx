@@ -8,7 +8,7 @@ import { m } from "@/paraglide/messages";
 
 export function TagsSkeleton() {
   return (
-    <div className="fuwari-card-base p-4">
+    <div className="anime-glass p-4">
       <Skeleton className="h-5 w-20 mb-3" />
       <div className="flex flex-wrap gap-2">
         {Array.from({ length: 6 }).map((_, i) => (
@@ -36,11 +36,11 @@ export function Tags() {
   if (tags.length === 0) return null;
 
   return (
-    <div className="fuwari-card-base pb-4 transition-all duration-300">
+    <div className="anime-glass pb-4 transition-all duration-300">
       <div className="font-bold text-lg fuwari-text-90 relative ml-6 mt-4 mb-2">
         <span
           className="absolute -left-4 top-[5.5px] w-1 h-4 rounded-md"
-          style={{ backgroundColor: "var(--fuwari-primary)" }}
+          style={{ background: "var(--anime-sakura)" }}
         />
         {m.tags_title()}
       </div>
@@ -56,7 +56,7 @@ export function Tags() {
             key={tag.id}
             to="/posts"
             search={{ tagName: tag.name }}
-            className="fuwari-btn-regular h-8 text-sm px-3 rounded-lg flex items-center gap-2"
+            className="fuwari-btn-regular h-8 text-sm px-3 rounded-lg flex items-center gap-2 hover:border-(--anime-sakura)/20 transition-colors"
           >
             <span>{tag.name}</span>
             <span className="bg-black/5 dark:bg-white/10 rounded-md px-1.5 py-0.5 text-xs opacity-70">
@@ -70,7 +70,7 @@ export function Tags() {
         <div className="px-4 pt-2 flex justify-center">
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="w-full py-2 flex items-center justify-center gap-1 text-sm fuwari-text-50 hover:text-(--fuwari-primary) transition-colors"
+            className="w-full py-2 flex items-center justify-center gap-1 text-sm fuwari-text-50 hover:text-(--anime-sakura) transition-colors"
           >
             {isExpanded ? (
               <>

@@ -20,11 +20,11 @@ export function ProfilePage({
     <div className="flex flex-col gap-6 w-full max-w-4xl mx-auto pb-12">
       {/* Header Profile Section */}
       <div
-        className="fuwari-card-base p-8 md:p-10 relative overflow-hidden flex flex-col items-center justify-center fuwari-onload-animation bg-linear-to-br from-(--fuwari-primary)/5 to-transparent"
-        style={{ animationDelay: "150ms" }}
+        className="anime-glass p-8 md:p-10 relative overflow-hidden flex flex-col items-center justify-center anime-onload"
+        style={{ animationDelay: "150ms", background: "linear-gradient(135deg, var(--anime-sakura-pale), transparent)" }}
       >
         <div
-          className="w-24 h-24 rounded-full overflow-hidden border-4 border-white dark:border-(--fuwari-card-bg) bg-(--fuwari-btn-regular-bg) shadow-md relative mb-4"
+          className="anime-avatar-ring w-24 h-24 rounded-full overflow-hidden bg-(--fuwari-btn-regular-bg) shadow-md relative mb-4"
           style={{ viewTransitionName: "user-avatar" }}
         >
           {user.image ? (
@@ -58,7 +58,7 @@ export function ProfilePage({
         {/* Left Column: Settings Form */}
         <div className="lg:col-span-2 flex flex-col gap-6">
           <div
-            className="fuwari-card-base p-6 md:p-8 fuwari-onload-animation flex flex-col gap-6"
+            className="anime-glass p-6 md:p-8 anime-onload flex flex-col gap-6"
             style={{ animationDelay: "200ms" }}
           >
             <div className="flex items-center gap-3 pb-4 border-b border-(--fuwari-btn-regular-bg)">
@@ -118,7 +118,7 @@ export function ProfilePage({
           {/* Security Document section if form is available */}
           {passwordForm && (
             <div
-              className="fuwari-card-base p-6 md:p-8 fuwari-onload-animation flex flex-col gap-6"
+              className="anime-glass p-6 md:p-8 anime-onload flex flex-col gap-6"
               style={{ animationDelay: "300ms" }}
             >
               <div className="flex items-center gap-3 pb-4 border-b border-(--fuwari-btn-regular-bg)">
@@ -200,7 +200,7 @@ export function ProfilePage({
         <div className="flex flex-col gap-6">
           {notification.available && (
             <div
-              className="fuwari-card-base p-6 fuwari-onload-animation flex flex-col gap-6"
+              className="anime-glass p-6 anime-onload flex flex-col gap-6"
               style={{ animationDelay: "250ms" }}
             >
               <h3 className="text-lg font-bold fuwari-text-90 border-b border-(--fuwari-btn-regular-bg) pb-3">
@@ -238,7 +238,7 @@ export function ProfilePage({
           )}
 
           <div
-            className="fuwari-card-base p-6 fuwari-onload-animation flex flex-col gap-3"
+            className="anime-glass p-6 anime-onload flex flex-col gap-3"
             style={{ animationDelay: "350ms" }}
           >
             <h3 className="text-lg font-bold fuwari-text-90 border-b border-(--fuwari-btn-regular-bg) pb-3 mb-2">

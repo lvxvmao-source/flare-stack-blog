@@ -28,12 +28,7 @@ export function ArchivePost({ post }: ArchivePostProps) {
         {/* Dot and Line */}
         <div className="w-[15%] md:w-[10%] relative fuwari-timeline-dash h-full flex items-center">
           <div
-            className="transition-all mx-auto w-1 h-1 rounded group-hover:h-5
-              bg-black/50 dark:bg-white/50 group-hover:bg-(--fuwari-primary)
-              outline z-50
-              outline-(--fuwari-card-bg)
-              group-hover:outline-(--fuwari-btn-plain-bg-hover)
-              group-active:outline-(--fuwari-btn-plain-bg-active)"
+            className="anime-timeline-dot transition-all mx-auto group-hover:scale-150 z-50"
           />
         </div>
 

@@ -54,7 +54,7 @@ export function LoginPage({
                 placeholder={m.login_email_placeholder()}
                 autoComplete="username"
                 disabled={isFormDisabled}
-                className="w-full bg-(--fuwari-input-bg) border border-(--fuwari-input-border) rounded-xl px-4 py-3 text-(--fuwari-text-90) placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-(--fuwari-primary)/50 focus:bg-(--fuwari-primary)/5 transition-all text-sm outline-none"
+                className="w-full bg-(--fuwari-input-bg) border border-(--fuwari-input-border) rounded-xl px-4 py-3 text-(--fuwari-text-90) placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-(--anime-sakura)/50 focus:bg-(--anime-sakura-pale)/30 transition-all text-sm outline-none"
               />
               {errors.email && (
                 <span className="text-xs text-red-500 ml-1 mt-1 font-medium">
@@ -71,7 +71,7 @@ export function LoginPage({
                 <Link
                   to="/forgot-password"
                   tabIndex={-1}
-                  className="text-xs font-medium hover:text-(--fuwari-primary) transition-colors"
+                  className="text-xs font-medium hover:text-(--anime-sakura) transition-colors"
                 >
                   {m.login_forgot_password_fuwari()}
                 </Link>
@@ -83,7 +83,7 @@ export function LoginPage({
                 placeholder={m.login_password_placeholder()}
                 autoComplete="current-password"
                 disabled={isFormDisabled}
-                className="w-full bg-(--fuwari-input-bg) border border-(--fuwari-input-border) rounded-xl px-4 py-3 text-(--fuwari-text-90) placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-(--fuwari-primary)/50 focus:bg-(--fuwari-primary)/5 transition-all text-sm outline-none"
+                className="w-full bg-(--fuwari-input-bg) border border-(--fuwari-input-border) rounded-xl px-4 py-3 text-(--fuwari-text-90) placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-(--anime-sakura)/50 focus:bg-(--anime-sakura-pale)/30 transition-all text-sm outline-none"
               />
               {errors.password && (
                 <span className="text-xs text-red-500 ml-1 mt-1 font-medium">
@@ -95,7 +95,7 @@ export function LoginPage({
             <button
               type="submit"
               disabled={isFormDisabled}
-              className="mt-2 w-full py-3.5 rounded-xl fuwari-btn-primary font-bold text-sm tracking-wide active:scale-[0.98] transition-all gap-2"
+              className="mt-2 w-full py-3.5 rounded-xl fuwari-btn-primary font-bold text-sm tracking-wide active:scale-[0.98] transition-all gap-2 anime-btn-ripple"
             >
               {loginStep === "VERIFYING" ? (
                 <>
@@ -151,7 +151,7 @@ export function LoginPage({
               {m.login_no_account()}{" "}
               <Link
                 to="/register"
-                className="text-(--fuwari-primary) hover:underline"
+                className="text-(--anime-sakura) hover:underline"
               >
                 {m.login_register_now()}
               </Link>

@@ -9,18 +9,21 @@ export function Profile() {
   const { siteConfig } = useRouteContext({ from: "__root__" });
 
   return (
-    <div className="fuwari-card-base p-4">
+    <div className="anime-glass p-4">
       <Link
         to="/"
-        className="group block relative mx-auto mb-3 max-w-48 lg:max-w-none overflow-hidden rounded-xl active:scale-95"
+        className="group block relative mx-auto mb-3 max-w-48 lg:max-w-none overflow-hidden rounded-xl active:scale-95 transition-transform"
         aria-label={m.profile_avatar_label()}
       >
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/0 group-hover:bg-black/30 group-active:bg-black/50 transition-colors pointer-events-none" />
-        <img
-          src={siteConfig.theme.fuwari.avatar}
-          alt=""
-          className="w-full h-auto aspect-square object-cover"
-        />
+        {/* Sakura ring around avatar */}
+        <div className="anime-avatar-ring p-[3px]">
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/0 group-hover:bg-black/30 group-active:bg-black/50 transition-colors pointer-events-none rounded-xl" />
+          <img
+            src={siteConfig.theme.fuwari.avatar}
+            alt=""
+            className="w-full h-auto aspect-square object-cover rounded-xl"
+          />
+        </div>
       </Link>
       <div className="px-2 text-center">
         <div className="font-bold text-xl fuwari-text-90 mb-1">
@@ -28,7 +31,7 @@ export function Profile() {
         </div>
         <div
           className="h-1 w-5 rounded-full mx-auto mb-2"
-          style={{ backgroundColor: "var(--fuwari-primary)" }}
+          style={{ background: "linear-gradient(90deg, var(--anime-sakura-light), var(--anime-sakura))" }}
         />
         <div className="fuwari-text-50 text-sm mb-2.5">
           {siteConfig.description}
@@ -52,7 +55,7 @@ export function Profile() {
                   target={link.platform === "email" ? undefined : "_blank"}
                   rel={link.platform === "email" ? undefined : "me noreferrer"}
                   aria-label={label}
-                  className="fuwari-btn-regular rounded-lg h-10 w-10 active:scale-90 hover:text-(--fuwari-primary) transition-colors"
+                  className="fuwari-btn-regular rounded-lg h-10 w-10 active:scale-90 hover:text-(--anime-sakura) transition-colors"
                 >
                   {Icon ? (
                     <Icon size={20} strokeWidth={1.5} />
