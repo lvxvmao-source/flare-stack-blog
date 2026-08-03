@@ -179,7 +179,7 @@ const PublicNavSlugIndexRoute = PublicNavSlugIndexRouteImport.update({
 const PublicPostsSlugRoute = PublicPostsSlugRouteImport.update({
   id: '/posts/$slug',
   path: '/$slug',
-  getParentRoute: () => PublicPostsRoute,,
+  getParentRoute: () => PublicPostsRoute,
 } as any)
 const PublicNavSlugPostSlugRoute = PublicNavSlugPostSlugRouteImport.update({
   id: '/$postSlug',
