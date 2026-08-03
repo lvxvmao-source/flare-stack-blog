@@ -4,7 +4,6 @@ import {
   ChevronRight,
   Clock,
   Eye,
-  Flame,
   Pin,
   Sparkles,
   Tag,

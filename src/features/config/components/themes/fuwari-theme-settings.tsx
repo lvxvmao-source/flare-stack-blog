@@ -180,7 +180,7 @@ function TextField({
 
 /* ─── BGM playlist editor ─── */
 function BgmPlaylistEditor() {
-  const { register, watch, setValue, getValues } = useFormContext<SystemConfig>();
+  const { register, watch, setValue } = useFormContext<SystemConfig>();
   const playlist = watch("site.theme.fuwari.bgmPlaylist") as Array<{ title: string; url: string }> | undefined;
   const tracks = playlist ?? [];
 
