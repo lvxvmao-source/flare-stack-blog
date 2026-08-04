@@ -43,7 +43,7 @@ const FOLD_THRESHOLD = 400;
 
 export const CodeBlock = memo(
   ({ code, language, highlightedHtml }: CodeBlockProps) => {
-    const fallback = `<pre class="shiki font-mono text-sm leading-relaxed whitespace-pre bg-transparent! p-0 m-0 border-0" style="color:var(--shiki-light);background-color:var(--shiki-light-bg)"><code>${code}</code></pre>`;
+    const fallback = `<pre class="shiki font-mono text-sm leading-relaxed whitespace-pre bg-transparent! p-0 m-0 border-0" style="background-color:#292D3E;color:#babed8"><code>${code}</code></pre>`;
     const html = highlightedHtml || fallback;
 
     const [copied, setCopied] = useState(false);
@@ -77,18 +77,6 @@ export const CodeBlock = memo(
 
     return (
       <div className="relative group max-w-full my-6 not-prose">
-        {/* Override <pre> background to happysimple dark, keep <span> inline colors
-            so syntax highlighting is preserved. */}
-        <style>{`
-          .code-block-wrapper > div > pre.shiki {
-            background-color: #292d3e !important;
-            color: #a6accd !important;
-          }
-          .code-block-wrapper pre.shiki span {
-            background-color: transparent !important;
-          }
-        `}</style>
-
         <div className="code-block-wrapper expressive-code relative rounded-xl border border-black/10 dark:border-white/10 bg-(--fuwari-code-bg) overflow-hidden transition-colors shadow-sm">
           {/* happysimple-style three-dot decoration — always visible, sits above code */}
           <div className="absolute left-3 top-3 z-30 flex gap-[6px] pointer-events-none">

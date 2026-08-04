@@ -1,8 +1,7 @@
 import type { HighlighterCore, LanguageRegistration } from "shiki/core";
 import { createHighlighterCore } from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
-import viteDark from "shiki/themes/vitesse-dark.mjs";
-import viteLight from "shiki/themes/vitesse-light.mjs";
+import palenight from "shiki/themes/material-theme-palenight.mjs";
 
 // Shiki language modules export `default` as an array of LanguageRegistration
 type LanguageModule = { default: Array<LanguageRegistration> };
@@ -39,24 +38,15 @@ const languageLoaders: Record<
 };
 
 export const themes = {
-  light: "vitesse-light",
-  dark: "vitesse-dark",
+  dark: "material-theme-palenight",
 } as const;
 
 let highlighterPromise: Promise<HighlighterCore> | null = null;
 
 export async function getHighlighter() {
   if (!highlighterPromise) {
-    // Customizing the background color of vitesse-dark to remove the greenish tint
-    // using Zinc-900 (#18181b) to match the dark mode UI
-    const customViteDark = {
-      ...viteDark,
-      bg: "#18181b",
-      name: "vitesse-dark", // Ensure name matches
-    };
-
     highlighterPromise = createHighlighterCore({
-      themes: [customViteDark, viteLight],
+      themes: [palenight],
       langs: [],
       engine: createJavaScriptRegexEngine(),
     });
@@ -103,9 +93,8 @@ export async function highlight(code: string, lang: string) {
     : "text";
 
   try {
-    // Use vitesse-dark as a single theme — generates hex colors directly,
-    // avoiding CSS variable compatibility issues across the app.
-    // The code block always renders with a dark background.
+    // Use material-theme-palenight as a single dark theme — its background
+    // (#292D3E) matches happysimple's --code-body-background-color exactly.
     return highlighter.codeToHtml(code, {
       lang: safeLang,
       theme: themes.dark,
@@ -129,9 +118,6 @@ export async function codeToTokens(code: string, lang: string) {
 
   return highlighter.codeToTokens(code, {
     lang: safeLang,
-    themes: {
-      light: themes.light,
-      dark: themes.dark,
-    },
+    theme: themes.dark,
   });
 }
