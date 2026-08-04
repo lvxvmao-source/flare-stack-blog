@@ -1,49 +1,65 @@
 @reference "tailwindcss";
 
 /* ============================================================
-   Typography variables — inspired by happysimple Typora theme
+   Typography variables — matched to happysimple Typora theme
    ============================================================ */
 :root {
-  --happysimple-body-font: "Source Han Serif SC VF", "Source Han Serif SC",
-    "Noto Serif CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --happysimple-heading-font: "HarmonyOS Sans SC", "Noto Sans CJK SC",
+  --happysimple-body-font: "XiaWuWenKai", "LXGW WenKai", "霞鹜文楷",
+    "Source Han Serif SC VF", "Source Han Serif SC", "Noto Serif CJK SC",
     "PingFang SC", "Microsoft YaHei", sans-serif;
-  --happysimple-mono-font: "JetBrains Mono", "Cascadia Code", "Fira Code",
-    "Source Code Pro", "Consolas", monospace;
+  --happysimple-heading-font: "XiaWuWenKai", "LXGW WenKai", "霞鹜文楷",
+    "HarmonyOS Sans SC", "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei",
+    sans-serif;
+  --happysimple-mono-font: "Consolas", "JetBrains Mono", "Cascadia Code",
+    "Fira Code", "Source Code Pro", monospace;
 
-  --happysimple-body-color: #303030;
-  --happysimple-heading-color: #222;
-  --happysimple-link-color: #1976d2;
-  --happysimple-inline-code-color: #e91e63;
-  --happysimple-inline-code-bg: rgba(233, 30, 99, 0.08);
-  --happysimple-blockquote-border: #4caf50;
-  --happysimple-blockquote-bg: rgba(76, 175, 80, 0.06);
-  --happysimple-blockquote-color: #555;
-  --happysimple-table-border: #e0e0e0;
-  --happysimple-table-header-bg: #f5f7fa;
-  --happysimple-hr-color: #e8e8e8;
+  --happysimple-body-color: #000;
+  --happysimple-heading-color: #000;
+  --happysimple-link-color: #61abff;
+  --happysimple-link-border-color: #ff8800;
+  --happysimple-link-hover-color: #db524f;
+  --happysimple-inline-code-color: #4c4c4c;
+  --happysimple-inline-code-bg: #edebeb;
+  --happysimple-blockquote-border: #a68bff;
+  --happysimple-blockquote-bg: #f3f0ff;
+  --happysimple-blockquote-color: #000;
+  --happysimple-table-border: #000;
+  --happysimple-table-header-bg: #86c8e4;
+  --happysimple-table-odd-row: #ededed;
+  --happysimple-table-even-row: #e2f2f9;
+  --happysimple-hr-color: #db524f;
 
   /* code block */
   --happysimple-code-bg-top: #21252b;
   --happysimple-code-bg-body: #292d3e;
   --happysimple-code-color: #a6accd;
   --happysimple-code-linenum-color: #f0ad4e;
-  --happysimple-code-border: #3a3f58;
+  --happysimple-code-border: #000;
   --happysimple-code-selected-bg: rgba(167, 178, 189, 0.2);
+
+  /* list */
+  --happysimple-list-sign-color: #db524f;
+
+  /* image */
+  --happysimple-img-border: #000;
 }
 
 .dark {
   --happysimple-body-color: #bbb;
   --happysimple-heading-color: #ddd;
   --happysimple-link-color: #64b5f6;
-  --happysimple-inline-code-color: #ec407a;
-  --happysimple-inline-code-bg: rgba(236, 64, 122, 0.12);
-  --happysimple-blockquote-border: #66bb6a;
-  --happysimple-blockquote-bg: rgba(76, 175, 80, 0.08);
+  --happysimple-link-border-color: #ff8800;
+  --happysimple-link-hover-color: #db524f;
+  --happysimple-inline-code-color: #bbb;
+  --happysimple-inline-code-bg: rgba(255, 255, 255, 0.08);
+  --happysimple-blockquote-border: #a68bff;
+  --happysimple-blockquote-bg: rgba(166, 139, 255, 0.08);
   --happysimple-blockquote-color: #aaa;
-  --happysimple-table-border: #333;
-  --happysimple-table-header-bg: #1e1e2e;
-  --happysimple-hr-color: #333;
+  --happysimple-table-border: #444;
+  --happysimple-table-header-bg: #2a3a4a;
+  --happysimple-table-odd-row: #1e1e2e;
+  --happysimple-table-even-row: #252536;
+  --happysimple-hr-color: #444;
 
   /* code block */
   --happysimple-code-bg-top: #21252b;
@@ -52,6 +68,12 @@
   --happysimple-code-linenum-color: #f0ad4e;
   --happysimple-code-border: #3a3f58;
   --happysimple-code-selected-bg: rgba(167, 178, 189, 0.15);
+
+  /* list */
+  --happysimple-list-sign-color: #db524f;
+
+  /* image */
+  --happysimple-img-border: #555;
 }
 
 .fuwari-custom-md {
@@ -60,8 +82,8 @@
   --tw-prose-lead: var(--happysimple-body-color);
   --tw-prose-links: var(--happysimple-link-color);
   --tw-prose-bold: var(--happysimple-heading-color);
-  --tw-prose-counters: rgb(0 0 0 / 0.5);
-  --tw-prose-bullets: rgb(0 0 0 / 0.3);
+  --tw-prose-counters: var(--happysimple-list-sign-color);
+  --tw-prose-bullets: var(--happysimple-list-sign-color);
   --tw-prose-hr: var(--happysimple-hr-color);
   --tw-prose-quotes: var(--happysimple-blockquote-color);
   --tw-prose-quote-borders: var(--happysimple-blockquote-border);
@@ -75,45 +97,55 @@
   font-family: var(--happysimple-body-font);
   color: var(--happysimple-body-color);
   font-size: 1.05rem;
-  line-height: 1.85;
-  letter-spacing: 0.01em;
-  word-spacing: 0.04em;
+  line-height: 1.5;
+  letter-spacing: 0px;
+  word-spacing: 0px;
+  text-align: justify;
 
   /* ---- headings ---- */
   h1 {
     font-family: var(--happysimple-heading-font);
-    font-size: 1.8rem;
-    font-weight: 700;
-    line-height: 1.4;
-    margin: 2.4rem 0 1.2rem;
-    padding-bottom: 0.4rem;
-    border-bottom: 1px solid var(--happysimple-hr-color);
+    font-size: 2.4rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin: 30px 0px;
+    padding: 0px;
+    display: block;
+    text-align: center;
     color: var(--happysimple-heading-color);
+    border-bottom: none;
+    padding-bottom: 0;
   }
   h2 {
     font-family: var(--happysimple-heading-font);
-    font-size: 1.55rem;
-    font-weight: 700;
-    line-height: 1.4;
-    margin: 2rem 0 1rem;
-    padding-bottom: 0.3rem;
-    border-bottom: 1px solid var(--happysimple-hr-color);
+    font-size: 2rem;
+    font-weight: 350;
+    line-height: 1.5;
+    margin: 25px 0px;
+    padding: 0px;
+    display: block;
+    text-align: left;
     color: var(--happysimple-heading-color);
+    border-bottom: none;
+    padding-bottom: 0;
   }
   h3 {
     font-family: var(--happysimple-heading-font);
-    font-size: 1.35rem;
-    font-weight: 700;
-    line-height: 1.4;
-    margin: 1.6rem 0 0.8rem;
+    font-size: 1.6rem;
+    font-weight: 350;
+    line-height: 1.5;
+    margin: 20px 0px;
+    padding: 0px;
+    display: block;
+    text-align: left;
     color: var(--happysimple-heading-color);
   }
   h4 {
     font-family: var(--happysimple-heading-font);
-    font-size: 1.15rem;
-    font-weight: 700;
-    line-height: 1.4;
-    margin: 1.4rem 0 0.6rem;
+    font-size: 1.35rem;
+    font-weight: 350;
+    line-height: 1.5;
+    margin: 20px 0px;
     color: var(--happysimple-heading-color);
   }
   h5 {
@@ -165,7 +197,7 @@
   /* ---- paragraphs ---- */
   p {
     margin: 0.8rem 0;
-    line-height: 1.85;
+    line-height: 1.5;
   }
 
   /* ---- links ---- */
@@ -173,12 +205,13 @@
     color: var(--happysimple-link-color);
     font-weight: 500;
     text-decoration: none;
-    border-bottom: 1px solid var(--happysimple-link-color);
+    border-bottom: 3px solid var(--happysimple-link-border-color);
     transition: all 0.2s ease;
     padding-bottom: 1px;
     &:hover {
-      border-bottom-width: 2px;
-      opacity: 0.85;
+      color: var(--happysimple-link-hover-color);
+      border-bottom-width: 3px;
+      opacity: 1;
     }
   }
 
@@ -189,12 +222,13 @@
     color: var(--happysimple-inline-code-color);
     background: var(--happysimple-inline-code-bg);
     padding: 0.15em 0.4em;
-    border-radius: 4px;
+    border-radius: 2px;
     word-break: break-word;
   }
 
   /* ---- code blocks (happysimple dark style) ---- */
-  pre {
+  /* Only target raw <pre> elements not inside .expressive-code or .shiki */
+  pre:not(.expressive-code pre):not(.shiki) {
     font-family: var(--happysimple-mono-font);
     font-size: 0.9rem;
     line-height: 1.6;
@@ -205,7 +239,7 @@
     padding: 1rem;
   }
 
-  code {
+  code:not(.shiki code) {
     font-family: var(--happysimple-mono-font);
     color: var(--happysimple-code-color);
     &:before,
@@ -251,13 +285,18 @@
   ul,
   ol {
     padding-left: 1.8rem;
-    margin: 0.8rem 0;
+    margin: 10px 0px;
+    font-family: var(--happysimple-heading-font);
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--happysimple-body-color);
+    line-height: 2;
     li {
-      margin: 0.25rem 0;
-      line-height: 1.75;
+      margin: 10px 0px;
+      line-height: 2;
     }
     li::marker {
-      color: var(--happysimple-heading-color);
+      color: var(--happysimple-list-sign-color);
     }
   }
 
@@ -266,12 +305,14 @@
     font-family: var(--happysimple-body-font);
     color: var(--happysimple-blockquote-color);
     background: var(--happysimple-blockquote-bg);
-    border-left: 4px solid var(--happysimple-blockquote-border);
-    margin: 1.2rem 0;
-    padding: 0.6rem 1.2rem;
+    border-left: 5px solid var(--happysimple-blockquote-border);
+    margin: 10px 0px;
+    padding: 10px;
     border-radius: 0 6px 6px 0;
     font-style: normal;
-    font-weight: inherit;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.5;
     p:before,
     p:after {
       @apply content-none;
@@ -283,27 +324,43 @@
 
   /* ---- horizontal rule ---- */
   hr {
-    border-color: var(--happysimple-hr-color);
-    margin: 2rem 0;
+    border: none;
+    border-bottom: 2px dashed var(--happysimple-hr-color);
+    margin: 20px 0px;
+    width: 100%;
   }
 
   /* ---- tables ---- */
   table {
     border-collapse: collapse;
-    width: 100%;
-    margin: 1.2rem 0;
+    width: 80%;
+    margin: 10px 0px;
+    font-family: var(--happysimple-body-font);
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center;
     thead {
       background: var(--happysimple-table-header-bg);
       th {
         font-family: var(--happysimple-heading-font);
-        font-weight: 600;
-        padding: 0.6rem 1rem;
-        text-align: left;
+        font-weight: 400;
+        padding: 5px 10px;
+        text-align: center;
+        border: 2px solid var(--happysimple-table-border);
       }
     }
-    tbody td {
-      padding: 0.5rem 1rem;
-      border-bottom: 1px solid var(--happysimple-table-border);
+    tbody {
+      tr {
+        background: var(--happysimple-table-odd-row);
+        font-weight: 300;
+      }
+      tr:nth-child(2n) {
+        background: var(--happysimple-table-even-row);
+      }
+      td {
+        padding: 5px 10px;
+        border: 2px solid var(--happysimple-table-border);
+      }
     }
   }
 
@@ -315,22 +372,23 @@
 
   /* ---- images ---- */
   img {
-    border-radius: 8px;
-    margin: 1rem auto;
+    border-radius: 5px;
+    margin: 20px auto;
     max-width: 100%;
+    border: 2px solid var(--happysimple-img-border);
   }
 
   /* KaTeX / Mathematics */
   .tiptap-mathematics-render,
   .katex {
-    font-size: 1.05em;
+    font-size: 1rem;
     color: var(--happysimple-body-color);
     padding: 0 0.15em;
   }
   .tiptap-mathematics-render[data-type="inline-math"],
   .katex:not(.katex-display) {
     background: var(--happysimple-inline-code-bg);
-    border-radius: 3px;
+    border-radius: 2px;
     padding: 0.1em 0.3em;
   }
   .tiptap-mathematics-render[data-type="block-math"],
@@ -354,7 +412,7 @@
   --tw-prose-pre-code: var(--happysimple-code-color);
   --tw-prose-pre-bg: var(--happysimple-code-bg-body);
 
-  pre {
+  pre:not(.expressive-code pre):not(.shiki) {
     background: var(--happysimple-code-bg-body) !important;
     color: var(--happysimple-code-color) !important;
     border-color: var(--happysimple-code-border);

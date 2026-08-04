@@ -13,6 +13,15 @@
 }
 
 @layer base {
+  /* Global Shiki Light Mode Override */
+  html.light .shiki,
+  html.light .shiki span {
+    color: var(--shiki-light) !important;
+    background-color: var(--shiki-light-bg) !important;
+    font-weight: var(--shiki-light-font-weight) !important;
+    text-decoration: var(--shiki-light-text-decoration) !important;
+  }
+
   /* Global Shiki Dark Mode Override */
   html.dark .shiki,
   html.dark .shiki span {

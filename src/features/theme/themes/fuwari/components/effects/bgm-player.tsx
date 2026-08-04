@@ -52,30 +52,33 @@ export function BgmPlayer({
   const currentTrack = playlist[currentIndex];
   const isBilibili = currentTrack?.url ? isBilibiliUrl(currentTrack.url) : false;
 
-  // Init audio element on client (only for non-bilibili tracks)
+  // Create a single persistent Audio instance that survives re-renders
+  // This prevents audio from stopping when parent re-renders (e.g. route changes)
   useEffect(() => {
-    if (!enabled || !hasTracks) return;
+    if (!enabled || !hasTracks || isBilibili) return;
+    if (audioRef.current) return; // Already created, keep it
 
-    if (!isBilibili) {
-      const audio = new Audio();
-      audio.volume = volume;
-      audioRef.current = audio;
+    const audio = new Audio();
+    audio.volume = volume;
+    audioRef.current = audio;
 
-      return () => {
-        audio.pause();
-        audio.src = "";
-      };
-    } else {
-      // Cleanup audio when switching to bilibili
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.src = "";
-        audioRef.current = null;
-      }
+    return () => {
+      audio.pause();
+      audio.src = "";
+      audioRef.current = null;
+    };
+  }, [enabled, hasTracks, isBilibili]);
+
+  // Clean up audio when switching to bilibili track
+  useEffect(() => {
+    if (isBilibili && audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = "";
+      audioRef.current = null;
     }
-  }, [enabled, hasTracks]);
+  }, [isBilibili]);
 
-  // Play current track
+  // Play current track — re-run when track changes or play state toggles
   useEffect(() => {
     const track = currentTrack;
     if (!track?.url) return;
@@ -83,20 +86,21 @@ export function BgmPlayer({
     setCurrentTitle(track.title);
 
     if (isBilibili) {
-      // Bilibili: just mark as playing, iframe handles itself
-      if (isPlaying) {
-        // Auto-play is handled by the iframe's autoplay=1 param
-      }
       return;
     }
 
     const audio = audioRef.current;
     if (!audio || !hasTracks) return;
 
-    audio.src = track.url;
+    // Only reload src when track actually changed
+    if (audio.src !== track.url) {
+      audio.src = track.url;
+    }
 
     if (isPlaying) {
       audio.play().catch(() => setIsPlaying(false));
+    } else {
+      audio.pause();
     }
 
     const onEnd = () => {
@@ -107,7 +111,7 @@ export function BgmPlayer({
     return () => {
       audio.removeEventListener("ended", onEnd);
     };
-  }, [currentIndex, hasTracks]);
+  }, [currentIndex, hasTracks, isPlaying]);
 
   // Volume sync
   useEffect(() => {
