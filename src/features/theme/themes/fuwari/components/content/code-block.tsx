@@ -80,6 +80,13 @@ export const CodeBlock = memo(
     return (
       <div className="relative group max-w-full my-6 not-prose">
         <div className="expressive-code relative rounded-xl border border-black/10 dark:border-white/10 bg-(--fuwari-code-bg) overflow-hidden transition-colors shadow-sm">
+          {/* happysimple-style three-dot decoration */}
+          <div className="absolute left-3 top-3 z-20 flex gap-[6px] pointer-events-none opacity-70 group-hover:opacity-0 transition-opacity duration-300">
+            <span className="w-3 h-3 rounded-full bg-[#fc625d]" />
+            <span className="w-3 h-3 rounded-full bg-[#fdbc40]" />
+            <span className="w-3 h-3 rounded-full bg-[#35cd4b]" />
+          </div>
+
           {/* Language Badge */}
           <div
             className={cn(

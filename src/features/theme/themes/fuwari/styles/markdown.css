@@ -102,6 +102,22 @@
   word-spacing: 0px;
   text-align: justify;
 
+  /* ---- heading auto-numbering (happysimple-style) ---- */
+  counter-reset: h2-counter;
+
+  h2 {
+    counter-reset: h3-counter;
+    counter-increment: h2-counter;
+  }
+
+  h3 {
+    counter-increment: h3-counter;
+  }
+
+  h4 {
+    counter-reset: h5-counter;
+  }
+
   /* ---- headings ---- */
   h1 {
     font-family: var(--happysimple-heading-font);
@@ -128,6 +144,12 @@
     color: var(--happysimple-heading-color);
     border-bottom: none;
     padding-bottom: 0;
+
+    &:before {
+      content: counter(h2-counter) ". ";
+      color: var(--happysimple-heading-color);
+      font-weight: 350;
+    }
   }
   h3 {
     font-family: var(--happysimple-heading-font);
@@ -139,6 +161,12 @@
     display: block;
     text-align: left;
     color: var(--happysimple-heading-color);
+
+    &:before {
+      content: counter(h2-counter) "." counter(h3-counter) ". ";
+      color: var(--happysimple-heading-color);
+      font-weight: 350;
+    }
   }
   h4 {
     font-family: var(--happysimple-heading-font);
@@ -165,10 +193,8 @@
     color: var(--happysimple-body-color);
   }
 
-  /* anchor hover */
+  /* anchor hover (only on headings without counter prefix: h1, h4-h6) */
   h1,
-  h2,
-  h3,
   h4,
   h5,
   h6 {
