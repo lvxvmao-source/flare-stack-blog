@@ -16,7 +16,7 @@ import { m } from "@/paraglide/messages";
 
 const postsPerPage = 12;
 
-export const Route = createFileRoute("/_public/posts")({
+export const Route = createFileRoute("/_public/posts/")({
   validateSearch: z.object({
     tagName: PostTagNameSchema,
   }),

@@ -365,16 +365,27 @@
 
   /* Sakura decorative divider */
   .anime-divider {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    position: relative;
+    display: flex;
     align-items: center;
-    gap: 0.75rem;
     width: 100%;
   }
 
-  .anime-divider::before,
+  .anime-divider::before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      oklch(0.7 0.12 350 / 0.4),
+      transparent
+    );
+  }
+
   .anime-divider::after {
     content: "";
+    flex: 1;
     height: 1px;
     background: linear-gradient(
       to right,
@@ -385,6 +396,10 @@
   }
 
   .anime-divider-dot {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     width: 6px;
     height: 6px;
     border-radius: 50%;

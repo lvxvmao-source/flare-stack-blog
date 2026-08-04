@@ -1,4 +1,4 @@
-﻿/* eslint-disable */
+/* eslint-disable */
 
 // @ts-nocheck
 
@@ -20,7 +20,6 @@ import { Route as UserSubmitFriendLinkRouteImport } from './routes/_user/submit-
 import { Route as UserProfileRouteImport } from './routes/_user/profile'
 import { Route as PublicUnsubscribeRouteImport } from './routes/_public/unsubscribe'
 import { Route as PublicSearchRouteImport } from './routes/_public/search'
-import { Route as PublicPostsRouteImport } from './routes/_public/posts'
 import { Route as PublicFriendLinksRouteImport } from './routes/_public/friend-links'
 import { Route as AuthVerifyEmailRouteImport } from './routes/_auth/verify-email'
 import { Route as AuthResetLinkRouteImport } from './routes/_auth/reset-link'
@@ -35,9 +34,9 @@ import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
 import { Route as AdminMediaIndexRouteImport } from './routes/admin/media/index'
 import { Route as AdminFriendLinksIndexRouteImport } from './routes/admin/friend-links/index'
 import { Route as AdminCommentsIndexRouteImport } from './routes/admin/comments/index'
+import { Route as PublicPostsIndexRouteImport } from './routes/_public/posts/index'
 import { Route as PublicNavSlugIndexRouteImport } from './routes/_public/$navSlug/index'
 import { Route as PublicPostsSlugRouteImport } from './routes/_public/posts/$slug'
-import { Route as PublicPostsIndexRouteImport } from './routes/_public/posts/index'
 import { Route as PublicNavSlugPostSlugRouteImport } from './routes/_public/$navSlug/$postSlug'
 import { Route as PublicNavNavIdRouteRouteImport } from './routes/_public/nav/$navId/route'
 import { Route as PublicNavNavIdIndexRouteImport } from './routes/_public/nav/$navId/index'
@@ -94,11 +93,6 @@ const PublicUnsubscribeRoute = PublicUnsubscribeRouteImport.update({
 const PublicSearchRoute = PublicSearchRouteImport.update({
   id: '/search',
   path: '/search',
-  getParentRoute: () => PublicRouteRoute,
-} as any)
-const PublicPostsRoute = PublicPostsRouteImport.update({
-  id: '/posts',
-  path: '/posts',
   getParentRoute: () => PublicRouteRoute,
 } as any)
 const PublicFriendLinksRoute = PublicFriendLinksRouteImport.update({
@@ -171,6 +165,11 @@ const AdminCommentsIndexRoute = AdminCommentsIndexRouteImport.update({
   path: '/comments/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const PublicPostsIndexRoute = PublicPostsIndexRouteImport.update({
+  id: '/posts/',
+  path: '/posts/',
+  getParentRoute: () => PublicRouteRoute,
+} as any)
 const PublicNavSlugIndexRoute = PublicNavSlugIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -178,8 +177,8 @@ const PublicNavSlugIndexRoute = PublicNavSlugIndexRouteImport.update({
 } as any)
 const PublicPostsSlugRoute = PublicPostsSlugRouteImport.update({
   id: '/posts/$slug',
-  path: '/$slug',
-  getParentRoute: () => PublicPostsRoute,
+  path: '/posts/$slug',
+  getParentRoute: () => PublicRouteRoute,
 } as any)
 const PublicNavSlugPostSlugRoute = PublicNavSlugPostSlugRouteImport.update({
   id: '/$postSlug',
@@ -218,7 +217,6 @@ export interface FileRoutesByFullPath {
   '/reset-link': typeof AuthResetLinkRoute
   '/verify-email': typeof AuthVerifyEmailRoute
   '/friend-links': typeof PublicFriendLinksRoute
-  '/posts': typeof PublicPostsRoute
   '/search': typeof PublicSearchRoute
   '/unsubscribe': typeof PublicUnsubscribeRoute
   '/profile': typeof UserProfileRoute
@@ -229,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/$navSlug/$postSlug': typeof PublicNavSlugPostSlugRoute
   '/posts/$slug': typeof PublicPostsSlugRoute
   '/$navSlug/': typeof PublicNavSlugIndexRoute
+  '/posts/': typeof PublicPostsIndexRoute
   '/admin/comments/': typeof AdminCommentsIndexRoute
   '/admin/friend-links/': typeof AdminFriendLinksIndexRoute
   '/admin/media/': typeof AdminMediaIndexRoute
@@ -247,7 +246,6 @@ export interface FileRoutesByTo {
   '/reset-link': typeof AuthResetLinkRoute
   '/verify-email': typeof AuthVerifyEmailRoute
   '/friend-links': typeof PublicFriendLinksRoute
-  '/posts': typeof PublicPostsRoute
   '/search': typeof PublicSearchRoute
   '/unsubscribe': typeof PublicUnsubscribeRoute
   '/profile': typeof UserProfileRoute
@@ -257,6 +255,7 @@ export interface FileRoutesByTo {
   '/$navSlug/$postSlug': typeof PublicNavSlugPostSlugRoute
   '/posts/$slug': typeof PublicPostsSlugRoute
   '/$navSlug': typeof PublicNavSlugIndexRoute
+  '/posts': typeof PublicPostsIndexRoute
   '/admin/comments': typeof AdminCommentsIndexRoute
   '/admin/friend-links': typeof AdminFriendLinksIndexRoute
   '/admin/media': typeof AdminMediaIndexRoute
@@ -281,7 +280,6 @@ export interface FileRoutesById {
   '/_auth/reset-link': typeof AuthResetLinkRoute
   '/_auth/verify-email': typeof AuthVerifyEmailRoute
   '/_public/friend-links': typeof PublicFriendLinksRoute
-  '/_public/posts': typeof PublicPostsRoute
   '/_public/search': typeof PublicSearchRoute
   '/_public/unsubscribe': typeof PublicUnsubscribeRoute
   '/_user/profile': typeof UserProfileRoute
@@ -293,6 +291,7 @@ export interface FileRoutesById {
   '/_public/$navSlug/$postSlug': typeof PublicNavSlugPostSlugRoute
   '/_public/posts/$slug': typeof PublicPostsSlugRoute
   '/_public/$navSlug/': typeof PublicNavSlugIndexRoute
+  '/_public/posts/': typeof PublicPostsIndexRoute
   '/admin/comments/': typeof AdminCommentsIndexRoute
   '/admin/friend-links/': typeof AdminFriendLinksIndexRoute
   '/admin/media/': typeof AdminMediaIndexRoute
@@ -316,7 +315,6 @@ export interface FileRouteTypes {
     | '/reset-link'
     | '/verify-email'
     | '/friend-links'
-    | '/posts'
     | '/search'
     | '/unsubscribe'
     | '/profile'
@@ -327,6 +325,7 @@ export interface FileRouteTypes {
     | '/$navSlug/$postSlug'
     | '/posts/$slug'
     | '/$navSlug/'
+    | '/posts/'
     | '/admin/comments/'
     | '/admin/friend-links/'
     | '/admin/media/'
@@ -345,7 +344,6 @@ export interface FileRouteTypes {
     | '/reset-link'
     | '/verify-email'
     | '/friend-links'
-    | '/posts'
     | '/search'
     | '/unsubscribe'
     | '/profile'
@@ -355,6 +353,7 @@ export interface FileRouteTypes {
     | '/$navSlug/$postSlug'
     | '/posts/$slug'
     | '/$navSlug'
+    | '/posts'
     | '/admin/comments'
     | '/admin/friend-links'
     | '/admin/media'
@@ -378,7 +377,6 @@ export interface FileRouteTypes {
     | '/_auth/reset-link'
     | '/_auth/verify-email'
     | '/_public/friend-links'
-    | '/_public/posts'
     | '/_public/search'
     | '/_public/unsubscribe'
     | '/_user/profile'
@@ -390,6 +388,7 @@ export interface FileRouteTypes {
     | '/_public/$navSlug/$postSlug'
     | '/_public/posts/$slug'
     | '/_public/$navSlug/'
+    | '/_public/posts/'
     | '/admin/comments/'
     | '/admin/friend-links/'
     | '/admin/media/'
@@ -488,13 +487,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicSearchRouteImport
       parentRoute: typeof PublicRouteRoute
     }
-    '/_public/posts': {
-      id: '/_public/posts'
-      path: '/posts'
-      fullPath: '/posts'
-      preLoaderRoute: typeof PublicPostsRouteImport
-      parentRoute: typeof PublicRouteRoute
-    }
     '/_public/friend-links': {
       id: '/_public/friend-links'
       path: '/friend-links'
@@ -549,7 +541,7 @@ declare module '@tanstack/react-router' {
       path: '/$navSlug'
       fullPath: '/$navSlug'
       preLoaderRoute: typeof PublicNavSlugRouteRouteImport
-      parentRoute: typeof PublicPostsRoute
+      parentRoute: typeof PublicRouteRoute
     }
     '/admin/tags/': {
       id: '/admin/tags/'
@@ -593,6 +585,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCommentsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/_public/posts/': {
+      id: '/_public/posts/'
+      path: '/posts'
+      fullPath: '/posts/'
+      preLoaderRoute: typeof PublicPostsIndexRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
     '/_public/$navSlug/': {
       id: '/_public/$navSlug/'
       path: '/'
@@ -602,10 +601,10 @@ declare module '@tanstack/react-router' {
     }
     '/_public/posts/$slug': {
       id: '/_public/posts/$slug'
-      path: '/$slug'
-      fullpath: '/$slug'
+      path: '/posts/$slug'
+      fullPath: '/posts/$slug'
       preLoaderRoute: typeof PublicPostsSlugRouteImport
-      parentRoute: typeof PublicPostsRoute
+      parentRoute: typeof PublicRouteRoute
     }
     '/_public/$navSlug/$postSlug': {
       id: '/_public/$navSlug/$postSlug'
@@ -619,7 +618,7 @@ declare module '@tanstack/react-router' {
       path: '/nav/$navId'
       fullPath: '/nav/$navId'
       preLoaderRoute: typeof PublicNavNavIdRouteRouteImport
-      parentRoute: typeof PublicPostsRoute
+      parentRoute: typeof PublicRouteRoute
     }
     '/_public/nav/$navId/': {
       id: '/_public/nav/$navId/'
@@ -694,23 +693,23 @@ const PublicNavNavIdRouteRouteWithChildren =
 interface PublicRouteRouteChildren {
   PublicNavSlugRouteRoute: typeof PublicNavSlugRouteRouteWithChildren
   PublicFriendLinksRoute: typeof PublicFriendLinksRoute
-  PublicPostsRoute: typeof PublicPostsRoute
   PublicSearchRoute: typeof PublicSearchRoute
   PublicUnsubscribeRoute: typeof PublicUnsubscribeRoute
   PublicIndexRoute: typeof PublicIndexRoute
   PublicNavNavIdRouteRoute: typeof PublicNavNavIdRouteRouteWithChildren
   PublicPostsSlugRoute: typeof PublicPostsSlugRoute
+  PublicPostsIndexRoute: typeof PublicPostsIndexRoute
 }
 
 const PublicRouteRouteChildren: PublicRouteRouteChildren = {
   PublicNavSlugRouteRoute: PublicNavSlugRouteRouteWithChildren,
   PublicFriendLinksRoute: PublicFriendLinksRoute,
-  PublicPostsRoute: PublicPostsRoute,
   PublicSearchRoute: PublicSearchRoute,
   PublicUnsubscribeRoute: PublicUnsubscribeRoute,
   PublicIndexRoute: PublicIndexRoute,
   PublicNavNavIdRouteRoute: PublicNavNavIdRouteRouteWithChildren,
   PublicPostsSlugRoute: PublicPostsSlugRoute,
+  PublicPostsIndexRoute: PublicPostsIndexRoute,
 }
 
 const PublicRouteRouteWithChildren = PublicRouteRoute._addFileChildren(
