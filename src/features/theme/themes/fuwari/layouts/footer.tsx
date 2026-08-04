@@ -13,7 +13,7 @@ export function Footer(_: FooterProps) {
 
   return (
     <>
-      <div className="anime-divider my-10 mx-4 md:mx-32">
+      <div className="anime-divider my-10">
         <div className="anime-divider-dot" />
       </div>
       <div className="anime-glass rounded-2xl mb-12 flex flex-col items-center justify-center px-6 py-8 gap-3">
