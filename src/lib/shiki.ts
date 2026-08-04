@@ -103,12 +103,12 @@ export async function highlight(code: string, lang: string) {
     : "text";
 
   try {
+    // Use vitesse-dark as a single theme — generates hex colors directly,
+    // avoiding CSS variable compatibility issues across the app.
+    // The code block always renders with a dark background.
     return highlighter.codeToHtml(code, {
       lang: safeLang,
-      themes: {
-        dark: themes.dark,
-        light: themes.light,
-      },
+      theme: themes.dark,
     });
   } catch (e) {
     console.warn(`Failed to highlight language: ${lang}`, e);

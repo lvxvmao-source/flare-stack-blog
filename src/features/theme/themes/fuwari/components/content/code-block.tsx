@@ -77,17 +77,15 @@ export const CodeBlock = memo(
 
     return (
       <div className="relative group max-w-full my-6 not-prose">
-        {/* Inline style to ensure Shiki dual-theme colors work reliably */}
+        {/* Override <pre> background to happysimple dark, keep <span> inline colors
+            so syntax highlighting is preserved. */}
         <style>{`
-          .code-block-wrapper .shiki,
-          .code-block-wrapper .shiki span {
-            color: var(--shiki-light) !important;
-            background-color: var(--shiki-light-bg) !important;
+          .code-block-wrapper > div > pre.shiki {
+            background-color: #292d3e !important;
+            color: #a6accd !important;
           }
-          .dark .code-block-wrapper .shiki,
-          .dark .code-block-wrapper .shiki span {
-            color: var(--shiki-dark) !important;
-            background-color: var(--shiki-dark-bg) !important;
+          .code-block-wrapper pre.shiki span {
+            background-color: transparent !important;
           }
         `}</style>
 
