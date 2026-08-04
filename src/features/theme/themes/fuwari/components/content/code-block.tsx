@@ -43,7 +43,7 @@ const FOLD_THRESHOLD = 400;
 
 export const CodeBlock = memo(
   ({ code, language, highlightedHtml }: CodeBlockProps) => {
-    const fallback = `<pre class="shiki font-mono text-sm leading-relaxed whitespace-pre text-(--fuwari-btn-content) bg-transparent! p-0 m-0 border-0"><code>${code}</code></pre>`;
+    const fallback = `<pre class="shiki font-mono text-sm leading-relaxed whitespace-pre bg-transparent! p-0 m-0 border-0" style="color:var(--shiki-light);background-color:var(--shiki-light-bg)"><code>${code}</code></pre>`;
     const html = highlightedHtml || fallback;
 
     const [copied, setCopied] = useState(false);
@@ -54,7 +54,6 @@ export const CodeBlock = memo(
 
     useLayoutEffect(() => {
       if (contentRef.current) {
-        // If the content is taller than our threshold, enable folding
         const scrollHeight = contentRef.current.scrollHeight;
         if (scrollHeight > FOLD_THRESHOLD + 50) {
           setNeedsFolding(true);
@@ -63,7 +62,6 @@ export const CodeBlock = memo(
       }
     }, [html]);
 
-    // Helper to get display label (following expressive-code language badge logic)
     const normalizedLanguage = language?.toLowerCase();
     const displayLanguage = normalizedLanguage
       ? normalizedLanguage === "text" || normalizedLanguage === "txt"
@@ -79,18 +77,32 @@ export const CodeBlock = memo(
 
     return (
       <div className="relative group max-w-full my-6 not-prose">
-        <div className="expressive-code relative rounded-xl border border-black/10 dark:border-white/10 bg-(--fuwari-code-bg) overflow-hidden transition-colors shadow-sm">
-          {/* happysimple-style three-dot decoration */}
-          <div className="absolute left-3 top-3 z-20 flex gap-[6px] pointer-events-none opacity-70 group-hover:opacity-0 transition-opacity duration-300">
+        {/* Inline style to ensure Shiki dual-theme colors work reliably */}
+        <style>{`
+          .code-block-wrapper .shiki,
+          .code-block-wrapper .shiki span {
+            color: var(--shiki-light) !important;
+            background-color: var(--shiki-light-bg) !important;
+          }
+          .dark .code-block-wrapper .shiki,
+          .dark .code-block-wrapper .shiki span {
+            color: var(--shiki-dark) !important;
+            background-color: var(--shiki-dark-bg) !important;
+          }
+        `}</style>
+
+        <div className="code-block-wrapper expressive-code relative rounded-xl border border-black/10 dark:border-white/10 bg-(--fuwari-code-bg) overflow-hidden transition-colors shadow-sm">
+          {/* happysimple-style three-dot decoration — always visible, sits above code */}
+          <div className="absolute left-3 top-3 z-30 flex gap-[6px] pointer-events-none">
             <span className="w-3 h-3 rounded-full bg-[#fc625d]" />
             <span className="w-3 h-3 rounded-full bg-[#fdbc40]" />
             <span className="w-3 h-3 rounded-full bg-[#35cd4b]" />
           </div>
 
-          {/* Language Badge */}
+          {/* Language Badge — right side, fades on hover */}
           <div
             className={cn(
-              "absolute z-10 right-2 top-2 px-2 py-0.5",
+              "absolute z-20 right-2 top-2 px-2 py-0.5",
               "font-mono text-xs font-bold uppercase pointer-events-none transition-opacity duration-300",
               "text-(--fuwari-primary) bg-(--fuwari-primary)/10 rounded-lg",
               "group-hover:opacity-0",
@@ -99,7 +111,7 @@ export const CodeBlock = memo(
             {displayLanguage}
           </div>
 
-          {/* Custom Copy Button (Expressive Code Style) */}
+          {/* Copy Button — appears on hover */}
           <button
             onClick={handleCopy}
             aria-label={m.common_copy_code()}
@@ -107,18 +119,16 @@ export const CodeBlock = memo(
               "absolute z-20 right-2 top-2 w-8 h-8 flex items-center justify-center rounded-lg transition-all duration-300",
               "bg-transparent border border-transparent text-gray-400 opacity-0 group-hover:opacity-100",
               "hover:bg-black/5 dark:hover:bg-white/10 hover:border-black/10 dark:hover:border-white/20 hover:text-black dark:hover:text-white",
-              copied && "text-green-500 hover:text-green-500 scale-110", // success state overrides
+              copied && "text-green-500 hover:text-green-500 scale-110",
             )}
           >
             <div className="w-4 h-4 relative flex items-center justify-center">
               {copied ? (
-                /* Success Check Icon */
                 <Check
                   strokeWidth={2.5}
                   className="w-4 h-4 absolute animate-in zoom-in"
                 />
               ) : (
-                /* Copy Icon */
                 <Copy strokeWidth={2.5} className="w-4 h-4 absolute" />
               )}
             </div>
@@ -133,12 +143,15 @@ export const CodeBlock = memo(
                 : undefined
             }
           >
+            {/* Top spacing for the three-dot decoration so it doesn't overlap code */}
+            <div className="h-10" />
+
             <div
               ref={contentRef}
               className="text-sm font-mono leading-relaxed transition-opacity duration-300"
             >
               <div
-                className="[&>pre]:px-5 [&>pre]:py-4 [&>pre]:m-0 [&>pre]:min-w-full [&>pre]:w-fit [&_code]:block [&_code]:w-fit [&>pre]:rounded-xl [&>pre>code]:p-0"
+                className="[&>pre]:px-5 [&>pre]:pb-4 [&>pre]:pt-0 [&>pre]:m-0 [&>pre]:min-w-full [&>pre]:w-fit [&_code]:block [&_code]:w-fit [&>pre]:rounded-b-xl [&>pre>code]:p-0"
                 dangerouslySetInnerHTML={{ __html: html }}
               />
             </div>
@@ -153,7 +166,7 @@ export const CodeBlock = memo(
             )}
           </div>
 
-          {/* Expand Button (Subtle Overlay Style) */}
+          {/* Expand Button */}
           {needsFolding && (
             <div
               className={cn(

@@ -56,9 +56,9 @@
   --happysimple-blockquote-bg: rgba(166, 139, 255, 0.08);
   --happysimple-blockquote-color: #aaa;
   --happysimple-table-border: #444;
-  --happysimple-table-header-bg: #2a3a4a;
-  --happysimple-table-odd-row: #1e1e2e;
-  --happysimple-table-even-row: #252536;
+  --happysimple-table-header-bg: #2d3748;
+  --happysimple-table-odd-row: #1a1a2e;
+  --happysimple-table-even-row: #22223a;
   --happysimple-hr-color: #444;
 
   /* code block */
@@ -91,8 +91,8 @@
   --tw-prose-code: var(--happysimple-inline-code-color);
   --tw-prose-pre-code: var(--happysimple-code-color);
   --tw-prose-pre-bg: var(--happysimple-code-bg-body);
-  --tw-prose-th-borders: var(--happysimple-table-border);
-  --tw-prose-td-borders: var(--happysimple-table-border);
+  --tw-prose-th-borders: var(--fuwari-table-border);
+  --tw-prose-td-borders: var(--fuwari-table-border);
 
   font-family: var(--happysimple-body-font);
   color: var(--happysimple-body-color);
@@ -358,34 +358,66 @@
 
   /* ---- tables ---- */
   table {
-    border-collapse: collapse;
-    width: 80%;
-    margin: 10px 0px;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin: 1.5rem 0;
     font-family: var(--happysimple-body-font);
-    font-size: 1rem;
-    line-height: 1.5;
-    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--fuwari-table-border);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.04);
+
     thead {
-      background: var(--happysimple-table-header-bg);
       th {
         font-family: var(--happysimple-heading-font);
-        font-weight: 400;
-        padding: 5px 10px;
-        text-align: center;
-        border: 2px solid var(--happysimple-table-border);
+        font-weight: 600;
+        font-size: 0.9rem;
+        letter-spacing: 0.02em;
+        padding: 12px 16px;
+        text-align: left;
+        color: var(--fuwari-table-header-color);
+        background: var(--fuwari-table-header-bg);
+        border-bottom: 2px solid var(--fuwari-table-border);
+
+        &:first-child {
+          border-top-left-radius: 10px;
+        }
+        &:last-child {
+          border-top-right-radius: 10px;
+        }
       }
     }
+
     tbody {
       tr {
-        background: var(--happysimple-table-odd-row);
-        font-weight: 300;
+        background: var(--fuwari-table-odd-row);
+        transition: background-color 0.15s ease;
+
+        &:nth-child(2n) {
+          background: var(--fuwari-table-even-row);
+        }
+
+        &:hover {
+          background: var(--fuwari-table-hover-bg);
+        }
+
+        &:last-child td:first-child {
+          border-bottom-left-radius: 10px;
+        }
+        &:last-child td:last-child {
+          border-bottom-right-radius: 10px;
+        }
       }
-      tr:nth-child(2n) {
-        background: var(--happysimple-table-even-row);
-      }
+
       td {
-        padding: 5px 10px;
-        border: 2px solid var(--happysimple-table-border);
+        padding: 10px 16px;
+        border-bottom: 1px solid
+          color-mix(in srgb, var(--fuwari-table-border) 30%, transparent);
+        color: var(--happysimple-body-color);
+        font-weight: 300;
       }
     }
   }
