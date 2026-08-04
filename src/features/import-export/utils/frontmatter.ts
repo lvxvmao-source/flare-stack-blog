@@ -1,6 +1,69 @@
-import matter from "gray-matter";
 import type { PostFrontmatter } from "@/features/import-export/import-export.schema";
 import { PostFrontmatterSchema } from "@/features/import-export/import-export.schema";
+
+/**
+ * 简易 YAML 解析器 — 仅处理简单键值对、数组、布尔值、数字和字符串
+ * 浏览器兼容，无需 Node.js Buffer
+ */
+function parseSimpleYaml(raw: string): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
+  const lines = raw.split("\n");
+  let currentKey = "";
+  let currentArray: string[] = [];
+
+  function flushArray() {
+    if (currentKey && currentArray.length > 0) {
+      result[currentKey] = [...currentArray];
+    }
+    currentKey = "";
+    currentArray = [];
+  }
+
+  for (const line of lines) {
+    // 跳过空行和纯注释行
+    if (/^\s*$/.test(line) || /^\s*#/.test(line)) continue;
+
+    // 数组项: - value
+    const arrMatch = line.match(/^\s*-\s+(.+?)\s*$/);
+    if (arrMatch && currentKey) {
+      const val = arrMatch[1].trim();
+      // 去掉引号
+      currentArray.push(val.replace(/^["']|["']$/g, ""));
+      continue;
+    }
+
+    // 遇到新的键值对时，先提交之前的数组
+    flushArray();
+
+    // 键值对: key: value
+    const kvMatch = line.match(/^(\w[\w_-]*)\s*:\s*(.*?)\s*$/);
+    if (kvMatch) {
+      const key = kvMatch[1];
+      let rawVal = kvMatch[2];
+
+      // 去掉引号
+      rawVal = rawVal.replace(/^["']|["']$/g, "");
+
+      if (rawVal === "" || rawVal === "~") {
+        result[key] = null;
+      } else if (rawVal === "true") {
+        result[key] = true;
+      } else if (rawVal === "false") {
+        result[key] = false;
+      } else if (/^-?\d+(\.\d+)?$/.test(rawVal)) {
+        result[key] = Number(rawVal);
+      } else {
+        result[key] = rawVal;
+      }
+      currentKey = key;
+    }
+  }
+
+  // 提交最后的数组
+  flushArray();
+
+  return result;
+}
 
 /**
  * 生成 YAML frontmatter + Markdown 内容
@@ -9,19 +72,47 @@ export function stringifyFrontmatter(
   frontmatter: PostFrontmatter,
   markdownContent: string,
 ): string {
-  // js-yaml cannot serialize undefined values — JSON round-trip strips them
-  const clean = JSON.parse(JSON.stringify(frontmatter));
-  return matter.stringify(markdownContent, clean);
+  const lines: string[] = ["---"];
+  if (frontmatter.title) lines.push(`title: "${frontmatter.title}"`);
+  if (frontmatter.slug) lines.push(`slug: "${frontmatter.slug}"`);
+  if (frontmatter.summary) lines.push(`summary: "${frontmatter.summary}"`);
+  lines.push(`status: ${frontmatter.status}`);
+  if (frontmatter.publishedAt) lines.push(`publishedAt: "${frontmatter.publishedAt}"`);
+  if (frontmatter.createdAt) lines.push(`createdAt: "${frontmatter.createdAt}"`);
+  if (frontmatter.updatedAt) lines.push(`updatedAt: "${frontmatter.updatedAt}"`);
+  lines.push(`readTimeInMinutes: ${frontmatter.readTimeInMinutes}`);
+  if (frontmatter.tags.length > 0) {
+    for (const tag of frontmatter.tags) {
+      lines.push(`  - ${tag}`);
+    }
+  }
+  lines.push("---");
+  lines.push("");
+  lines.push(markdownContent);
+  return lines.join("\n");
 }
 
 /**
  * 解析 Markdown 文件的 frontmatter 和正文内容
+ * 支持 YAML frontmatter（以 --- 包裹）
  */
 export function parseFrontmatter(raw: string): {
   data: Record<string, unknown>;
   content: string;
 } {
-  const { data, content } = matter(raw);
+  const trimmed = raw.trimStart();
+  // 检查是否以 --- 开头
+  if (!trimmed.startsWith("---")) {
+    return { data: {}, content: raw };
+  }
+  // 找到第二个 ---（结束标记），从第 4 个字符开始找
+  const endIdx = trimmed.indexOf("\n---", 3);
+  if (endIdx === -1) {
+    return { data: {}, content: raw };
+  }
+  const yamlBlock = trimmed.slice(4, endIdx);
+  const content = trimmed.slice(endIdx + 4).trimStart();
+  const data = parseSimpleYaml(yamlBlock);
   return { data, content };
 }
 
