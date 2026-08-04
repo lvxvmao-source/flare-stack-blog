@@ -29,15 +29,14 @@ export function CodeBlockView({
       await loadLanguage(language);
 
       const h = await getHighlighter();
-      const lightTheme = h.getTheme(shikiThemes.light);
-      const darkTheme = h.getTheme(shikiThemes.dark);
+      const theme = h.getTheme(shikiThemes.dark);
 
       if (mounted) {
         setThemeStyles({
-          "--shiki-light": lightTheme.fg,
-          "--shiki-dark": darkTheme.fg,
-          "--shiki-light-bg": lightTheme.bg,
-          "--shiki-dark-bg": darkTheme.bg,
+          "--shiki-light": theme.fg,
+          "--shiki-dark": theme.fg,
+          "--shiki-light-bg": theme.bg,
+          "--shiki-dark-bg": theme.bg,
         } as React.CSSProperties);
 
         // Trigger re-decoration in shiki plugin

@@ -377,7 +377,7 @@
         font-size: 0.9rem;
         letter-spacing: 0.02em;
         padding: 12px 16px;
-        text-align: center;
+        text-align: center !important;
         color: var(--fuwari-table-header-color);
         background: var(--fuwari-table-header-bg);
         border-bottom: 2px solid var(--fuwari-table-border);
@@ -416,7 +416,7 @@
 
       td {
         padding: 10px 16px;
-        text-align: center;
+        text-align: center !important;
         border-bottom: 1px solid
           color-mix(in srgb, var(--fuwari-table-border) 30%, transparent);
         border-right: 1px solid

@@ -84,10 +84,7 @@ function generateDecorationsForBlock(
     if (!tokensData) {
       const tokens = highlighter.codeToTokens(code, {
         lang: safeLang,
-        themes: {
-          light: themes.light,
-          dark: themes.dark,
-        },
+        theme: themes.dark,
       });
       tokensData = { tokens: tokens.tokens };
       tokenCache.set(cacheKey, tokensData);

@@ -11,7 +11,6 @@ export default function TableOfContents({
   const [activeIndices, setActiveIndices] = useState<Array<number>>([]);
   const [isReady, setIsReady] = useState(false);
 
-  const [isVisible, setIsVisible] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const tocRootRef = useRef<HTMLDivElement>(null);
   const linksContainerRef = useRef<HTMLDivElement>(null);
@@ -44,21 +43,6 @@ export default function TableOfContents({
     }
     return text;
   };
-
-  // Scroll visibility logic: Show TOC after scrolling past banner area
-  useEffect(() => {
-    const handleScrollVisibility = () => {
-      const scrollY = window.scrollY;
-      // Show when scrolled > 350px (approx banner height)
-      setIsVisible(scrollY > 350);
-    };
-
-    window.addEventListener("scroll", handleScrollVisibility, {
-      passive: true,
-    });
-    handleScrollVisibility(); // Initial check
-    return () => window.removeEventListener("scroll", handleScrollVisibility);
-  }, []);
 
   // Section-based active heading detection (matches original Fuwari logic)
   const computeActiveHeadings = useCallback(() => {
@@ -213,15 +197,15 @@ export default function TableOfContents({
     <nav
       ref={navRef}
       className={cn(
-        "sticky top-14 self-start block w-full transition-all duration-500",
-        isVisible && isReady
+        "block w-full transition-all duration-500",
+        isReady
           ? "opacity-100 translate-y-0"
           : "opacity-0 translate-y-4 pointer-events-none",
       )}
     >
       <div
         ref={tocRootRef}
-        className="relative toc-root overflow-y-scroll overflow-x-hidden fuwari-toc-scrollbar h-[calc(100vh-20rem)]"
+        className="relative toc-root overflow-y-auto overflow-x-hidden fuwari-toc-scrollbar max-h-[calc(100vh-24rem)]"
         style={{
           scrollBehavior: "smooth",
           maskImage:

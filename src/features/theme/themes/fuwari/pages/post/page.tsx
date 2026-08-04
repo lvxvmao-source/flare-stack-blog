@@ -4,12 +4,12 @@ import { Suspense } from "react";
 import type { PostPageProps } from "@/features/theme/contract/pages";
 import { FuwariCommentSection } from "@/features/theme/themes/fuwari/components/comments/view/comment-section";
 import { ContentRenderer } from "@/features/theme/themes/fuwari/components/content/content-renderer";
+import { TocContext } from "@/features/theme/themes/fuwari/lib/toc-context";
 import { authClient } from "@/lib/auth/auth.client";
 import { m } from "@/paraglide/messages";
 import { PostMeta } from "./components/post-meta";
 import { PostSummary } from "./components/post-summary";
 import { RelatedPosts, RelatedPostsSkeleton } from "./components/related-posts";
-import TableOfContents from "./components/table-of-contents";
 
 export function PostPage({ post }: PostPageProps) {
   const { data: session } = authClient.useSession();
@@ -17,18 +17,8 @@ export function PostPage({ post }: PostPageProps) {
   const wordCount = post.readTimeInMinutes * 300;
 
   return (
+    <TocContext.Provider value={{ toc: post.toc }}>
     <div className="relative flex flex-col rounded-(--fuwari-radius-large) py-1 md:py-0 md:bg-transparent gap-4 mb-4 w-full">
-      {/* Table Of Contents (Desktop Floating Right) */}
-      <div
-        className="hidden 2xl:block absolute top-0 h-full pl-4"
-        style={{
-          right: "calc(var(--fuwari-toc-width) * -1)",
-          width: "var(--fuwari-toc-width)",
-        }}
-      >
-        <TableOfContents headers={post.toc} />
-      </div>
-
       {/* Main Post Container */}
       <div className="fuwari-card-base z-10 px-6 md:px-9 pt-6 pb-4 relative w-full fuwari-onload-animation">
         {/* Word count and reading time */}
@@ -121,5 +111,6 @@ export function PostPage({ post }: PostPageProps) {
         <FuwariCommentSection postId={post.id} />
       </div>
     </div>
+    </TocContext.Provider>
   );
 }
