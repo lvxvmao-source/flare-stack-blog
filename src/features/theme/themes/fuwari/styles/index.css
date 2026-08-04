@@ -365,7 +365,8 @@
 
   /* Sakura decorative divider */
   .anime-divider {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: 0.75rem;
     width: 100%;
@@ -374,7 +375,6 @@
   .anime-divider::before,
   .anime-divider::after {
     content: "";
-    flex: 1;
     height: 1px;
     background: linear-gradient(
       to right,
@@ -390,6 +390,7 @@
     border-radius: 50%;
     background: var(--anime-sakura);
     box-shadow: 0 0 8px var(--anime-sakura);
+    flex-shrink: 0;
   }
 
   /* Gradient border (for friend link cards etc.) */
