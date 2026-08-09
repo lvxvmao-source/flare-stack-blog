@@ -206,6 +206,11 @@ export function resolveSiteConfig(
         displayFont:
           config?.site?.theme?.fuwari?.displayFont ??
           blogConfig.theme.fuwari.displayFont,
+        welcome: {
+          background:
+            config?.site?.theme?.fuwari?.welcome?.background ??
+            blogConfig.theme.fuwari.welcome.background,
+        },
       },
     },
     navItems: config?.site?.navItems ?? blogConfig.navItems,
