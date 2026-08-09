@@ -2,7 +2,8 @@ import type { ThemeName } from "@/features/theme/registry";
 import { themeNames } from "@/features/theme/registry";
 import type { Messages } from "@/lib/i18n";
 
-export const SITE_ASSET_MAX_FILE_SIZE = 8 * 1024 * 1024; // 2MB
+export const SITE_ASSET_MAX_FILE_SIZE = 8 * 1024 * 1024; // 8MB for images
+export const SITE_ASSET_VIDEO_MAX_FILE_SIZE = 30 * 1024 * 1024; // 30MB for welcome-page videos
 
 export const SITE_ASSET_ACCEPTED_TYPES = [
   "image/jpeg",
@@ -13,6 +14,11 @@ export const SITE_ASSET_ACCEPTED_TYPES = [
   "image/svg+xml",
   "image/x-icon",
   "image/vnd.microsoft.icon",
+] as const;
+
+export const SITE_ASSET_VIDEO_ACCEPTED_TYPES = [
+  "video/mp4",
+  "video/webm",
 ] as const;
 
 type ThemePrefix = `themes/${ThemeName}/`;
@@ -28,6 +34,17 @@ const ALLOWED_ASSET_PREFIXES = [
 function isAllowedAssetPath(path: string): boolean {
   const normalized = path.replace(/^\/+/, "").replace(/\\/g, "/");
   return ALLOWED_ASSET_PREFIXES.some((prefix) => normalized.startsWith(prefix));
+}
+
+/** True when the file looks like a supported welcome-page video (.mp4/.webm). */
+export function isVideoAsset(file: File): boolean {
+  const mime = file.type.toLowerCase();
+  const ext = file.name.split(".").pop()?.toLowerCase();
+  return (
+    (SITE_ASSET_VIDEO_ACCEPTED_TYPES as readonly string[]).includes(mime) ||
+    ext === "mp4" ||
+    ext === "webm"
+  );
 }
 
 export function parseSiteAssetUploadInput(
@@ -49,13 +66,22 @@ export function parseSiteAssetUploadInput(
     throw new Error(messages.settings_asset_validation_path_invalid());
   }
 
-  if (file.size > SITE_ASSET_MAX_FILE_SIZE) {
-    throw new Error(messages.settings_asset_validation_file_too_large());
+  const video = isVideoAsset(file);
+  const maxSize = video ? SITE_ASSET_VIDEO_MAX_FILE_SIZE : SITE_ASSET_MAX_FILE_SIZE;
+  if (file.size > maxSize) {
+    throw new Error(
+      video
+        ? messages.settings_asset_validation_video_too_large()
+        : messages.settings_asset_validation_file_too_large(),
+    );
   }
 
   const mime = file.type.toLowerCase();
   const ext = file.name.split(".").pop()?.toLowerCase();
-  const allowedMimes = new Set<string>(SITE_ASSET_ACCEPTED_TYPES);
+  const allowedMimes = new Set<string>([
+    ...SITE_ASSET_ACCEPTED_TYPES,
+    ...SITE_ASSET_VIDEO_ACCEPTED_TYPES,
+  ]);
   const allowedExts = new Set([
     "jpeg",
     "jpg",
@@ -64,6 +90,8 @@ export function parseSiteAssetUploadInput(
     "gif",
     "svg",
     "ico",
+    "mp4",
+    "webm",
   ]);
 
   if (!allowedMimes.has(mime) && !allowedExts.has(ext ?? "")) {

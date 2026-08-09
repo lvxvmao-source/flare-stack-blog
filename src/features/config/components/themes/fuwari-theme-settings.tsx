@@ -259,6 +259,19 @@ export function FuwariThemeSettings() {
       />
       <FuwariHuePreview />
 
+      {/* ── Welcome Page ── */}
+      <SectionShell title={m.settings_site_fuwari_welcome?.() ?? "Welcome Page"}>
+        <AssetUploadField
+          name="site.theme.fuwari.welcome.background"
+          assetPath="themes/fuwari/welcome-bg"
+          accept=".png,.webp,.jpg,.jpeg,.mp4,.webm"
+          label={m.settings_site_fuwari_welcome_bg?.() ?? "Welcome Page Background"}
+          hint={m.settings_site_fuwari_welcome_bg_hint?.() ?? "Static image or .mp4/.webm video used as the welcome page backdrop. Leave empty for a plain background."}
+          placeholder="/images/asset/themes/fuwari/welcome-bg or external image/video URL"
+          error={errors.site?.theme?.fuwari?.welcome?.background?.message}
+        />
+      </SectionShell>
+
       {/* ── Decoration Effects ── */}
       <SectionShell title={m.settings_site_fuwari_effects?.() ?? "Decoration Effects"}>
         <ToggleField name="site.theme.fuwari.sakuraEnabled" label={m.settings_site_fuwari_sakura_enabled?.() ?? "Sakura Petal Effect"} hint={m.settings_site_fuwari_sakura_hint?.() ?? "Falling cherry blossom petals across the page"} />

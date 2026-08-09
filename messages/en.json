@@ -1214,7 +1214,8 @@
   "settings_asset_validation_path_required": "Asset path is required",
   "settings_asset_validation_path_invalid": "Asset path must start with favicon/ or themes/default/ or themes/fuwari/ or themes/acg/",
   "settings_asset_validation_file_too_large": "File size must be less than 2MB",
-  "settings_asset_validation_file_invalid_type": "Only image files (JPEG, PNG, WebP, GIF, SVG, ICO) are supported",
+  "settings_asset_validation_video_too_large": "Video file size must be less than 30MB",
+  "settings_asset_validation_file_invalid_type": "Only image files (JPEG, PNG, WebP, GIF, SVG, ICO) or video files (MP4, WebM) are supported",
   "settings_asset_upload_success": "Asset uploaded",
   "settings_asset_upload_fail": "Upload failed",
   "settings_asset_upload_btn": "Upload",
@@ -1540,5 +1541,8 @@
   "settings_site_fuwari_footer_quote_hint": "Anime-style quote shown in footer",
   "settings_site_fuwari_font": "Typography",
   "settings_site_fuwari_display_font": "Display Font",
-  "settings_site_fuwari_display_font_hint": "Font used for headings and decorative text"
+  "settings_site_fuwari_display_font_hint": "Font used for headings and decorative text",
+  "settings_site_fuwari_welcome": "Welcome Page",
+  "settings_site_fuwari_welcome_bg": "Welcome Page Background",
+  "settings_site_fuwari_welcome_bg_hint": "Use a static image or an .mp4/.webm video as the welcome page backdrop. Upload a local file or enter a site/external URL; leave empty for a plain background."
 }

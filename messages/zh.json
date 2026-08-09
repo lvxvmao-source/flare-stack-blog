@@ -1206,7 +1206,8 @@
   "settings_asset_validation_path_required": "资源路径不能为空",
   "settings_asset_validation_path_invalid": "资源路径必须以 favicon/、themes/default/、themes/fuwari/ 或 themes/acg/ 开头",
   "settings_asset_validation_file_too_large": "文件大小不能超过 2MB",
-  "settings_asset_validation_file_invalid_type": "仅支持图片格式（JPEG、PNG、WebP、GIF、SVG、ICO）",
+  "settings_asset_validation_video_too_large": "视频文件大小不能超过 30MB",
+  "settings_asset_validation_file_invalid_type": "仅支持图片格式（JPEG、PNG、WebP、GIF、SVG、ICO）或视频格式（MP4、WebM）",
   "settings_asset_upload_success": "资源已上传",
   "settings_asset_upload_fail": "上传失败",
   "settings_asset_upload_btn": "上传",
@@ -1532,5 +1533,8 @@
   "settings_site_fuwari_footer_quote_hint": "在页脚展示的二次元风格签名或语录",
   "settings_site_fuwari_font": "字体设置",
   "settings_site_fuwari_display_font": "展示字体",
-  "settings_site_fuwari_display_font_hint": "用于标题和装饰性文字的字体"
+  "settings_site_fuwari_display_font_hint": "用于标题和装饰性文字的字体",
+  "settings_site_fuwari_welcome": "欢迎页",
+  "settings_site_fuwari_welcome_bg": "欢迎页背景壁纸",
+  "settings_site_fuwari_welcome_bg_hint": "支持静态图片或 .mp4/.webm 视频作为欢迎页背景，可本地上传或填写站内/外部链接；留空则为纯色背景。"
 }

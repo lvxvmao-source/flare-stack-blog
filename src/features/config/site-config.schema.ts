@@ -344,6 +344,12 @@ function createFuwariThemeSiteConfigSchema() {
     footerQuote: z.string().max(200),
     // Font
     displayFont: z.enum(["zcool", "mashan", "noto"]),
+    // Welcome page background (image or .mp4/.webm video URL)
+    welcome: z
+      .object({
+        background: z.string(),
+      })
+      .default({ background: "" }),
   });
 }
 
@@ -370,6 +376,11 @@ function createFuwariThemeSiteConfigInputSchema() {
     cardGlassIntensity: z.number().min(0).max(1).optional(),
     footerQuote: z.string().max(200).optional(),
     displayFont: z.enum(["zcool", "mashan", "noto"]).optional(),
+    welcome: z
+      .object({
+        background: z.string().max(2000),
+      })
+      .optional(),
   });
 }
 
@@ -396,6 +407,11 @@ function createFuwariThemeSiteConfigInputFormSchema(messages: Messages) {
     cardGlassIntensity: z.number().min(0).max(1).optional(),
     footerQuote: z.string().max(200).optional(),
     displayFont: z.enum(["zcool", "mashan", "noto"]).optional(),
+    welcome: z
+      .object({
+        background: z.string().max(2000),
+      })
+      .optional(),
   });
 }
 

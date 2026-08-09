@@ -8,3 +8,85 @@ Using secrets defined in .dev.vars
 [2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
   [32m➜[39m  [1mDebug[22m:   [2m[33mhttp://localhost:[1m3999[22m[2m/__debug[39m[22m
 File D:/ziliao/flare-stack-blog/src/routes/index.tsx was modified by another process during processing.
+[2m18:26:47[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[vite] hot updated: virtual:cloudflare/worker-entry
+[2m18:27:09[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[vite] hot updated: virtual:cloudflare/worker-entry
+[2m18:27:11[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[vite] hot updated: virtual:cloudflare/worker-entry
+[2m18:27:14[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[vite] hot updated: virtual:cloudflare/worker-entry
+[36mℹ[39m [1m[34m[paraglide-js] [39m[22mRe-compiling inlang project... File "messages\zh.json" has changed.
+[36mℹ[39m [1m[34m[paraglide-js] [39m[22mRe-compiling inlang project... File "messages\en.json" has changed.
+[2m18:28:49[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[2m18:28:49[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[2m18:28:49[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[32m✔[39m [1m[32m[paraglide-js] [39m[22mRe-compilation complete (locale-modules)
+[vite] hot updated: virtual:cloudflare/worker-entry
+[vite] hot updated: virtual:cloudflare/worker-entry
+[vite] hot updated: virtual:cloudflare/worker-entry
+[2m18:28:51[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[2m18:28:51[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[2m18:28:51[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[32m✔[39m [1m[32m[paraglide-js] [39m[22mRe-compilation complete (locale-modules)
+[vite] hot updated: virtual:cloudflare/worker-entry
+[vite] hot updated: virtual:cloudflare/worker-entry
+[vite] hot updated: virtual:cloudflare/worker-entry
+[36mℹ[39m [1m[34m[paraglide-js] [39m[22mRe-compiling inlang project... File "messages\zh.json" has changed.
+[2m18:29:21[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[2m18:29:21[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[2m18:29:21[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[32m✔[39m [1m[32m[paraglide-js] [39m[22mRe-compilation complete (locale-modules)
+[vite] hot updated: virtual:cloudflare/worker-entry
+[vite] hot updated: virtual:cloudflare/worker-entry
+[vite] hot updated: virtual:cloudflare/worker-entry
+[2m18:29:37[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[2m18:29:37[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mpage reload [39m[2msrc/paraglide/registry.js[22m
+[2m18:29:37[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[2m18:29:37[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mpage reload [39m[2msrc/paraglide/messages/en.js[22m
+[2m18:29:37[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mpage reload [39m[2msrc/paraglide/messages/zh.js[22m
+[2m18:29:37[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mpage reload [39m[2msrc/paraglide/messages/_index.js[22m
+[2m18:29:37[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[2m18:29:37[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mpage reload [39m[2msrc/paraglide/registry.js[22m
+[2m18:29:37[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[vite] Error: Failed to load url /src/paraglide/messages.js (resolved id: D:/ziliao/flare-stack-blog/src/paraglide/messages.js) in D:/ziliao/flare-stack-blog/src/features/email/service/email.service.ts. Does the file exist?
+    at loadAndTransform (file:///D:/ziliao/flare-stack-blog/node_modules/vite/dist/node/chunks/config.js:22663:33)
+    at async fetchModule (file:///D:/ziliao/flare-stack-blog/node_modules/vite/dist/node/chunks/config.js:33993:15)
+    at async Object.handleInvoke (file:///D:/ziliao/flare-stack-blog/node_modules/vite/dist/node/chunks/config.js:25834:21)
+    at async __VITE_INVOKE_MODULE__ (file:///D:/ziliao/flare-stack-blog/node_modules/@cloudflare/vite-plugin/dist/index.mjs:52836:22)
+    at async #handleLoopbackCustomFetchService (D:\ziliao\flare-stack-blog\node_modules\miniflare\dist\src\index.js:88410:22)
+    at async #handleLoopback (D:\ziliao\flare-stack-blog\node_modules\miniflare\dist\src\index.js:88644:20) {
+  code: 'ERR_LOAD_URL',
+  runnerError: Error: RunnerError
+      at reviveInvokeError (workers/runner-worker/vite/module-runner:528:64)
+      at Object.invoke (workers/runner-worker/vite/module-runner:543:33)
+      at ModuleRunner.getModuleInformation (workers/runner-worker/vite/module-runner:1155:7)
+      at request (workers/runner-worker/vite/module-runner:1172:83)
+      at D:/ziliao/flare-stack-blog/src/lib/errors/error-handler.ts:2:1
+      at Object.runInlinedModule (workers/runner-worker/index.js:215:4)
+      at ModuleRunner.directRequest (workers/runner-worker/vite/module-runner:1215:59)
+      at ModuleRunner.cachedRequest (workers/runner-worker/vite/module-runner:1122:73)
+      at D:/ziliao/flare-stack-blog/src/lib/errors/index.ts:2:1
+      at Object.runInlinedModule (workers/runner-worker/index.js:215:4)
+}
+[vite] Failed to reload virtual:cloudflare/worker-entry. This could be due to syntax errors or importing non-existent modules. (see errors above)
+[vite] program reload
+[2m18:29:38[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mpage reload [39m[2msrc/paraglide/registry.js[22m
+[2m18:29:38[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[2m18:29:38[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[2m18:29:39[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mpage reload [39m[2msrc/paraglide/registry.js[22m
+[2m18:29:39[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[2m18:29:39[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/@id/virtual:cloudflare/worker-entry[22m
+[2m18:29:39[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mpage reload [39m[2msrc/paraglide/messages/_index.js[22m
+[vite] hot updated: virtual:cloudflare/worker-entry
+[vite] program reload
+[vite] hot updated: virtual:cloudflare/worker-entry
+[vite] program reload
+[vite] hot updated: virtual:cloudflare/worker-entry
+[vite] program reload
+[vite] hot updated: virtual:cloudflare/worker-entry
+[vite] hot updated: virtual:cloudflare/worker-entry
+[vite] program reload
+[vite] hot updated: virtual:cloudflare/worker-entry
+[vite] hot updated: virtual:cloudflare/worker-entry
+[vite] program reload

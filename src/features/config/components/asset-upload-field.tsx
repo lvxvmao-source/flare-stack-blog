@@ -29,6 +29,11 @@ function getPreviewUrl(value: string): string | null {
   return null;
 }
 
+function isVideoUrl(url: string): boolean {
+  const lower = url.split("?")[0].toLowerCase();
+  return lower.endsWith(".mp4") || lower.endsWith(".webm");
+}
+
 export function AssetUploadField({
   name,
   assetPath,
@@ -123,15 +128,26 @@ export function AssetUploadField({
             </button>
           </div>
           {previewUrl ? (
-            <div className="w-12 h-12 rounded overflow-hidden border border-border/30 bg-muted/30">
-              <img
-                src={previewUrl}
-                alt=""
-                className="w-full h-full object-contain"
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                }}
-              />
+            <div className="w-40 h-24 rounded overflow-hidden border border-border/30 bg-muted/30">
+              {isVideoUrl(previewUrl) ? (
+                <video
+                  src={previewUrl}
+                  muted
+                  loop
+                  autoPlay
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <img
+                  src={previewUrl}
+                  alt=""
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+              )}
             </div>
           ) : null}
         </div>

@@ -44,6 +44,9 @@ export const blogConfig = {
       cardGlassIntensity: 0.65,
       footerQuote: "愿你在二次元的世界里，找到属于自己的那片星空 ✨",
       displayFont: "zcool",
+      welcome: {
+        background: "",
+      },
     },
     acg: {
       navBarName: "导航栏名称",
