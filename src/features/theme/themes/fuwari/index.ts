@@ -11,6 +11,7 @@ import { ResetPasswordPage } from "./pages/auth/reset-password";
 import { VerifyEmailPage } from "./pages/auth/verify-email";
 import { FriendLinksPage, FriendLinksPageSkeleton } from "./pages/friend-links";
 import { HomePage, HomePageSkeleton } from "./pages/home";
+import { WelcomePage } from "./pages/welcome/page";
 import { NavPage, NavPageSkeleton } from "./pages/nav";
 import { PostPage, PostPageSkeleton } from "./pages/post";
 import { PostsPage, PostsPageSkeleton } from "./pages/posts";
@@ -48,4 +49,5 @@ export default {
   VerifyEmailPage,
   ProfilePage,
   Toaster,
+  WelcomePage,
 } satisfies ThemeComponents;

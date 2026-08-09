@@ -41,7 +41,7 @@ function PublicLayout() {
   const locale = getLocale();
 
   const builtInNavOptions: NavOption[] = [
-    { label: m.nav_home(), to: "/", id: "home" },
+    { label: m.nav_home(), to: "/home", id: "home" },
     { label: m.nav_posts(), to: "/posts", id: "posts" },
   ];
 

@@ -36,6 +36,8 @@ export interface ThemeComponents {
   ) => React.CSSProperties | undefined;
   /** 公共布局（Navbar + MobileMenu + Footer 的组合） */
   PublicLayout: React.ComponentType<PublicLayoutProps>;
+  /** 欢迎页组件（可选，仅部分主题实现，根路径 / 展示） */
+  WelcomePage?: React.ComponentType;
   /** 主页渲染组件 */
   HomePage: React.ComponentType<HomePageProps>;
   /** 主页加载中骨架屏（用于 TanStack Router pendingComponent） */
