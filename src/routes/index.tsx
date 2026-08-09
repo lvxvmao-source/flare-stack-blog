@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useSiteTheme } from "@/features/theme/theme-context";
 
-export const Route = createFileRoute("/_public/")({
+export const Route = createFileRoute("/")({
   beforeLoad: ({ context }) => {
     const themeName = context.siteConfig.themeName;
     // 仅在提供 WelcomePage 的主题下展示欢迎页，其余主题保持原重定向

@@ -1,0 +1,10 @@
+⎔ Establishing remote connection...
+Using secrets defined in .dev.vars
+[32m✔[39m [1m[32m[paraglide-js] [39m[22mCompilation complete (locale-modules)
+
+  [32m[1mVITE[22m v7.3.1[39m  [2mready in [0m[1m61052[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m3999[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+  [32m➜[39m  [1mDebug[22m:   [2m[33mhttp://localhost:[1m3999[22m[2m/__debug[39m[22m
+File D:/ziliao/flare-stack-blog/src/routes/index.tsx was modified by another process during processing.

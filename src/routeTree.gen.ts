@@ -13,13 +13,14 @@ import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as UserRouteRouteImport } from './routes/_user/route'
 import { Route as PublicRouteRouteImport } from './routes/_public/route'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as OauthConsentRouteImport } from './routes/oauth/consent'
 import { Route as UserSubmitFriendLinkRouteImport } from './routes/_user/submit-friend-link'
 import { Route as UserProfileRouteImport } from './routes/_user/profile'
 import { Route as PublicUnsubscribeRouteImport } from './routes/_public/unsubscribe'
 import { Route as PublicSearchRouteImport } from './routes/_public/search'
+import { Route as PublicHomeRouteImport } from './routes/_public/home'
 import { Route as PublicFriendLinksRouteImport } from './routes/_public/friend-links'
 import { Route as AuthVerifyEmailRouteImport } from './routes/_auth/verify-email'
 import { Route as AuthResetLinkRouteImport } from './routes/_auth/reset-link'
@@ -60,15 +61,15 @@ const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRouteRoute,
-} as any)
-const PublicIndexRoute = PublicIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => PublicRouteRoute,
 } as any)
 const OauthConsentRoute = OauthConsentRouteImport.update({
   id: '/oauth/consent',
@@ -93,6 +94,11 @@ const PublicUnsubscribeRoute = PublicUnsubscribeRouteImport.update({
 const PublicSearchRoute = PublicSearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => PublicRouteRoute,
+} as any)
+const PublicHomeRoute = PublicHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
   getParentRoute: () => PublicRouteRoute,
 } as any)
 const PublicFriendLinksRoute = PublicFriendLinksRouteImport.update({
@@ -207,7 +213,7 @@ const PublicNavNavIdPostSlugRoute = PublicNavNavIdPostSlugRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof PublicIndexRoute
+  '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/$navSlug': typeof PublicNavSlugRouteRouteWithChildren
   '/admin/posts': typeof AdminPostsRouteRouteWithChildren
@@ -217,6 +223,7 @@ export interface FileRoutesByFullPath {
   '/reset-link': typeof AuthResetLinkRoute
   '/verify-email': typeof AuthVerifyEmailRoute
   '/friend-links': typeof PublicFriendLinksRoute
+  '/home': typeof PublicHomeRoute
   '/search': typeof PublicSearchRoute
   '/unsubscribe': typeof PublicUnsubscribeRoute
   '/profile': typeof UserProfileRoute
@@ -239,13 +246,14 @@ export interface FileRoutesByFullPath {
   '/nav/$navId/': typeof PublicNavNavIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof PublicIndexRoute
+  '/': typeof IndexRoute
   '/forgot-password': typeof AuthForgotPasswordRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/reset-link': typeof AuthResetLinkRoute
   '/verify-email': typeof AuthVerifyEmailRoute
   '/friend-links': typeof PublicFriendLinksRoute
+  '/home': typeof PublicHomeRoute
   '/search': typeof PublicSearchRoute
   '/unsubscribe': typeof PublicUnsubscribeRoute
   '/profile': typeof UserProfileRoute
@@ -268,6 +276,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_public': typeof PublicRouteRouteWithChildren
   '/_user': typeof UserRouteRouteWithChildren
@@ -280,12 +289,12 @@ export interface FileRoutesById {
   '/_auth/reset-link': typeof AuthResetLinkRoute
   '/_auth/verify-email': typeof AuthVerifyEmailRoute
   '/_public/friend-links': typeof PublicFriendLinksRoute
+  '/_public/home': typeof PublicHomeRoute
   '/_public/search': typeof PublicSearchRoute
   '/_public/unsubscribe': typeof PublicUnsubscribeRoute
   '/_user/profile': typeof UserProfileRoute
   '/_user/submit-friend-link': typeof UserSubmitFriendLinkRoute
   '/oauth/consent': typeof OauthConsentRoute
-  '/_public/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/_public/nav/$navId': typeof PublicNavNavIdRouteRouteWithChildren
   '/_public/$navSlug/$postSlug': typeof PublicNavSlugPostSlugRoute
@@ -315,6 +324,7 @@ export interface FileRouteTypes {
     | '/reset-link'
     | '/verify-email'
     | '/friend-links'
+    | '/home'
     | '/search'
     | '/unsubscribe'
     | '/profile'
@@ -344,6 +354,7 @@ export interface FileRouteTypes {
     | '/reset-link'
     | '/verify-email'
     | '/friend-links'
+    | '/home'
     | '/search'
     | '/unsubscribe'
     | '/profile'
@@ -365,6 +376,7 @@ export interface FileRouteTypes {
     | '/nav/$navId'
   id:
     | '__root__'
+    | '/'
     | '/_auth'
     | '/_public'
     | '/_user'
@@ -377,12 +389,12 @@ export interface FileRouteTypes {
     | '/_auth/reset-link'
     | '/_auth/verify-email'
     | '/_public/friend-links'
+    | '/_public/home'
     | '/_public/search'
     | '/_public/unsubscribe'
     | '/_user/profile'
     | '/_user/submit-friend-link'
     | '/oauth/consent'
-    | '/_public/'
     | '/admin/'
     | '/_public/nav/$navId'
     | '/_public/$navSlug/$postSlug'
@@ -401,6 +413,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   PublicRouteRoute: typeof PublicRouteRouteWithChildren
   UserRouteRoute: typeof UserRouteRouteWithChildren
@@ -438,19 +451,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/': {
       id: '/admin/'
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRouteRoute
-    }
-    '/_public/': {
-      id: '/_public/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof PublicIndexRouteImport
-      parentRoute: typeof PublicRouteRoute
     }
     '/oauth/consent': {
       id: '/oauth/consent'
@@ -485,6 +498,13 @@ declare module '@tanstack/react-router' {
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof PublicSearchRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
+    '/_public/home': {
+      id: '/_public/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof PublicHomeRouteImport
       parentRoute: typeof PublicRouteRoute
     }
     '/_public/friend-links': {
@@ -693,9 +713,9 @@ const PublicNavNavIdRouteRouteWithChildren =
 interface PublicRouteRouteChildren {
   PublicNavSlugRouteRoute: typeof PublicNavSlugRouteRouteWithChildren
   PublicFriendLinksRoute: typeof PublicFriendLinksRoute
+  PublicHomeRoute: typeof PublicHomeRoute
   PublicSearchRoute: typeof PublicSearchRoute
   PublicUnsubscribeRoute: typeof PublicUnsubscribeRoute
-  PublicIndexRoute: typeof PublicIndexRoute
   PublicNavNavIdRouteRoute: typeof PublicNavNavIdRouteRouteWithChildren
   PublicPostsSlugRoute: typeof PublicPostsSlugRoute
   PublicPostsIndexRoute: typeof PublicPostsIndexRoute
@@ -704,9 +724,9 @@ interface PublicRouteRouteChildren {
 const PublicRouteRouteChildren: PublicRouteRouteChildren = {
   PublicNavSlugRouteRoute: PublicNavSlugRouteRouteWithChildren,
   PublicFriendLinksRoute: PublicFriendLinksRoute,
+  PublicHomeRoute: PublicHomeRoute,
   PublicSearchRoute: PublicSearchRoute,
   PublicUnsubscribeRoute: PublicUnsubscribeRoute,
-  PublicIndexRoute: PublicIndexRoute,
   PublicNavNavIdRouteRoute: PublicNavNavIdRouteRouteWithChildren,
   PublicPostsSlugRoute: PublicPostsSlugRoute,
   PublicPostsIndexRoute: PublicPostsIndexRoute,
@@ -769,6 +789,7 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
   PublicRouteRoute: PublicRouteRouteWithChildren,
   UserRouteRoute: UserRouteRouteWithChildren,
