@@ -493,22 +493,34 @@
       0 0 24px oklch(0.7 0.14 350 / 0.15);
   }
 
-  /* Avatar sakura ring */
+  /* Avatar sakura frame */
   .anime-avatar-ring {
-    border-radius: 50%;
-    padding: 3px;
+    border-radius: 0.875rem;
+    padding: 2px;
     background: linear-gradient(
       135deg,
       var(--anime-sakura-light),
       var(--anime-sakura),
       var(--anime-sakura-deep)
     );
-    box-shadow: 0 0 16px oklch(0.7 0.12 350 / 0.25);
+    box-shadow:
+      0 0 0 1px oklch(0.85 0.06 350 / 0.25),
+      0 0 16px oklch(0.7 0.12 350 / 0.18),
+      0 2px 8px oklch(0.4 0.08 350 / 0.08);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .anime-avatar-ring:hover {
+    box-shadow:
+      0 0 0 1px oklch(0.85 0.08 350 / 0.4),
+      0 0 24px oklch(0.7 0.14 350 / 0.3),
+      0 2px 12px oklch(0.4 0.08 350 / 0.12);
   }
 
   .anime-avatar-ring img {
-    border-radius: 50%;
+    border-radius: 0.75rem;
     display: block;
+    box-shadow: inset 0 0 0 1.5px oklch(1 0 0 / 0.5);
   }
 
   /* Banner overlay gradient */

@@ -16,7 +16,7 @@ export function Profile() {
         aria-label={m.profile_avatar_label()}
       >
         {/* Sakura ring around avatar */}
-        <div className="anime-avatar-ring p-[3px]">
+        <div className="anime-avatar-ring p-[2px]">
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/0 group-hover:bg-black/30 group-active:bg-black/50 transition-colors pointer-events-none rounded-xl" />
           <img
             src={siteConfig.theme.fuwari.avatar}
@@ -31,7 +31,10 @@ export function Profile() {
         </div>
         <div
           className="h-1 w-5 rounded-full mx-auto mb-2"
-          style={{ background: "linear-gradient(90deg, var(--anime-sakura-light), var(--anime-sakura))" }}
+          style={{
+            background:
+              "linear-gradient(90deg, var(--anime-sakura-light), var(--anime-sakura))",
+          }}
         />
         <div className="fuwari-text-50 text-sm mb-2.5">
           {siteConfig.description}

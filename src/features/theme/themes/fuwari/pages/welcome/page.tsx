@@ -73,11 +73,11 @@ export function WelcomePage() {
           {/* 1. 头像（樱花光环） */}
           {avatar ? (
             <div className="anime-onload" style={{ animationDelay: "100ms" }}>
-              <div className="anime-avatar-ring p-[3px]">
+              <div className="anime-avatar-ring p-[2px]">
                 <img
                   src={avatar}
                   alt={siteConfig.author}
-                  className="h-24 w-24 object-cover"
+                  className="h-24 w-24 rounded-xl object-cover"
                 />
               </div>
             </div>
