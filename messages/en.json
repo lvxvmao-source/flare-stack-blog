@@ -1544,5 +1544,6 @@
   "settings_site_fuwari_display_font_hint": "Font used for headings and decorative text",
   "settings_site_fuwari_welcome": "Welcome Page",
   "settings_site_fuwari_welcome_bg": "Welcome Page Background",
-  "settings_site_fuwari_welcome_bg_hint": "Use a static image or an .mp4/.webm video as the welcome page backdrop. Upload a local file or enter a site/external URL; leave empty for a plain background."
+  "settings_site_fuwari_welcome_bg_hint": "Use a static image or an .mp4/.webm video as the welcome page backdrop. Upload a local file or enter a site/external URL; leave empty for a plain background.",
+  "welcome_enter": "Enter"
 }

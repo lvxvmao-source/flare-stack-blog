@@ -1536,5 +1536,6 @@
   "settings_site_fuwari_display_font_hint": "用于标题和装饰性文字的字体",
   "settings_site_fuwari_welcome": "欢迎页",
   "settings_site_fuwari_welcome_bg": "欢迎页背景壁纸",
-  "settings_site_fuwari_welcome_bg_hint": "支持静态图片或 .mp4/.webm 视频作为欢迎页背景，可本地上传或填写站内/外部链接；留空则为纯色背景。"
+  "settings_site_fuwari_welcome_bg_hint": "支持静态图片或 .mp4/.webm 视频作为欢迎页背景，可本地上传或填写站内/外部链接；留空则为纯色背景。",
+  "welcome_enter": "进入"
 }
