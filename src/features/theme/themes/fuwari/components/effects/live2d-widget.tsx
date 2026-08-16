@@ -15,14 +15,16 @@ export interface Live2dWidgetProps {
 }
 
 /**
- * Verified Live2D model sources hosted on the official oh-my-live2d CDN.
- * (haru/shizuku: Cubism 2; hijiki/tororo: bundled index.json manifests)
+ * Live2D model sources, self-hosted under public/live2d/ (same-origin).
+ * model.oml2d.com CDN is DNS-hijacked on some mainland China networks,
+ * so models are vendored locally instead of loaded from a third-party CDN.
+ * (haru/shizuku: Cubism 2; hijiki/tororo: Cubism 2 cat models)
  */
 const MODEL_SOURCES: Record<PresetModel, string> = {
-  haru: "https://model.oml2d.com/haru/haru.model.json",
-  hijiki: "https://model.oml2d.com/hijiki/index.json",
-  tororo: "https://model.oml2d.com/tororo/index.json",
-  shizuku: "https://model.oml2d.com/shizuku/shizuku.model.json",
+  haru: "/live2d/haru/haru01.model.json",
+  hijiki: "/live2d/hijiki/hijiki.model.json",
+  tororo: "/live2d/tororo/tororo.model.json",
+  shizuku: "/live2d/shizuku/shizuku.model.json",
 };
 
 const DEFAULT_MESSAGES = [
