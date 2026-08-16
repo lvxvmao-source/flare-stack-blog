@@ -1,4 +1,4 @@
-import type { ModelOptions } from "oh-my-live2d";
+import type { ModelOptions, TipsOptions } from "oh-my-live2d";
 import { useEffect, useRef } from "react";
 
 type Oml2dInstance = ReturnType<typeof import("oh-my-live2d")["loadOml2d"]>;
@@ -31,6 +31,17 @@ const DEFAULT_MESSAGES = [
   "这里的内容很有趣呢～",
 ];
 
+/** Per-model scale / position (miku is a very large Cubism 4 canvas) */
+const MODEL_CONFIG: Record<PresetModel, Partial<ModelOptions>> = {
+  miku: {
+    scale: 0.05,
+    position: [0, 0],
+    anchor: [0, 0],
+    mobileScale: 0.035,
+    mobilePosition: [0, 0],
+  },
+};
+
 const MODEL_MESSAGES: Record<Live2dModel, string[]> = {
   miku: [
     "初音未来来报到了！",
@@ -58,7 +69,11 @@ function resolveModelName(
 function buildModelOptions(customModelUrl: string): ModelOptions[] {
   const models: ModelOptions[] = (
     Object.keys(MODEL_SOURCES) as PresetModel[]
-  ).map((name) => ({ name, path: MODEL_SOURCES[name] }));
+  ).map((name) => ({
+    name,
+    path: MODEL_SOURCES[name],
+    ...MODEL_CONFIG[name],
+  }));
   if (isValidModelUrl(customModelUrl)) {
     models.push({ name: "custom", path: customModelUrl.trim() });
   }
@@ -118,7 +133,19 @@ export function Live2dWidget({
         sayHello: false,
         transitionTime: 800,
         models: ordered,
-        tips: (currentModel: ModelOptions) => ({
+        tips: (currentModel: ModelOptions): TipsOptions => ({
+          style: {
+            bottom: "110%",
+            top: "auto",
+            minHeight: "50px",
+            width: "85%",
+          },
+          mobileStyle: {
+            bottom: "110%",
+            top: "auto",
+            minHeight: "44px",
+            width: "90%",
+          },
           idleTips: {
             wordTheDay: false,
             interval: 10000,
