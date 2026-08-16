@@ -24,6 +24,13 @@ const config = defineConfig({
       outdir: "./src/paraglide",
       strategy: ["cookie", "preferredLanguage", "baseLocale"],
       cookieName: "LOCALE",
+      // Prevent the plugin from cleaning the output directory on startup.
+      // The Cloudflare vite-plugin's workerd SSR runner resolves modules
+      // during buildStart, and the clean→regenerate cycle creates a race
+      // where files are missing when the runner tries to load them.
+      // Pre-compiled files (from `npx @inlang/paraglide-js compile`) are
+      // used as the initial state, and the plugin still recompiles on change.
+      cleanOutdir: false,
     }),
     cloudflare({
       viteEnvironment: {

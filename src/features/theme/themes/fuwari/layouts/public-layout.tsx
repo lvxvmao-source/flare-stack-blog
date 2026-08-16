@@ -1,12 +1,12 @@
 import { useLocation, useRouteContext } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import type { PublicLayoutProps } from "@/features/theme/contract/layouts";
-import { BackToTop } from "../components/control/back-to-top";
 import { RightSidebar } from "@/features/theme/themes/fuwari/components/right-sidebar";
-import { Sidebar } from "../components/sidebar";
-import { SakuraPetals } from "../components/effects/sakura-petals";
+import { BackToTop } from "../components/control/back-to-top";
 import { BgmPlayer } from "../components/effects/bgm-player";
 import { Live2dWidget } from "../components/effects/live2d-widget";
+import { SakuraPetals } from "../components/effects/sakura-petals";
+import { Sidebar } from "../components/sidebar";
 import { Footer } from "./footer";
 import { MobileMenu } from "./mobile-menu";
 import { Navbar } from "./navbar";
@@ -57,7 +57,8 @@ export function PublicLayout({
     if (customNavBanner) return customNavBanner;
 
     if (path === "/") return fuwari.homeBg;
-    if (path === "/posts" || path.startsWith("/posts")) return fuwari.postsBg || fuwari.homeBg;
+    if (path === "/posts" || path.startsWith("/posts"))
+      return fuwari.postsBg || fuwari.homeBg;
     if (path === "/friend-links") return fuwari.friendLinksBg || fuwari.homeBg;
     return fuwari.homeBg;
   }, [location.pathname, fuwari, siteConfig.navItems]);
@@ -153,6 +154,7 @@ export function PublicLayout({
         enabled={fuwari.live2dEnabled}
         model={fuwari.live2dModel}
         position={fuwari.live2dPosition}
+        customModelUrl={fuwari.live2dCustomModelUrl}
       />
     </div>
   );

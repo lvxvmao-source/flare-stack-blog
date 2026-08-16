@@ -329,8 +329,9 @@ function createFuwariThemeSiteConfigSchema() {
     friendLinksBg: createBackgroundImageRefSchema(),
     // Live2D widget
     live2dEnabled: z.boolean(),
-    live2dModel: z.enum(["haru", "hijiki", "tororo", "shizuku"]),
+    live2dModel: z.enum(["haru", "hijiki", "tororo", "shizuku", "custom"]),
     live2dPosition: z.enum(["left", "right"]),
+    live2dCustomModelUrl: z.string().max(2000).default(""),
     // BGM player
     bgmEnabled: z.boolean(),
     bgmDefaultVolume: z.number().int().min(0).max(100),
@@ -362,12 +363,17 @@ function createFuwariThemeSiteConfigInputSchema() {
     sakuraDensity: z.number().int().min(1).max(10).optional(),
     sakuraSpeed: z.number().int().min(1).max(5).optional(),
     particlesEnabled: z.boolean().optional(),
-    bannerAnimationType: z.enum(["fade", "parallax", "kenburns", "none"]).optional(),
+    bannerAnimationType: z
+      .enum(["fade", "parallax", "kenburns", "none"])
+      .optional(),
     postsBg: createBackgroundImageRefSchema().optional(),
     friendLinksBg: createBackgroundImageRefSchema().optional(),
     live2dEnabled: z.boolean().optional(),
-    live2dModel: z.enum(["haru", "hijiki", "tororo", "shizuku"]).optional(),
+    live2dModel: z
+      .enum(["haru", "hijiki", "tororo", "shizuku", "custom"])
+      .optional(),
     live2dPosition: z.enum(["left", "right"]).optional(),
+    live2dCustomModelUrl: z.string().max(2000).optional(),
     bgmEnabled: z.boolean().optional(),
     bgmDefaultVolume: z.number().int().min(0).max(100).optional(),
     bgmPlaylist: z.array(createBgmTrackSchema()).optional(),
@@ -393,12 +399,17 @@ function createFuwariThemeSiteConfigInputFormSchema(messages: Messages) {
     sakuraDensity: z.number().int().min(1).max(10).optional(),
     sakuraSpeed: z.number().int().min(1).max(5).optional(),
     particlesEnabled: z.boolean().optional(),
-    bannerAnimationType: z.enum(["fade", "parallax", "kenburns", "none"]).optional(),
+    bannerAnimationType: z
+      .enum(["fade", "parallax", "kenburns", "none"])
+      .optional(),
     postsBg: createBackgroundImageRefFormSchema(messages).optional(),
     friendLinksBg: createBackgroundImageRefFormSchema(messages).optional(),
     live2dEnabled: z.boolean().optional(),
-    live2dModel: z.enum(["haru", "hijiki", "tororo", "shizuku"]).optional(),
+    live2dModel: z
+      .enum(["haru", "hijiki", "tororo", "shizuku", "custom"])
+      .optional(),
     live2dPosition: z.enum(["left", "right"]).optional(),
+    live2dCustomModelUrl: z.string().max(2000).optional(),
     bgmEnabled: z.boolean().optional(),
     bgmDefaultVolume: z.number().int().min(0).max(100).optional(),
     bgmPlaylist: z.array(createBgmTrackSchema()).optional(),

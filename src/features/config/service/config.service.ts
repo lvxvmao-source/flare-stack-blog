@@ -139,8 +139,7 @@ export function resolveSiteConfig(
                 opacity: configAcgBackground.dark?.opacity ?? 0.1,
               },
               backdropBlur: configAcgBackground.backdropBlur ?? 8,
-              transitionDuration:
-                configAcgBackground.transitionDuration ?? 600,
+              transitionDuration: configAcgBackground.transitionDuration ?? 600,
             }
           : undefined,
       },
@@ -182,6 +181,9 @@ export function resolveSiteConfig(
         live2dPosition:
           config?.site?.theme?.fuwari?.live2dPosition ??
           blogConfig.theme.fuwari.live2dPosition,
+        live2dCustomModelUrl:
+          config?.site?.theme?.fuwari?.live2dCustomModelUrl ??
+          blogConfig.theme.fuwari.live2dCustomModelUrl,
         bgmEnabled:
           config?.site?.theme?.fuwari?.bgmEnabled ??
           blogConfig.theme.fuwari.bgmEnabled,

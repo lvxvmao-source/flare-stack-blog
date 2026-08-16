@@ -36,6 +36,7 @@ export const blogConfig = {
       live2dEnabled: true,
       live2dModel: "haru",
       live2dPosition: "right",
+      live2dCustomModelUrl: "",
       bgmEnabled: false,
       bgmDefaultVolume: 30,
       bgmPlaylist: [],

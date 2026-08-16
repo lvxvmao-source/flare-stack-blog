@@ -80,10 +80,18 @@ function FuwariHuePreview() {
 }
 
 /* ─── Simple section shell for settings blocks ─── */
-function SectionShell({ title, children }: { title: string; children: React.ReactNode }) {
+function SectionShell({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="rounded-xl border border-border/40 bg-background/60 p-5 space-y-4">
-      <h4 className="text-sm font-semibold text-foreground border-b border-border/30 pb-2">{title}</h4>
+      <h4 className="text-sm font-semibold text-foreground border-b border-border/30 pb-2">
+        {title}
+      </h4>
       {children}
     </div>
   );
@@ -99,9 +107,18 @@ function ToggleField({
   label: string;
   hint?: string;
 }) {
-  const { register, formState: { errors } } = useFormContext<SystemConfig>();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<SystemConfig>();
   const err = errors as Record<string, unknown>;
-  const errMsg = name.split(".").reduce((obj: Record<string, unknown>, key) => obj?.[key] as Record<string, unknown>, err)?.message as string | undefined;
+  const errMsg = name
+    .split(".")
+    .reduce(
+      (obj: Record<string, unknown>, key) =>
+        obj?.[key] as Record<string, unknown>,
+      err,
+    )?.message as string | undefined;
 
   return (
     <div className="flex items-center justify-between gap-4">
@@ -144,7 +161,9 @@ function SelectField({
         className="mt-1 w-full rounded-lg border border-border/50 bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-(--fuwari-primary)/30"
       >
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>{opt.label}</option>
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
         ))}
       </select>
     </div>
@@ -181,20 +200,30 @@ function TextField({
 /* ─── BGM playlist editor ─── */
 function BgmPlaylistEditor() {
   const { register, watch, setValue } = useFormContext<SystemConfig>();
-  const playlist = watch("site.theme.fuwari.bgmPlaylist") as Array<{ title: string; url: string }> | undefined;
+  const playlist = watch("site.theme.fuwari.bgmPlaylist") as
+    | Array<{ title: string; url: string }>
+    | undefined;
   const tracks = playlist ?? [];
 
   const addTrack = () => {
-    setValue("site.theme.fuwari.bgmPlaylist", [...tracks, { title: "", url: "" }] as never);
+    setValue("site.theme.fuwari.bgmPlaylist", [
+      ...tracks,
+      { title: "", url: "" },
+    ] as never);
   };
 
   const removeTrack = (index: number) => {
-    setValue("site.theme.fuwari.bgmPlaylist", tracks.filter((_, i) => i !== index) as never);
+    setValue(
+      "site.theme.fuwari.bgmPlaylist",
+      tracks.filter((_, i) => i !== index) as never,
+    );
   };
 
   return (
     <div className="space-y-2">
-      <label className="text-sm font-medium">{m.settings_site_fuwari_bgm_playlist?.() ?? "BGM Playlist"}</label>
+      <label className="text-sm font-medium">
+        {m.settings_site_fuwari_bgm_playlist?.() ?? "BGM Playlist"}
+      </label>
       {tracks.map((_, i) => (
         <div key={i} className="flex gap-2 items-start">
           <input
@@ -209,12 +238,20 @@ function BgmPlaylistEditor() {
             placeholder="Audio URL or Bilibili video link"
             className="flex-1 rounded-lg border border-border/50 bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-(--fuwari-primary)/30"
           />
-          <button type="button" onClick={() => removeTrack(i)} className="text-red-500 text-xs px-2 py-2 hover:bg-red-50 rounded-lg transition-colors">
+          <button
+            type="button"
+            onClick={() => removeTrack(i)}
+            className="text-red-500 text-xs px-2 py-2 hover:bg-red-50 rounded-lg transition-colors"
+          >
             ✕
           </button>
         </div>
       ))}
-      <button type="button" onClick={addTrack} className="text-xs text-(--fuwari-primary) hover:underline font-medium">
+      <button
+        type="button"
+        onClick={addTrack}
+        className="text-xs text-(--fuwari-primary) hover:underline font-medium"
+      >
         + {m.settings_site_fuwari_bgm_add_track?.() ?? "Add track"}
       </button>
     </div>
@@ -260,95 +297,256 @@ export function FuwariThemeSettings() {
       <FuwariHuePreview />
 
       {/* ── Welcome Page ── */}
-      <SectionShell title={m.settings_site_fuwari_welcome?.() ?? "Welcome Page"}>
+      <SectionShell
+        title={m.settings_site_fuwari_welcome?.() ?? "Welcome Page"}
+      >
         <AssetUploadField
           name="site.theme.fuwari.welcome.background"
           assetPath="themes/fuwari/welcome-bg"
           accept=".png,.webp,.jpg,.jpeg,.mp4,.webm"
-          label={m.settings_site_fuwari_welcome_bg?.() ?? "Welcome Page Background"}
-          hint={m.settings_site_fuwari_welcome_bg_hint?.() ?? "Static image or .mp4/.webm video used as the welcome page backdrop. Leave empty for a plain background."}
+          label={
+            m.settings_site_fuwari_welcome_bg?.() ?? "Welcome Page Background"
+          }
+          hint={
+            m.settings_site_fuwari_welcome_bg_hint?.() ??
+            "Static image or .mp4/.webm video used as the welcome page backdrop. Leave empty for a plain background."
+          }
           placeholder="/images/asset/themes/fuwari/welcome-bg or external image/video URL"
           error={errors.site?.theme?.fuwari?.welcome?.background?.message}
         />
       </SectionShell>
 
       {/* ── Decoration Effects ── */}
-      <SectionShell title={m.settings_site_fuwari_effects?.() ?? "Decoration Effects"}>
-        <ToggleField name="site.theme.fuwari.sakuraEnabled" label={m.settings_site_fuwari_sakura_enabled?.() ?? "Sakura Petal Effect"} hint={m.settings_site_fuwari_sakura_hint?.() ?? "Falling cherry blossom petals across the page"} />
-        <RangeField name="site.theme.fuwari.sakuraDensity" label={m.settings_site_fuwari_sakura_density?.() ?? "Petal Density"} min={1} max={10} step={1} defaultValue={5} />
-        <RangeField name="site.theme.fuwari.sakuraSpeed" label={m.settings_site_fuwari_sakura_speed?.() ?? "Fall Speed"} min={1} max={5} step={1} defaultValue={3} />
-        <ToggleField name="site.theme.fuwari.particlesEnabled" label={m.settings_site_fuwari_particles?.() ?? "Particle Effects"} hint={m.settings_site_fuwari_particles_hint?.() ?? "Subtle sparkle particles on the page"} />
-        <SelectField name="site.theme.fuwari.bannerAnimationType" label={m.settings_site_fuwari_banner_anim?.() ?? "Banner Animation"} options={[
-          { value: "fade", label: "Fade" },
-          { value: "parallax", label: "Parallax" },
-          { value: "kenburns", label: "Ken Burns" },
-          { value: "none", label: "None" },
-        ]} />
+      <SectionShell
+        title={m.settings_site_fuwari_effects?.() ?? "Decoration Effects"}
+      >
+        <ToggleField
+          name="site.theme.fuwari.sakuraEnabled"
+          label={
+            m.settings_site_fuwari_sakura_enabled?.() ?? "Sakura Petal Effect"
+          }
+          hint={
+            m.settings_site_fuwari_sakura_hint?.() ??
+            "Falling cherry blossom petals across the page"
+          }
+        />
+        <RangeField
+          name="site.theme.fuwari.sakuraDensity"
+          label={m.settings_site_fuwari_sakura_density?.() ?? "Petal Density"}
+          min={1}
+          max={10}
+          step={1}
+          defaultValue={5}
+        />
+        <RangeField
+          name="site.theme.fuwari.sakuraSpeed"
+          label={m.settings_site_fuwari_sakura_speed?.() ?? "Fall Speed"}
+          min={1}
+          max={5}
+          step={1}
+          defaultValue={3}
+        />
+        <ToggleField
+          name="site.theme.fuwari.particlesEnabled"
+          label={m.settings_site_fuwari_particles?.() ?? "Particle Effects"}
+          hint={
+            m.settings_site_fuwari_particles_hint?.() ??
+            "Subtle sparkle particles on the page"
+          }
+        />
+        <SelectField
+          name="site.theme.fuwari.bannerAnimationType"
+          label={m.settings_site_fuwari_banner_anim?.() ?? "Banner Animation"}
+          options={[
+            { value: "fade", label: "Fade" },
+            { value: "parallax", label: "Parallax" },
+            { value: "kenburns", label: "Ken Burns" },
+            { value: "none", label: "None" },
+          ]}
+        />
       </SectionShell>
 
       {/* ── Page Backgrounds ── */}
-      <SectionShell title={m.settings_site_fuwari_page_bgs?.() ?? "Page Backgrounds"}>
-        <AssetUploadField name="site.theme.fuwari.postsBg" assetPath="themes/fuwari/posts-bg.webp" accept=".png,.webp,.jpg,.jpeg" label={m.settings_site_fuwari_posts_bg?.() ?? "Posts Page Banner"} placeholder="Leave empty to use default home background" error={errors.site?.theme?.fuwari?.postsBg?.message} />
-        <AssetUploadField name="site.theme.fuwari.friendLinksBg" assetPath="themes/fuwari/friend-links-bg.webp" accept=".png,.webp,.jpg,.jpeg" label={m.settings_site_fuwari_friendlinks_bg?.() ?? "Friend Links Banner"} placeholder="Leave empty to use default home background" error={errors.site?.theme?.fuwari?.friendLinksBg?.message} />
+      <SectionShell
+        title={m.settings_site_fuwari_page_bgs?.() ?? "Page Backgrounds"}
+      >
+        <AssetUploadField
+          name="site.theme.fuwari.postsBg"
+          assetPath="themes/fuwari/posts-bg.webp"
+          accept=".png,.webp,.jpg,.jpeg"
+          label={m.settings_site_fuwari_posts_bg?.() ?? "Posts Page Banner"}
+          placeholder="Leave empty to use default home background"
+          error={errors.site?.theme?.fuwari?.postsBg?.message}
+        />
+        <AssetUploadField
+          name="site.theme.fuwari.friendLinksBg"
+          assetPath="themes/fuwari/friend-links-bg.webp"
+          accept=".png,.webp,.jpg,.jpeg"
+          label={
+            m.settings_site_fuwari_friendlinks_bg?.() ?? "Friend Links Banner"
+          }
+          placeholder="Leave empty to use default home background"
+          error={errors.site?.theme?.fuwari?.friendLinksBg?.message}
+        />
         {/* Dynamic nav item banners */}
         <NavBannersSection />
       </SectionShell>
 
       {/* ── Live2D Widget ── */}
-      <SectionShell title={m.settings_site_fuwari_live2d?.() ?? "Live2D Mascot"}>
-        <ToggleField name="site.theme.fuwari.live2dEnabled" label={m.settings_site_fuwari_live2d_enabled?.() ?? "Enable Live2D Mascot"} />
-        <SelectField name="site.theme.fuwari.live2dModel" label={m.settings_site_fuwari_live2d_model?.() ?? "Character"} options={[
-          { value: "haru", label: "Haru" },
-          { value: "hijiki", label: "Hijiki" },
-          { value: "tororo", label: "Tororo" },
-          { value: "shizuku", label: "Shizuku" },
-        ]} />
-        <SelectField name="site.theme.fuwari.live2dPosition" label={m.settings_site_fuwari_live2d_pos?.() ?? "Position"} options={[
-          { value: "right", label: "Right" },
-          { value: "left", label: "Left" },
-        ]} />
+      <SectionShell
+        title={m.settings_site_fuwari_live2d?.() ?? "Live2D Mascot"}
+      >
+        <ToggleField
+          name="site.theme.fuwari.live2dEnabled"
+          label={
+            m.settings_site_fuwari_live2d_enabled?.() ?? "Enable Live2D Mascot"
+          }
+        />
+        <SelectField
+          name="site.theme.fuwari.live2dModel"
+          label={m.settings_site_fuwari_live2d_model?.() ?? "Character"}
+          options={[
+            { value: "haru", label: "Haru" },
+            { value: "hijiki", label: "Hijiki" },
+            { value: "tororo", label: "Tororo" },
+            { value: "shizuku", label: "Shizuku" },
+            {
+              value: "custom",
+              label: m.settings_site_fuwari_live2d_custom?.() ?? "Custom Model",
+            },
+          ]}
+        />
+        <CustomModelUrlField />
+        <SelectField
+          name="site.theme.fuwari.live2dPosition"
+          label={m.settings_site_fuwari_live2d_pos?.() ?? "Position"}
+          options={[
+            { value: "right", label: "Right" },
+            { value: "left", label: "Left" },
+          ]}
+        />
       </SectionShell>
 
       {/* ── BGM Player ── */}
       <SectionShell title={m.settings_site_fuwari_bgm?.() ?? "BGM Player"}>
-        <ToggleField name="site.theme.fuwari.bgmEnabled" label={m.settings_site_fuwari_bgm_enabled?.() ?? "Enable BGM Player"} />
-        <RangeField name="site.theme.fuwari.bgmDefaultVolume" label={m.settings_site_fuwari_bgm_volume?.() ?? "Default Volume"} min={0} max={100} step={5} unit="%" defaultValue={30} />
+        <ToggleField
+          name="site.theme.fuwari.bgmEnabled"
+          label={m.settings_site_fuwari_bgm_enabled?.() ?? "Enable BGM Player"}
+        />
+        <RangeField
+          name="site.theme.fuwari.bgmDefaultVolume"
+          label={m.settings_site_fuwari_bgm_volume?.() ?? "Default Volume"}
+          min={0}
+          max={100}
+          step={5}
+          unit="%"
+          defaultValue={30}
+        />
         <BgmPlaylistEditor />
       </SectionShell>
 
       {/* ── Comments ── */}
       <SectionShell title={m.settings_site_fuwari_comments?.() ?? "Comments"}>
-        <ToggleField name="site.theme.fuwari.commentStickersEnabled" label={m.settings_site_fuwari_comment_stickers?.() ?? "Enable Anime Stickers"} hint={m.settings_site_fuwari_comment_stickers_hint?.() ?? "Anime-style sticker picker in comment editor"} />
+        <ToggleField
+          name="site.theme.fuwari.commentStickersEnabled"
+          label={
+            m.settings_site_fuwari_comment_stickers?.() ??
+            "Enable Anime Stickers"
+          }
+          hint={
+            m.settings_site_fuwari_comment_stickers_hint?.() ??
+            "Anime-style sticker picker in comment editor"
+          }
+        />
       </SectionShell>
 
       {/* ── Card Style ── */}
-      <SectionShell title={m.settings_site_fuwari_card_style?.() ?? "Card Style"}>
-        <RangeField name="site.theme.fuwari.cardBorderRadius" label={m.settings_site_fuwari_card_radius?.() ?? "Card Border Radius"} min={0.5} max={2} step={0.25} unit="rem" defaultValue={1.25} />
-        <RangeField name="site.theme.fuwari.cardGlassIntensity" label={m.settings_site_fuwari_card_glass?.() ?? "Glass Effect Intensity"} min={0} max={1} step={0.1} defaultValue={0.65} />
+      <SectionShell
+        title={m.settings_site_fuwari_card_style?.() ?? "Card Style"}
+      >
+        <RangeField
+          name="site.theme.fuwari.cardBorderRadius"
+          label={m.settings_site_fuwari_card_radius?.() ?? "Card Border Radius"}
+          min={0.5}
+          max={2}
+          step={0.25}
+          unit="rem"
+          defaultValue={1.25}
+        />
+        <RangeField
+          name="site.theme.fuwari.cardGlassIntensity"
+          label={
+            m.settings_site_fuwari_card_glass?.() ?? "Glass Effect Intensity"
+          }
+          min={0}
+          max={1}
+          step={0.1}
+          defaultValue={0.65}
+        />
       </SectionShell>
 
       {/* ── Footer ── */}
       <SectionShell title={m.settings_site_fuwari_footer?.() ?? "Footer"}>
-        <TextField name="site.theme.fuwari.footerQuote" label={m.settings_site_fuwari_footer_quote?.() ?? "Footer Quote"} placeholder="「愿你在二次元的世界里，找到属于自己的那片星空 ✨」" hint={m.settings_site_fuwari_footer_quote_hint?.() ?? "Anime-style quote shown in footer"} />
+        <TextField
+          name="site.theme.fuwari.footerQuote"
+          label={m.settings_site_fuwari_footer_quote?.() ?? "Footer Quote"}
+          placeholder="「愿你在二次元的世界里，找到属于自己的那片星空 ✨」"
+          hint={
+            m.settings_site_fuwari_footer_quote_hint?.() ??
+            "Anime-style quote shown in footer"
+          }
+        />
       </SectionShell>
 
       {/* ── Font ── */}
       <SectionShell title={m.settings_site_fuwari_font?.() ?? "Typography"}>
-        <SelectField name="site.theme.fuwari.displayFont" label={m.settings_site_fuwari_display_font?.() ?? "Display Font"} options={[
-          { value: "zcool", label: "ZCOOL XiaoWei" },
-          { value: "mashan", label: "Ma Shan Zheng" },
-          { value: "noto", label: "Noto Sans SC" },
-        ]} hint={m.settings_site_fuwari_display_font_hint?.() ?? "Font used for headings and decorative text"} />
+        <SelectField
+          name="site.theme.fuwari.displayFont"
+          label={m.settings_site_fuwari_display_font?.() ?? "Display Font"}
+          options={[
+            { value: "zcool", label: "ZCOOL XiaoWei" },
+            { value: "mashan", label: "Ma Shan Zheng" },
+            { value: "noto", label: "Noto Sans SC" },
+          ]}
+          hint={
+            m.settings_site_fuwari_display_font_hint?.() ??
+            "Font used for headings and decorative text"
+          }
+        />
       </SectionShell>
     </>
+  );
+}
+
+/** Custom Live2D model URL input, shown only when character is "custom" */
+function CustomModelUrlField() {
+  const { watch } = useFormContext<SystemConfig>();
+  const selectedModel = watch("site.theme.fuwari.live2dModel");
+
+  if (selectedModel !== "custom") return null;
+
+  return (
+    <TextField
+      name="site.theme.fuwari.live2dCustomModelUrl"
+      label={m.settings_site_fuwari_live2d_custom_url?.() ?? "Custom Model URL"}
+      hint={
+        m.settings_site_fuwari_live2d_custom_url_hint?.() ??
+        "Live2D model JSON URL (.model.json / .model3.json)"
+      }
+      placeholder="https://model.oml2d.com/haru/haru.model.json"
+    />
   );
 }
 
 /** Dynamic banner upload fields for custom nav items */
 function NavBannersSection() {
   const { watch } = useFormContext<SystemConfig>();
-  const navItems = watch("site.navItems") as Array<{ id: string; label: { zh: string }; type: string }> | undefined;
-  const internalItems = (navItems ?? []).filter((item) => item.type === "internal");
+  const navItems = watch("site.navItems") as
+    | Array<{ id: string; label: { zh: string }; type: string }>
+    | undefined;
+  const internalItems = (navItems ?? []).filter(
+    (item) => item.type === "internal",
+  );
 
   if (internalItems.length === 0) return null;
 
