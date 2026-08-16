@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 
 type Oml2dInstance = ReturnType<typeof import("oh-my-live2d")["loadOml2d"]>;
 
-type PresetModel = "haru" | "hijiki" | "tororo" | "shizuku";
+type PresetModel = "miku";
 export type Live2dModel = PresetModel | "custom";
 
 export interface Live2dWidgetProps {
@@ -18,13 +18,10 @@ export interface Live2dWidgetProps {
  * Live2D model sources, self-hosted under public/live2d/ (same-origin).
  * model.oml2d.com CDN is DNS-hijacked on some mainland China networks,
  * so models are vendored locally instead of loaded from a third-party CDN.
- * (haru/shizuku: Cubism 2; hijiki/tororo: Cubism 2 cat models)
+ * (miku: Cubism 4 model from Steam Workshop 3779598652)
  */
 const MODEL_SOURCES: Record<PresetModel, string> = {
-  haru: "/live2d/haru/haru01.model.json",
-  hijiki: "/live2d/hijiki/hijiki.model.json",
-  tororo: "/live2d/tororo/tororo.model.json",
-  shizuku: "/live2d/shizuku/shizuku.model.json",
+  miku: "/live2d/miku/model3.json",
 };
 
 const DEFAULT_MESSAGES = [
@@ -35,24 +32,11 @@ const DEFAULT_MESSAGES = [
 ];
 
 const MODEL_MESSAGES: Record<Live2dModel, string[]> = {
-  haru: DEFAULT_MESSAGES,
-  hijiki: [
-    "你好呀，旅行者！",
-    "要一起探索这个博客吗？",
-    "发现有趣的文章了呢！",
-    "今天天气真不错～",
-  ],
-  tororo: [
-    "主人，欢迎回来！",
-    "需要我帮忙找文章吗？",
-    "你写的文章好棒！",
-    "今天有什么计划呀？",
-  ],
-  shizuku: [
-    "こんにちは！",
-    "这里好漂亮呢～",
-    "一起看书吧！",
-    "有什么需要帮忙的吗？",
+  miku: [
+    "初音未来来报到了！",
+    "准备好听歌了吗？",
+    "今天的博客也要充满活力哦～",
+    "呼呼，葱给你♪",
   ],
   custom: DEFAULT_MESSAGES,
 };
@@ -67,7 +51,7 @@ function resolveModelName(
   customModelUrl: string,
 ): PresetModel | "custom" {
   if (model === "custom" && isValidModelUrl(customModelUrl)) return "custom";
-  return model === "custom" ? "haru" : model;
+  return "miku";
 }
 
 /** Build the full model list for oml2d (presets + custom when available) */
@@ -104,7 +88,7 @@ let initPromise: Promise<Oml2dInstance | null> | null = null;
 
 export function Live2dWidget({
   enabled = true,
-  model = "haru",
+  model = "miku",
   position = "right",
   customModelUrl = "",
 }: Live2dWidgetProps) {

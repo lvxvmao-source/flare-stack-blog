@@ -1,0 +1,76 @@
+{
+  "Version": 3,
+  "FileReferences": {
+    "Moc": "FileReferences_Moc_0.moc3",
+    "Textures": [
+      "textures/FileReferences_Textures_0_0.png",
+      "textures/FileReferences_Textures_1_0.png",
+      "textures/FileReferences_Textures_2_0.png",
+      "textures/FileReferences_Textures_3_0.png",
+      "textures/FileReferences_Textures_4_0.png",
+      "textures/FileReferences_Textures_5_0.png"
+    ],
+    "Physics": "physics/FileReferences_Physics_0.physic3.json",
+    "Motions": {
+      "Idle": [
+        {
+          "Name": "FileReferences_Motions_Idle_0_File_0",
+          "File": "motions/idle/FileReferences_Motions_Idle_0_File_0.motion3.json"
+        }
+      ]
+    },
+    "Expressions": [
+      {
+        "Name": "拿葱",
+        "File": "expressions/FileReferences_Expressions_0_File_0.exp3.json"
+      },
+      {
+        "Name": "QQ人",
+        "File": "expressions/FileReferences_Expressions_1_File_0.exp3.json"
+      },
+      {
+        "Name": "前倾",
+        "File": "expressions/FileReferences_Expressions_2_File_0.exp3.json"
+      },
+      {
+        "Name": "唱歌",
+        "File": "expressions/FileReferences_Expressions_3_File_0.exp3.json"
+      },
+      {
+        "Name": "比心",
+        "File": "expressions/FileReferences_Expressions_4_File_0.exp3.json"
+      },
+      {
+        "Name": "脸红",
+        "File": "expressions/FileReferences_Expressions_5_File_0.exp3.json"
+      },
+      {
+        "Name": "圈圈",
+        "File": "expressions/FileReferences_Expressions_6_File_0.exp3.json"
+      },
+      {
+        "Name": "待机",
+        "File": "expressions/FileReferences_Expressions_7_File_0.exp3.json"
+      },
+      {
+        "Name": "默认",
+        "File": "expressions/FileReferences_Expressions_7_File_0.exp3.json"
+      }
+    ]
+  },
+  "Groups": [],
+  "HitAreas": [
+    {
+      "Name": "脸",
+      "Id": "ArtMesh120"
+    },
+    {
+      "Name": "躯干",
+      "Id": "ArtMesh131"
+    },
+    {
+      "Name": "裙子",
+      "Id": "ArtMesh145"
+    }
+  ]
+}

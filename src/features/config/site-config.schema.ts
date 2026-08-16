@@ -329,7 +329,8 @@ function createFuwariThemeSiteConfigSchema() {
     friendLinksBg: createBackgroundImageRefSchema(),
     // Live2D widget
     live2dEnabled: z.boolean(),
-    live2dModel: z.enum(["haru", "hijiki", "tororo", "shizuku", "custom"]),
+    // .catch("miku") migrates configs that still reference removed presets
+    live2dModel: z.enum(["miku", "custom"]).catch("miku"),
     live2dPosition: z.enum(["left", "right"]),
     live2dCustomModelUrl: z.string().max(2000).default(""),
     // BGM player
@@ -369,9 +370,7 @@ function createFuwariThemeSiteConfigInputSchema() {
     postsBg: createBackgroundImageRefSchema().optional(),
     friendLinksBg: createBackgroundImageRefSchema().optional(),
     live2dEnabled: z.boolean().optional(),
-    live2dModel: z
-      .enum(["haru", "hijiki", "tororo", "shizuku", "custom"])
-      .optional(),
+    live2dModel: z.enum(["miku", "custom"]).optional(),
     live2dPosition: z.enum(["left", "right"]).optional(),
     live2dCustomModelUrl: z.string().max(2000).optional(),
     bgmEnabled: z.boolean().optional(),
@@ -405,9 +404,7 @@ function createFuwariThemeSiteConfigInputFormSchema(messages: Messages) {
     postsBg: createBackgroundImageRefFormSchema(messages).optional(),
     friendLinksBg: createBackgroundImageRefFormSchema(messages).optional(),
     live2dEnabled: z.boolean().optional(),
-    live2dModel: z
-      .enum(["haru", "hijiki", "tororo", "shizuku", "custom"])
-      .optional(),
+    live2dModel: z.enum(["miku", "custom"]).optional(),
     live2dPosition: z.enum(["left", "right"]).optional(),
     live2dCustomModelUrl: z.string().max(2000).optional(),
     bgmEnabled: z.boolean().optional(),

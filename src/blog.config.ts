@@ -34,7 +34,7 @@ export const blogConfig = {
       postsBg: "",
       friendLinksBg: "",
       live2dEnabled: true,
-      live2dModel: "haru",
+      live2dModel: "miku",
       live2dPosition: "right",
       live2dCustomModelUrl: "",
       bgmEnabled: false,

@@ -406,10 +406,7 @@ export function FuwariThemeSettings() {
           name="site.theme.fuwari.live2dModel"
           label={m.settings_site_fuwari_live2d_model?.() ?? "Character"}
           options={[
-            { value: "haru", label: "Haru" },
-            { value: "hijiki", label: "Hijiki" },
-            { value: "tororo", label: "Tororo" },
-            { value: "shizuku", label: "Shizuku" },
+            { value: "miku", label: "初音未来 (Miku)" },
             {
               value: "custom",
               label: m.settings_site_fuwari_live2d_custom?.() ?? "Custom Model",
