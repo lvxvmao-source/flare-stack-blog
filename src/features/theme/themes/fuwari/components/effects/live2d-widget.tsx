@@ -32,7 +32,7 @@ const DEFAULT_MESSAGES = [
 ];
 
 /**
- * Stage padding so the full character is visible.
+ * Fixed stage box so the full character is visible.
  *
  * The Miku model3.json ships without a Cubism `Layout` section, so pixi-live2d-display
  * reports a bounding box that is smaller than the actual artwork. With the default
@@ -41,14 +41,20 @@ const DEFAULT_MESSAGES = [
  * reported bounds. Fixing the stage to a fixed, larger box and centering the model
  * (`anchor: [0.5, 0.5]` + position at the stage center) keeps the whole figure in view
  * at any dock side.
+ *
+ * The stage height is intentionally larger than the width: without a `Layout` section
+ * the model's reported center sits a little low, so its head pokes above the reported
+ * bounds. The extra vertical room (520 desktop / 420 mobile) gives the head enough
+ * clearance so it is no longer clipped. Tune these two numbers if the head still
+ * touches the top edge.
  */
 const STAGE_SIZE: { width: number; height: number } = {
   width: 380,
-  height: 380,
+  height: 520,
 };
 const MOBILE_STAGE_SIZE: { width: number; height: number } = {
   width: 300,
-  height: 300,
+  height: 420,
 };
 
 /** Per-model scale / position (miku is a very large Cubism 4 canvas) */
@@ -145,6 +151,36 @@ function ensureChatIcon(): void {
   symbol.appendChild(path);
   svg.appendChild(symbol);
   document.body.appendChild(svg);
+}
+
+/**
+ * Hide the whole Live2D widget from the welcome page.
+ *
+ * The widget is a module-level singleton mounted on `document.body`, so once it has
+ * been initialized on any normal (PublicLayout) page it keeps rendering even when the
+ * route switches to the welcome page (which lives outside PublicLayout). We hide it by
+ * toggling a body class plus an injected CSS rule that targets every oml2d root element
+ * (`oml2d-stage` / `oml2d-menus` / `oml2d-tips` / `oml2d-statusBar`). Using CSS (rather
+ * than touching each element directly) also catches elements created lazily afterwards
+ * (e.g. idle tips), and restores instantly on unmount.
+ */
+function ensureHiddenStyle(): void {
+  if (typeof document === "undefined") return;
+  if (document.getElementById("oml2d-welcome-hide-style")) return;
+  const style = document.createElement("style");
+  style.id = "oml2d-welcome-hide-style";
+  style.textContent =
+    "body.oml2d-hidden-welcome .oml2d-stage," +
+    "body.oml2d-hidden-welcome .oml2d-menus," +
+    "body.oml2d-hidden-welcome .oml2d-tips," +
+    "body.oml2d-hidden-welcome .oml2d-statusBar{display:none!important;}";
+  document.head.appendChild(style);
+}
+
+export function setLive2dVisible(visible: boolean): void {
+  if (typeof document === "undefined") return;
+  ensureHiddenStyle();
+  document.body.classList.toggle("oml2d-hidden-welcome", !visible);
 }
 
 /**
