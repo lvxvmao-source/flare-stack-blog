@@ -227,31 +227,41 @@ interface Oml2dInternal {
 }
 
 function fitStageToModel(oml2d: Oml2dInstance): void {
+  // This only makes sense in the browser; never run during SSR.
+  if (typeof window === "undefined") return;
   const internal = oml2d as unknown as Oml2dInternal;
+  let applied = false;
   let tries = 0;
-  const MAX_TRIES = 60; // ~1s at 60fps; stops retrying if the model never loads
+  // Miku is ~32MB and loads slowly. `loadOml2d` returns before the pixi model
+  // exists, so we can't attach `model.once("ready")` up-front (it would no-op).
+  // Poll on rAF until the model is measured, then enlarge the stage once.
+  // Allow up to ~10s (600 frames @60fps) for a slow first load.
+  const MAX_TRIES = 600;
   const apply = () => {
+    if (applied) return;
     const pixiModel = internal.models?.model;
     const size = internal.models?.modelSize;
-    // Model may not be created/measured yet — retry on the next frame (capped).
+    // Model not created/measured yet — keep polling (capped) until it is.
     if (!pixiModel || !size || !size.width || !size.height) {
       if (typeof requestAnimationFrame === "function" && tries++ < MAX_TRIES) {
         requestAnimationFrame(apply);
       }
       return;
     }
-    const w = Math.ceil(size.width * (1 + STAGE_MARGIN_X * 2));
-    const h = Math.ceil(size.height * (1 + STAGE_MARGIN_TOP + 0.05));
-    internal.stage?.reloadStyle({ width: w, height: h });
-    internal.setModelPosition({
-      x: w / 2,
-      y: size.height * STAGE_MARGIN_TOP + size.height / 2,
-    });
+    try {
+      const w = Math.ceil(size.width * (1 + STAGE_MARGIN_X * 2));
+      const h = Math.ceil(size.height * (1 + STAGE_MARGIN_TOP + 0.05));
+      internal.stage?.reloadStyle({ width: w, height: h });
+      internal.setModelPosition({
+        x: w / 2,
+        y: size.height * STAGE_MARGIN_TOP + size.height / 2,
+      });
+      applied = true;
+    } catch (err) {
+      // A sizing hiccup must never break the widget's load.
+      console.warn("[live2d] fitStageToModel failed:", err);
+    }
   };
-  // The pixi model emits "ready"/"modelLoaded" once textures + model are in place
-  // (index.js:16068); oml2d's load-time reloadStyle(28375) has already run by then.
-  internal.models?.model?.once("ready", apply);
-  internal.models?.model?.once("modelLoaded", apply);
   apply();
 }
 
