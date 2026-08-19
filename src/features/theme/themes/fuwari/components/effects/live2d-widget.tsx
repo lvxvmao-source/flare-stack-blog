@@ -32,21 +32,14 @@ const DEFAULT_MESSAGES = [
 ];
 
 /**
- * Fixed stage box so the full character is visible.
+ * Initial stage box — used only as the model's first-center fallback.
  *
- * The Miku model3.json ships without a Cubism `Layout` section, so pixi-live2d-display
- * reports a bounding box that is smaller than the actual artwork. With the default
- * `anchor: [0, 0]` + `position: [0, 0]` the model's top-left corner is pinned to the
- * stage's top-left, which clips the part of the drawing that extends outside the
- * reported bounds. Fixing the stage to a fixed, larger box and centering the model
- * (`anchor: [0.5, 0.5]` + position at the stage center) keeps the whole figure in view
- * at any dock side.
- *
- * The stage height is intentionally larger than the width: without a `Layout` section
- * the model's reported center sits a little low, so its head pokes above the reported
- * bounds. The extra vertical room (520 desktop / 420 mobile) gives the head enough
- * clearance so it is no longer clipped. Tune these two numbers if the head still
- * touches the top edge.
+ * Important: oh-my-live2d re-sizes the stage to the model's real rendered size
+ * (`this.models.modelSize`) right after the model loads (index.js:28375) and centers the
+ * model. The Miku model3.json ships without a Cubism `Layout` section, so pixi's reported
+ * bounds are a little shorter than the actual artwork and the head pokes above the stage
+ * top. `fitStageToModel()` runs *after* that load-time sizing to enlarge the stage (extra
+ * top padding) and nudge the model down, giving the head clearance.
  */
 const STAGE_SIZE: { width: number; height: number } = {
   width: 380,
@@ -57,6 +50,10 @@ const MOBILE_STAGE_SIZE: { width: number; height: number } = {
   height: 420,
 };
 
+/** Extra stage padding so the whole character (incl. head) is visible after load. */
+const STAGE_MARGIN_X = 0.12; // 12% each side
+const STAGE_MARGIN_TOP = 0.45; // extra 45% of model height on top, for the head
+
 /** Per-model scale / position (miku is a very large Cubism 4 canvas) */
 const MODEL_CONFIG: Record<PresetModel, Partial<ModelOptions>> = {
   miku: {
@@ -65,11 +62,6 @@ const MODEL_CONFIG: Record<PresetModel, Partial<ModelOptions>> = {
     anchor: [0.5, 0.5],
     position: [STAGE_SIZE.width / 2, STAGE_SIZE.height / 2],
     mobilePosition: [MOBILE_STAGE_SIZE.width / 2, MOBILE_STAGE_SIZE.height / 2],
-    stageStyle: { width: STAGE_SIZE.width, height: STAGE_SIZE.height },
-    mobileStageStyle: {
-      width: MOBILE_STAGE_SIZE.width,
-      height: MOBILE_STAGE_SIZE.height,
-    },
   },
 };
 
@@ -214,6 +206,56 @@ function buildMenus(): MenusOptions {
 }
 
 /**
+ * Re-fit the stage after oh-my-live2d's own load-time sizing so the whole figure
+ * (including the head, which pixi under-reports without a Cubism `Layout`) is visible.
+ *
+ * oml2d sizes the stage to `models.modelSize` and centers the model on load
+ * (index.js:28375). Because the Miku model3.json lacks a `Layout` section, pixi's
+ * reported bounds are shorter than the artwork, so the head gets clipped at the top.
+ * We enlarge the stage (extra top padding) and shift the model down so the head clears.
+ *
+ * The public oml2d types don't expose `stage` / `models.modelSize` / `setModelPosition`,
+ * so we reach them through a minimal structural cast.
+ */
+interface Oml2dInternal {
+  stage?: { reloadStyle: (style: Record<string, unknown>) => void };
+  models?: {
+    modelSize?: { width: number; height: number };
+    model?: { once: (event: string, cb: () => void) => void };
+  };
+  setModelPosition: (pos: { x: number; y: number }) => void;
+}
+
+function fitStageToModel(oml2d: Oml2dInstance): void {
+  const internal = oml2d as unknown as Oml2dInternal;
+  let tries = 0;
+  const MAX_TRIES = 60; // ~1s at 60fps; stops retrying if the model never loads
+  const apply = () => {
+    const pixiModel = internal.models?.model;
+    const size = internal.models?.modelSize;
+    // Model may not be created/measured yet — retry on the next frame (capped).
+    if (!pixiModel || !size || !size.width || !size.height) {
+      if (typeof requestAnimationFrame === "function" && tries++ < MAX_TRIES) {
+        requestAnimationFrame(apply);
+      }
+      return;
+    }
+    const w = Math.ceil(size.width * (1 + STAGE_MARGIN_X * 2));
+    const h = Math.ceil(size.height * (1 + STAGE_MARGIN_TOP + 0.05));
+    internal.stage?.reloadStyle({ width: w, height: h });
+    internal.setModelPosition({
+      x: w / 2,
+      y: size.height * STAGE_MARGIN_TOP + size.height / 2,
+    });
+  };
+  // The pixi model emits "ready"/"modelLoaded" once textures + model are in place
+  // (index.js:16068); oml2d's load-time reloadStyle(28375) has already run by then.
+  internal.models?.model?.once("ready", apply);
+  internal.models?.model?.once("modelLoaded", apply);
+  apply();
+}
+
+/**
  * oh-my-live2d exposes no destroy() API, so we keep a module-level singleton:
  * the widget DOM is mounted to document.body (survives React remounts) and
  * model switching is done via `loadModelByName` on the existing instance.
@@ -280,6 +322,7 @@ export function Live2dWidget({
           },
         }),
       });
+      fitStageToModel(oml2dInstance);
       return oml2dInstance;
     })().catch((error) => {
       console.warn("[live2d] failed to initialize:", error);

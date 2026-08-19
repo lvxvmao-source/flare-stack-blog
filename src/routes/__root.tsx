@@ -5,15 +5,18 @@ import {
   HeadContent,
   Scripts,
   useRouteContext,
+  useRouterState,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { useEffect } from "react";
 import { ThemeProvider } from "@/components/common/theme-provider";
 import { siteConfigQuery } from "@/features/config/queries";
 import {
   SiteThemeProvider,
-  themeMap,
   type ThemeName,
+  themeMap,
 } from "@/features/theme/theme-context";
+import { setLive2dVisible } from "@/features/theme/themes/fuwari/components/effects/live2d-widget";
 import TanStackQueryDevtools from "@/integrations/tanstack-query/devtools";
 import { clientEnv } from "@/lib/env/client.env";
 import { getLocale } from "@/paraglide/runtime";
@@ -129,6 +132,20 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   shellComponent: RootDocument,
 });
 
+/**
+ * Controls whether the Live2D 站娘 (a `document.body` singleton mounted in PublicLayout)
+ * is visible. It must show ONLY on the frontend pages — never on the welcome page (`/`)
+ * nor the admin area (`/admin`). Driven by the router so it stays correct across
+ * navigations even though the widget DOM persists on `body`.
+ */
+function Live2dVisibilityController() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  useEffect(() => {
+    setLive2dVisible(!(pathname === "/" || pathname.startsWith("/admin")));
+  }, [pathname]);
+  return null;
+}
+
 function RootDocument({ children }: { children: React.ReactNode }) {
   const locale = getLocale();
   const { siteConfig } = useRouteContext({ from: "__root__" });
@@ -162,6 +179,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             TanStackQueryDevtools,
           ]}
         />
+        <Live2dVisibilityController />
         <Scripts />
       </body>
     </html>

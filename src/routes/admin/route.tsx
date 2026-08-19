@@ -85,7 +85,7 @@ function AdminLayout() {
             </Link>
             <div className="h-4 w-px bg-border/40" />
             <Link
-              to="/"
+              to="/home"
               className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-mono font-medium text-muted-foreground hover:text-foreground transition-colors group"
             >
               <span>{m.admin_layout_back_to_site()}</span>

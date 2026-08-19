@@ -1,11 +1,9 @@
 import { useNavigate, useRouteContext } from "@tanstack/react-router";
-import { useEffect } from "react";
 import {
   resolveSocialHref,
   SOCIAL_PLATFORMS,
 } from "@/features/config/utils/social-platforms";
 import { m } from "@/paraglide/messages";
-import { setLive2dVisible } from "../../components/effects/live2d-widget";
 import { SakuraPetals } from "../../components/effects/sakura-petals";
 
 function isVideoBackground(url: string): boolean {
@@ -23,13 +21,6 @@ export function WelcomePage() {
   const navigate = useNavigate();
   const { siteConfig } = useRouteContext({ from: "__root__" });
   const fuwari = siteConfig.theme.fuwari;
-
-  // The Live2D widget is a body-level singleton that survives route changes, so hide it
-  // while the welcome page is shown (it lives outside PublicLayout) and restore on leave.
-  useEffect(() => {
-    setLive2dVisible(false);
-    return () => setLive2dVisible(true);
-  }, []);
 
   // 背景回退链：welcome.background → homeBg → 无（纯 --fuwari-page-bg）
   const background = (
