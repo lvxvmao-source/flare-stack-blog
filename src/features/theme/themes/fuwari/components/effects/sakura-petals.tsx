@@ -24,23 +24,36 @@ const DENSITY_MAP: Record<number, number> = {
   6: 44, 7: 52, 8: 62, 9: 72, 10: 84,
 };
 
-function drawPetal(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  size: number,
-  rotation: number,
-  opacity: number,
-) {
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.rotate(rotation);
-  ctx.globalAlpha = Math.max(0.15, opacity);
+/**
+ * Offscreen sprite size for the pre-rendered petal.
+ *
+ * Perf note: the previous implementation rebuilt the whole 5-petal bezier path
+ * AND re-parsed an `oklch(...)` colour string for every petal on every frame
+ * (up to 84 petals × 60fps). That is pure main-thread work and is the main
+ * cause of scroll jank on lower-end devices.
+ *
+ * We instead draw the petal shape exactly once into an offscreen canvas, then
+ * blit it with `drawImage` each frame — same visuals, a fraction of the cost.
+ */
+const SPRITE_SIZE = 64;
+/** Petal radius inside the sprite: max extent is `s * 0.7`, so keep it inside bounds. */
+const SPRITE_RADIUS = 40;
 
-  const s = size;
-  // 5-petal sakura shape using bezier curves
-  ctx.beginPath();
-  ctx.fillStyle = `oklch(0.78 0.12 350 / ${opacity})`;
+/**
+ * Draw a single sakura petal into an offscreen canvas (shape + colour only —
+ * opacity/rotation/scale are applied per-frame at blit time).
+ */
+function createPetalSprite(): HTMLCanvasElement | null {
+  const off = document.createElement("canvas");
+  off.width = SPRITE_SIZE;
+  off.height = SPRITE_SIZE;
+  const octx = off.getContext("2d");
+  if (!octx) return null;
+
+  const s = SPRITE_RADIUS;
+  octx.translate(SPRITE_SIZE / 2, SPRITE_SIZE / 2);
+  octx.beginPath();
+  octx.fillStyle = "oklch(0.78 0.12 350)";
 
   for (let i = 0; i < 5; i++) {
     const angle = (i * Math.PI * 2) / 5 - Math.PI / 2;
@@ -50,14 +63,14 @@ function drawPetal(
     const tipY = Math.sin(angle) * s * 0.7;
 
     if (i === 0) {
-      ctx.moveTo(
+      octx.moveTo(
         Math.cos(angle - 0.35) * s * 0.25,
         Math.sin(angle - 0.35) * s * 0.25,
       );
     }
 
-    ctx.quadraticCurveTo(cx, cy, tipX, tipY);
-    ctx.quadraticCurveTo(
+    octx.quadraticCurveTo(cx, cy, tipX, tipY);
+    octx.quadraticCurveTo(
       Math.cos(angle + 0.35) * s * 0.25,
       Math.sin(angle + 0.35) * s * 0.25,
       0,
@@ -65,8 +78,8 @@ function drawPetal(
     );
   }
 
-  ctx.fill();
-  ctx.restore();
+  octx.fill();
+  return off;
 }
 
 export function SakuraPetals({
@@ -90,6 +103,9 @@ export function SakuraPetals({
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    const sprite = createPetalSprite();
+    if (!sprite) return;
 
     let w = 0;
     let h = 0;
@@ -121,6 +137,13 @@ export function SakuraPetals({
     }));
 
     const animate = () => {
+      // Pause the loop entirely while the tab is hidden: rAF is throttled by the
+      // browser anyway, but stopping it releases the main thread and battery.
+      if (document.hidden) {
+        animFrameRef.current = 0;
+        return;
+      }
+
       ctx.clearRect(0, 0, w, h);
 
       for (const petal of petalsRef.current) {
@@ -136,17 +159,41 @@ export function SakuraPetals({
         if (petal.x > w + 30) petal.x = -30;
         if (petal.x < -30) petal.x = w + 30;
 
-        drawPetal(ctx, petal.x, petal.y, petal.size, petal.rotation, petal.opacity);
+        // Same visual result as before: the original code multiplied the petal's
+        // colour alpha (oklch `/<opacity>`) by `globalAlpha = max(0.15, opacity)`,
+        // i.e. an effective alpha of roughly opacity². We reproduce that here.
+        const alpha = Math.max(0.15, petal.opacity) * petal.opacity;
+        const k = petal.size / SPRITE_RADIUS;
+        const dw = SPRITE_SIZE * k;
+
+        ctx.save();
+        ctx.translate(petal.x, petal.y);
+        ctx.rotate(petal.rotation);
+        ctx.globalAlpha = alpha;
+        ctx.drawImage(sprite, -dw / 2, -dw / 2, dw, dw);
+        ctx.restore();
       }
 
       animFrameRef.current = requestAnimationFrame(animate);
     };
 
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animFrameRef.current);
+        animFrameRef.current = 0;
+      } else if (!animFrameRef.current) {
+        animFrameRef.current = requestAnimationFrame(animate);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
     animFrameRef.current = requestAnimationFrame(animate);
 
     return () => {
       cancelAnimationFrame(animFrameRef.current);
+      animFrameRef.current = 0;
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, [enabled, density, speed]);
 

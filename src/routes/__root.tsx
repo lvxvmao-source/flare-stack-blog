@@ -57,6 +57,13 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         },
       ],
       links: [
+        // Google Fonts 的三个中文字体族（ZCOOL XiaoWei / Ma Shan Zheng / Noto Sans SC）
+        // 原先以 <link rel="stylesheet"> 同步引入，属于「渲染阻塞资源」——浏览器必须
+        // 等它下载完才会开始渲染首屏。而 fonts.googleapis.com 在中国大陆常年不可达，
+        // 于是首屏会一直卡在等待、直到请求超时，这是「浏览卡顿」的一个直接来源。
+        //
+        // 现改为在 RootDocument 中异步注入（见 ASYNC_FONT_SCRIPT）：字体能力保留，
+        // 但不再阻塞渲染。preconnect 一并保留，让异步请求能更快建连。
         {
           rel: "preconnect",
           href: "https://fonts.googleapis.com",
@@ -65,10 +72,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
           rel: "preconnect",
           href: "https://fonts.gstatic.com",
           crossOrigin: "anonymous",
-        },
-        {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&display=swap",
         },
         {
           rel: "icon",
@@ -133,6 +136,25 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 /**
+ * Google Fonts 异步加载脚本（ZCOOL XiaoWei / Ma Shan Zheng / Noto Sans SC）。
+ *
+ * 这三种字体被归档页年份（archive-year）、页脚（footer）与欢迎页使用，因此不能直接
+ * 删除，否则这些位置的字体回退会改变外观。
+ *
+ * 做法：以 `media="print"` 插入 link —— 浏览器视其为非渲染关键资源，不会阻塞首屏；
+ * 待其加载完成后再把 media 切回 `all`，字体随即生效。若加载失败（例如国内网络
+ * 不可达）则静默忽略，回退到系统字体，与当前的表现一致。全程不阻塞渲染。
+ */
+const ASYNC_FONT_SCRIPT = `(function(){try{
+var href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&display=swap";
+var l=document.createElement("link");
+l.rel="stylesheet";l.href=href;l.media="print";
+l.onload=function(){l.media="all";};
+l.onerror=function(){};
+document.head.appendChild(l);
+}catch(e){}})();`;
+
+/**
  * Controls whether the Live2D 站娘 (a `document.body` singleton mounted in PublicLayout)
  * is visible. It must show ONLY on the frontend pages — never on the welcome page (`/`)
  * nor the admin area (`/admin`). Driven by the router so it stays correct across
@@ -162,6 +184,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        {/* 远程中文字体异步注入，避免阻塞首屏渲染（见 ASYNC_FONT_SCRIPT） */}
+        <script dangerouslySetInnerHTML={{ __html: ASYNC_FONT_SCRIPT }} />
         <ThemeProvider>
           <SiteThemeProvider themeName={themeName}>
             {children}

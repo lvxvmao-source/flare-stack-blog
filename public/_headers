@@ -1,0 +1,42 @@
+# Cloudflare Workers Assets 自定义响应头
+# 官方文档：https://developers.cloudflare.com/workers/static-assets/headers/
+#
+# 背景：Workers Assets 默认给所有静态资源下发
+#   Cache-Control: public, max-age=0, must-revalidate
+# 这会让浏览器每次访问都必须发起条件请求回源校验。对于文件名携带内容哈希、
+# 内容永不改变的构建产物而言，这个策略白白浪费了大量往返。
+#
+# 注意：本文件的路径匹配同时适用于 /assets/*（Vite 构建产物，文件名含 hash）、
+# /live2d/*（Live2D 模型，体积达 31MB）、/images/*（站点图片）。
+
+# ── 构建产物：文件名含内容哈希，内容永不改变，可安全长期强缓存 ──
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# ── Live2D 站娘模型：体积大（moc3 9MB + 贴图 21MB），但文件名固定不变。
+#    折中设 1 天，避免更新模型后浏览器长期使用旧缓存（更新后可强刷 Ctrl+F5） ──
+/live2d/*
+  Cache-Control: public, max-age=86400
+
+# ── 站点图片 ──
+/images/*
+  Cache-Control: public, max-age=604800
+
+# ── 站点图标 ──
+/favicon.ico
+  Cache-Control: public, max-age=86400
+
+/favicon.svg
+  Cache-Control: public, max-age=86400
+
+/favicon-96x96.png
+  Cache-Control: public, max-age=86400
+
+/apple-touch-icon.png
+  Cache-Control: public, max-age=86400
+
+/web-app-manifest-192x192.png
+  Cache-Control: public, max-age=604800
+
+/web-app-manifest-512x512.png
+  Cache-Control: public, max-age=604800
